@@ -88,7 +88,7 @@ public class SuperScoutApplication extends Application implements Application.Ac
                 }
             });
         new Instabug.Builder(this, "f56c6f16e2c9965920019f8eb52e7b6e")
-                .setInvocationEvent(InstabugInvocationEvent.SHAKE)
+                .setInvocationEvent(InstabugInvocationEvent.FLOATING_BUTTON)
                 .build();
         }
     public void onActivityCreated(Activity activity, Bundle savedInstanceState){currentActivity = activity;}
