@@ -16,8 +16,20 @@
     <ToggleButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/forceone"
         android:layout_below="@+id/ForceCubesForPowerup"
+        android:id="@+id/forcethree"
+        android:gravity="center_horizontal"
+        android:textOff="3"
+        android:textOn="3"
+        android:checked="false"
+        android:layout_centerHorizontal="true"
+        />
+
+    <ToggleButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/forceone"
+        android:layout_below="@+id/forcetwo"
         android:gravity="center_horizontal"
         android:textOff="1"
         android:textOn="1"
@@ -27,7 +39,7 @@
     <ToggleButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/forceone"
+        android:layout_below="@+id/forcethree"
         android:id="@+id/forcetwo"
         android:gravity="center_horizontal"
         android:textOff="2"
@@ -35,21 +47,10 @@
         android:checked="false"
         android:layout_centerHorizontal="true" />
 
-    <ToggleButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/forcetwo"
-        android:id="@+id/forcethree"
-        android:gravity="center_horizontal"
-        android:textOff="3"
-        android:textOn="3"
-        android:checked="false"
-        android:layout_centerHorizontal="true"
-        />
 
 
 
 
 
 
-    </RelativeLayout>
+</RelativeLayout>
