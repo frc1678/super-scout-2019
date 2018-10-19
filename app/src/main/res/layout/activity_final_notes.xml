@@ -17,20 +17,18 @@
         android:layout_alignParentTop="true"
         android:textColor="#000000"
         android:textSize="21sp"
+        android:padding="10sp"
         android:id="@+id/teamNumberOneTextView" />
 
     <EditText
-        android:inputType="textMultiLine"
-        android:lines="3"
-        android:minLines="3"
-        android:maxLines="10"
+        android:inputType="text"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:scrollbars="vertical"
         android:hint="Your Notes Go Here ..."
         android:layout_below="@+id/teamNumberOneTextView"
         android:layout_alignParentLeft="true"
         android:textSize="17sp"
+        android:padding="10sp"
         android:id="@+id/teamOneSuperNotesEditText" />
 
     <TextView
@@ -40,20 +38,18 @@
         android:layout_alignParentLeft="true"
         android:textColor="#000000"
         android:textSize="21sp"
+        android:padding="10sp"
         android:id="@+id/teamNumberTwoTextView" />
 
     <EditText
-        android:inputType="textMultiLine"
-        android:lines="3"
-        android:minLines="3"
-        android:maxLines="10"
+        android:inputType="text"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:scrollbars="vertical"
         android:hint="Your Notes Go Here ..."
         android:layout_below="@+id/teamNumberTwoTextView"
         android:layout_alignParentLeft="true"
         android:textSize="17sp"
+        android:padding="10sp"
         android:id="@+id/teamTwoSuperNotesEditText" />
 
     <TextView
@@ -63,20 +59,18 @@
         android:layout_alignParentLeft="true"
         android:textColor="#000000"
         android:textSize="21sp"
+        android:padding="10sp"
         android:id="@+id/teamNumberThreeTextView" />
 
     <EditText
-        android:inputType="textMultiLine"
-        android:lines="3"
-        android:minLines="3"
-        android:maxLines="10"
+        android:inputType="text"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:scrollbars="vertical"
         android:hint="Your Notes Go Here ..."
         android:layout_below="@+id/teamNumberThreeTextView"
         android:layout_alignParentLeft="true"
         android:textSize="17sp"
+        android:padding="10sp"
         android:id="@+id/teamThreeSuperNotesEditText" />
 
 </RelativeLayout>
