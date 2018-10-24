@@ -31,6 +31,7 @@
             android:name=".finalNotes"
             android:windowSoftInputMode="adjustPan"
             />
+        <activity android:name=".QrDisplay"/>
     </application>
 
 </manifest>

@@ -90,7 +90,7 @@ public class finalNotes extends ActionBarActivity {
         final Activity activity = this;
         new AlertDialog.Builder(this)
                 .setTitle("WARNING!")
-                .setMessage("Send before leaving?")
+                .setMessage("SEND BEFORE LEAVING? PRESSING OK TO SEND DATA!")
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
 
