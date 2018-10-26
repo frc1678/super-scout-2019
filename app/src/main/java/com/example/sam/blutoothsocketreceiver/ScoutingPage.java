@@ -87,9 +87,6 @@ public class ScoutingPage extends ActionBarActivity {
     Counter boostCounterView;
     Counter levitateCounterView;
     Counter forceCounterView;
-    SuperScoutingPanel panelOne;
-    SuperScoutingPanel panelTwo;
-    SuperScoutingPanel panelThree;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,7 +95,6 @@ public class ScoutingPage extends ActionBarActivity {
 
         setContentView(R.layout.super_scouting);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-        getPanels();
         next = getIntent();
         object = new JSONObject();
         getExtrasForScouting();
@@ -150,11 +146,15 @@ public class ScoutingPage extends ActionBarActivity {
     public Boolean canProceed() {
         Boolean canProceed = true;
         ArrayList<String> dataNames = new ArrayList<>(Arrays.asList("Speed", "Agility", "Defense"));
+        SuperScoutingPanel panelone = (SuperScoutingPanel) getSupportFragmentManager().findFragmentById(panelOne);
+        SuperScoutingPanel paneltwo = (SuperScoutingPanel) getSupportFragmentManager().findFragmentById(panelTwo);
+        SuperScoutingPanel panelthree = (SuperScoutingPanel) getSupportFragmentManager().findFragmentById(R.id.panelThree);
+
         for (int i = 0; i < 3; i++) {
             String dataName = dataNames.get(i);
-            int valOne = panelOne.getData().get(dataName);
-            int valTwo = panelTwo.getData().get(dataName);
-            int valThree = panelThree.getData().get(dataName);
+            int valOne = panelone.getData().get(dataName);
+            int valTwo = paneltwo.getData().get(dataName);
+            int valThree = panelthree.getData().get(dataName);
 
             if(dataName.equals("Defense")) {
                 if ((valOne != 0 && valTwo != 0 && valOne != 1 && valTwo != 1 && valOne == valTwo) || (valOne != 0 && valThree != 0 && valOne != 1 && valThree != 1 && valOne == valThree) || (valTwo != 0 && valThree != 0 && valTwo != 1 && valThree != 1 && valTwo == valThree)){
@@ -187,13 +187,57 @@ public class ScoutingPage extends ActionBarActivity {
 
         if (id == R.id.finalNext) {
             if (canProceed()) {
+                final SuperScoutingPanel panelOne = (SuperScoutingPanel) getSupportFragmentManager().findFragmentById(R.id.panelOne);
+                final SuperScoutingPanel panelTwo = (SuperScoutingPanel) getSupportFragmentManager().findFragmentById(R.id.panelTwo);
+                final SuperScoutingPanel panelThree = (SuperScoutingPanel) getSupportFragmentManager().findFragmentById(R.id.panelThree);
 
                 levitateNum = 0;
 
                 if(levitate.isChecked()) {
                     levitateNum = 3;
                 }
+
+
+
+
                 listDataValues();
+                new Thread() {
+                    @Override
+                    public void run() {
+                        try {
+                            for (int i = 0; i < panelOne.getDataNameCount() - 1; i++) {
+                                dataBase.child("/TeamInMatchDatas").child(teamNumberOne + "Q" + numberOfMatch).child(reformatDataNames(teamOneDataName.get(i))).setValue(Integer.parseInt(teamOneDataScore.get(i)));
+                            }
+                            for (int i = 0; i < panelTwo.getDataNameCount() - 1; i++) {
+                                dataBase.child("/TeamInMatchDatas").child(teamNumberTwo + "Q" + numberOfMatch).child(reformatDataNames(teamTwoDataName.get(i))).setValue(Integer.parseInt(teamTwoDataScore.get(i)));
+                            }
+                            for (int i = 0; i < panelThree.getDataNameCount() - 1; i++) {
+                                dataBase.child("/TeamInMatchDatas").child(teamNumberThree + "Q" + numberOfMatch).child(reformatDataNames(teamThreeDataName.get(i))).setValue(Integer.parseInt(teamThreeDataScore.get(i)));
+                            }
+                            if(alliance.equals("Blue Alliance")){
+                                for (int i = 0; i < allianceCubesForPowerup.size(); i++){
+                                    dataBase.child("/Matches").child(numberOfMatch).child("blueCubesForPowerup").child(allianceCubesForPowerup.keySet().toArray()[i].toString()).setValue(allianceCubesForPowerup.get(allianceCubesForPowerup.keySet().toArray()[i]));
+                                }
+
+                            }else{
+                                for (int i = 0; i < allianceCubesForPowerup.size(); i++){
+                                    dataBase.child("/Matches").child(numberOfMatch).child("redCubesForPowerup").child(allianceCubesForPowerup.keySet().toArray()[i].toString()).setValue(allianceCubesForPowerup.get(allianceCubesForPowerup.keySet().toArray()[i]));
+                                }
+                            }
+
+                            if(alliance.equals("Blue Alliance")){
+                                dataBase.child("/Matches").child(numberOfMatch).child("blueCubesForPowerup").child("Levitate").setValue(levitateNum);
+                            }
+                            else{
+                                dataBase.child("/Matches").child(numberOfMatch).child("redCubesForPowerup").child("Levitate").setValue(levitateNum);
+                            }
+                        } catch (DatabaseException FBE) {
+                            Log.e("firebase", "scoutingPage");
+                        } catch (IndexOutOfBoundsException IOB) {
+                            Log.e("ScoutingPage", "Index");
+                        }
+                    }
+                }.start();
                 sendExtras();
             } else {
                 //toast
@@ -274,6 +318,26 @@ public class ScoutingPage extends ActionBarActivity {
                     allianceScoreInt = 0;
                     allianceFoulInt = 0;
                 }
+
+                if (alliance.equals("Blue Alliance")) {
+                    dataBase.child("/Matches").child(numberOfMatch).child("blueScore").setValue(allianceScoreInt);
+                    dataBase.child("/Matches").child(numberOfMatch).child("foulPointsGainedBlue").setValue(allianceFoulInt);
+                    dataBase.child("/Matches").child(numberOfMatch).child("blueDidFaceBoss").setValue(facedTheBoss);
+                    dataBase.child("/Matches").child(numberOfMatch).child("blueDidAutoQuest").setValue(didAutoQuest);
+                    dataBase.child("/Matches").child(numberOfMatch).child("blueCubesInVaultFinal").child("Boost").setValue(boostC);
+                    dataBase.child("/Matches").child(numberOfMatch).child("blueCubesInVaultFinal").child("Levitate").setValue(levitateC);
+                    dataBase.child("/Matches").child(numberOfMatch).child("blueCubesInVaultFinal").child("Force").setValue(forceC);
+                } else if (alliance.equals("Red Alliance")) {
+                    dataBase.child("/Matches").child(numberOfMatch).child("redScore").setValue(allianceScoreInt);
+                    dataBase.child("/Matches").child(numberOfMatch).child("foulPointsGainedRed").setValue(allianceFoulInt);
+                    dataBase.child("/Matches").child(numberOfMatch).child("redDidFaceBoss").setValue(facedTheBoss);
+                    dataBase.child("/Matches").child(numberOfMatch).child("redDidAutoQuest").setValue(didAutoQuest);
+                    dataBase.child("/Matches").child(numberOfMatch).child("redCubesInVaultFinal").child("Boost").setValue(boostC);
+                    dataBase.child("/Matches").child(numberOfMatch).child("redCubesInVaultFinal").child("Levitate").setValue(levitateC);
+                    dataBase.child("/Matches").child(numberOfMatch).child("redCubesInVaultFinal").child("Force").setValue(forceC);
+
+                }
+
                 dialog.cancel();
             }
         });
@@ -301,6 +365,9 @@ public class ScoutingPage extends ActionBarActivity {
 
 
     public void setPanels() {
+        SuperScoutingPanel panelOne = (SuperScoutingPanel) getSupportFragmentManager().findFragmentById(R.id.panelOne);
+        SuperScoutingPanel panelTwo = (SuperScoutingPanel) getSupportFragmentManager().findFragmentById(R.id.panelTwo);
+        SuperScoutingPanel panelThree = (SuperScoutingPanel) getSupportFragmentManager().findFragmentById(R.id.panelThree);
         panelOne.setAllianceColor(isRed);
         panelOne.setTeamNumber(teamNumberOne);
         panelTwo.setAllianceColor(isRed);
@@ -326,7 +393,6 @@ public class ScoutingPage extends ActionBarActivity {
         intent.putExtra("forceCount", forceC);
         intent.putExtra("boostCount", boostC);
         intent.putExtra("completedAutoQuest", didAutoQuest);
-        System.out.println(didAutoQuest);
         intent.putExtra("facedTheBoss", facedTheBoss);
         intent.putExtra("forceForPowerup", allianceCubesForPowerup.get("Force"));
         intent.putExtra("boostForPowerup", allianceCubesForPowerup.get("Boost"));
@@ -343,6 +409,10 @@ public class ScoutingPage extends ActionBarActivity {
     }
 
     public void listDataValues() {
+        SuperScoutingPanel panelOne = (SuperScoutingPanel) getSupportFragmentManager().findFragmentById(R.id.panelOne);
+        SuperScoutingPanel panelTwo = (SuperScoutingPanel) getSupportFragmentManager().findFragmentById(R.id.panelTwo);
+        SuperScoutingPanel panelThree = (SuperScoutingPanel) getSupportFragmentManager().findFragmentById(R.id.panelThree);
+
         teamOneDataName = new ArrayList<>(panelOne.getData().keySet());
         teamTwoDataName = new ArrayList<>(panelTwo.getData().keySet());
         teamThreeDataName = new ArrayList<>(panelThree.getData().keySet());
@@ -360,16 +430,24 @@ public class ScoutingPage extends ActionBarActivity {
             teamThreeDataScore.add(panelThree.getData().get(teamThreeDataName.get(i)).toString());
         }
     }
-    public void getPanels() {
-        panelOne = (SuperScoutingPanel) getSupportFragmentManager().findFragmentById(R.id.panelOne);
-        panelTwo = (SuperScoutingPanel) getSupportFragmentManager().findFragmentById(R.id.panelTwo);
-        panelThree = (SuperScoutingPanel) getSupportFragmentManager().findFragmentById(R.id.panelThree);
+
+    public String reformatDataNames(String dataName) {
+        String reformattedDataName = "";
+        if(!dataName.equals("Good Decisions") && !dataName.equals("Bad Decisions")){
+            reformattedDataName = "rank" + dataName.replace(" ", "");
+        }else if(dataName.equals("Good Decisions") || dataName.equals("Bad Decisions")){
+            reformattedDataName = "num" + dataName.replace(" ", "");
+        }
+        return reformattedDataName;
     }
 
 
 
 
     public void initializeTeamTextViews() {
+        SuperScoutingPanel panelOne = (SuperScoutingPanel) getSupportFragmentManager().findFragmentById(R.id.panelOne);
+        SuperScoutingPanel panelTwo = (SuperScoutingPanel) getSupportFragmentManager().findFragmentById(R.id.panelTwo);
+        SuperScoutingPanel panelThree = (SuperScoutingPanel) getSupportFragmentManager().findFragmentById(R.id.panelThree);
         teamNumberOneTextview = (TextView) panelOne.getView().findViewById(R.id.teamNumberTextView);
         teamNumberTwoTextview = (TextView) panelTwo.getView().findViewById(R.id.teamNumberTextView);
         teamNumberThreeTextview = (TextView) panelThree.getView().findViewById(R.id.teamNumberTextView);

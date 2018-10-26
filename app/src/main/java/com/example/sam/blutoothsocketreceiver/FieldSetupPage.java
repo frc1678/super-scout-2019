@@ -102,11 +102,22 @@ public class FieldSetupPage extends AppCompatActivity{
             } else {
                 //TODO: Add data check against other scout if extra time (check if what is currently in the switches and plates conflicts with what this has, notify).
 
+                dataBase.child("Matches").child(numberOfMatch).child("blueSwitch").child("left").setValue(configMap.get(R.id.blueTopPlateButton));
+                dataBase.child("Matches").child(numberOfMatch).child("blueSwitch").child("right").setValue(configMap.get(R.id.blueBottomPlateButton));
+                dataBase.child("Matches").child(numberOfMatch).child("scale").child("left").setValue(configMap.get(R.id.scaleTopPlateButton));
+                dataBase.child("Matches").child(numberOfMatch).child("scale").child("right").setValue(configMap.get(R.id.scaleBottomPlateButton));
+                dataBase.child("Matches").child(numberOfMatch).child("redSwitch").child("left").setValue(configMap.get(R.id.redTopPlateButton));
+                dataBase.child("Matches").child(numberOfMatch).child("redSwitch").child("right").setValue(configMap.get(R.id.redBottomPlateButton));
+
                 next = new Intent(context, ScoutingPage.class);
                 next.putExtras(previous);
-                next.putExtra("blueSwitch", configMap.get(R.id.blueBottomPlateButton));
-                next.putExtra("scale", configMap.get(R.id.scaleBottomPlateButton));
-                next.putExtra("redSwitch", configMap.get(R.id.redBottomPlateButton));
+
+                String blueSwitch = formatPlateData(configMap.get(R.id.blueTopPlateButton), configMap.get(R.id.blueBottomPlateButton));
+                String scale = formatPlateData(configMap.get(R.id.scaleTopPlateButton), configMap.get(R.id.scaleBottomPlateButton));
+                String redSwitch = formatPlateData(configMap.get(R.id.redTopPlateButton), configMap.get(R.id.redBottomPlateButton));
+                next.putExtra("blueSwitch", blueSwitch);
+                next.putExtra("scale", scale);
+                next.putExtra("redSwitch", redSwitch);
                 startActivity(next);
             }
 
@@ -127,4 +138,8 @@ public class FieldSetupPage extends AppCompatActivity{
         isRed = previous.getExtras().getBoolean("allianceColor");
     }
 
+    public String formatPlateData(String left, String right) {
+        String JsonStringPlates = "{\"left\": \"" + left + "\",\"right\": \"" + right + "\"}";
+        return JsonStringPlates;
+    }
 }
