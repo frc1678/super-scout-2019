@@ -97,25 +97,8 @@
             android:layout_width="fill_parent"
             android:layout_height="330dp"
             android:id="@+id/view_files_received"
-            android:layout_above="@+id/button" />
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginLeft="6dp"
-            android:text = "super data"
-            android:textSize="10sp"
-            android:onClick="getSuperData"
-            android:id="@+id/button" />
-        <Button
-            android:id="@+id/resendAll"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="10sp"
-            android:text="Resend All"
-            android:layout_centerHorizontal="true"
-            android:layout_alignParentBottom="true"
-            android:onClick="resendAllClicked"/>
+            android:layout_below="@+id/searchEditText"
+            />
 
         <EditText
             android:layout_width="match_parent"
@@ -123,8 +106,7 @@
             android:hint="Search: "
             android:id="@+id/searchEditText"
             android:layout_alignParentTop="true"
-            android:layout_alignLeft="@+id/button"
-            android:layout_alignStart="@+id/button" />
+            />
 
     </RelativeLayout>
 </LinearLayout>

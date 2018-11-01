@@ -5,6 +5,9 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -12,6 +15,7 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
@@ -35,11 +39,13 @@ public class FieldSetupPage extends AppCompatActivity{
     Activity context;
     Intent previous;
     Intent next;
-
+    View leftView;
+    View rightView;
+    String red;
+    String blue;
     String numberOfMatch;
-    //Intent next;
+    String leftViewColor;
     DatabaseReference dataBase;
-
     PlateConfig plateConfig;
     boolean isRed;
 
@@ -52,7 +58,13 @@ public class FieldSetupPage extends AppCompatActivity{
         previous = getIntent();
         getExtrasForSetup();
         dataBase = FirebaseDatabase.getInstance().getReference();
-
+        leftView = findViewById(R.id.leftColorView);
+        rightView = findViewById(R.id.rightColorView);
+        blue = "#aa0000ff";
+        red = "#aaff0000";
+        leftView.setBackgroundColor(Color.parseColor(blue));
+        rightView.setBackgroundColor(Color.parseColor(red));
+        leftViewColor = "blue";
         plateConfig = new PlateConfig(context, isRed);
     }
 
@@ -102,22 +114,16 @@ public class FieldSetupPage extends AppCompatActivity{
             } else {
                 //TODO: Add data check against other scout if extra time (check if what is currently in the switches and plates conflicts with what this has, notify).
 
-                dataBase.child("Matches").child(numberOfMatch).child("blueSwitch").child("left").setValue(configMap.get(R.id.blueTopPlateButton));
-                dataBase.child("Matches").child(numberOfMatch).child("blueSwitch").child("right").setValue(configMap.get(R.id.blueBottomPlateButton));
-                dataBase.child("Matches").child(numberOfMatch).child("scale").child("left").setValue(configMap.get(R.id.scaleTopPlateButton));
-                dataBase.child("Matches").child(numberOfMatch).child("scale").child("right").setValue(configMap.get(R.id.scaleBottomPlateButton));
-                dataBase.child("Matches").child(numberOfMatch).child("redSwitch").child("left").setValue(configMap.get(R.id.redTopPlateButton));
-                dataBase.child("Matches").child(numberOfMatch).child("redSwitch").child("right").setValue(configMap.get(R.id.redBottomPlateButton));
-
                 next = new Intent(context, ScoutingPage.class);
                 next.putExtras(previous);
-
-                String blueSwitch = formatPlateData(configMap.get(R.id.blueTopPlateButton), configMap.get(R.id.blueBottomPlateButton));
-                String scale = formatPlateData(configMap.get(R.id.scaleTopPlateButton), configMap.get(R.id.scaleBottomPlateButton));
-                String redSwitch = formatPlateData(configMap.get(R.id.redTopPlateButton), configMap.get(R.id.redBottomPlateButton));
-                next.putExtra("blueSwitch", blueSwitch);
-                next.putExtra("scale", scale);
-                next.putExtra("redSwitch", redSwitch);
+                next.putExtra("scale", configMap.get(R.id.scaleBottomPlateButton));
+                if (leftViewColor.equals("blue")){
+                    next.putExtra("blueSwitch", configMap.get(R.id.leftBottomPlateButton));
+                    next.putExtra("redSwitch", configMap.get(R.id.rightBottomPlateButton));
+                } else {
+                    next.putExtra("redSwitch", configMap.get(R.id.leftBottomPlateButton));
+                    next.putExtra("blueSwitch", configMap.get(R.id.rightBottomPlateButton));
+                }
                 startActivity(next);
             }
 
@@ -132,14 +138,22 @@ public class FieldSetupPage extends AppCompatActivity{
         plateConfig.swapColor(plateButton);
     }
 
+    public void rotateButtonPress(View view) {
+        if (leftViewColor.equals("blue")) {
+            leftView.setBackgroundColor(Color.parseColor(red));
+            rightView.setBackgroundColor(Color.parseColor(blue));
+            leftViewColor = "red";
+        } else {
+            leftView.setBackgroundColor(Color.parseColor(blue));
+            rightView.setBackgroundColor(Color.parseColor(red));
+            leftViewColor = "blue";
+        }
+    }
+
     public void getExtrasForSetup() {
 
         numberOfMatch = previous.getExtras().getString("matchNumber");
         isRed = previous.getExtras().getBoolean("allianceColor");
     }
 
-    public String formatPlateData(String left, String right) {
-        String JsonStringPlates = "{\"left\": \"" + left + "\",\"right\": \"" + right + "\"}";
-        return JsonStringPlates;
-    }
 }

@@ -12,41 +12,49 @@
     android:textSize = "20sp"
     android:paddingBottom = "20dp"
     android:id= "@+id/ForceCubesForPowerup"/>
-
-    <ToggleButton
+    <RadioGroup
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/ForceCubesForPowerup"
-        android:id="@+id/forcethree"
-        android:gravity="center_horizontal"
-        android:textOff="3"
-        android:textOn="3"
-        android:checked="false"
         android:layout_centerHorizontal="true"
-        />
+        android:layout_below="@+id/ForceCubesForPowerup">
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/forcethree"
+            android:gravity="center_horizontal"
+            android:checked="false"
+            android:text="3"
+            android:textSize="20dp"
+            />
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/forcetwo"
+            android:gravity="center_horizontal"
+            android:checked="false"
+            android:text="2"
+            android:textSize="20dp"/>
 
-    <ToggleButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/forceone"
-        android:layout_below="@+id/forcetwo"
-        android:gravity="center_horizontal"
-        android:textOff="1"
-        android:textOn="1"
-        android:checked="false"
-        android:layout_centerHorizontal="true" />
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/forceone"
+            android:gravity="center_horizontal"
+            android:checked="false"
+            android:text="1"
+            android:textSize="20dp"/>
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/forceZero"
+            android:gravity="center_horizontal"
+            android:checked="false"
+            android:text="0"
+            android:textSize="20dp"
+            />
 
-    <ToggleButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/forcethree"
-        android:id="@+id/forcetwo"
-        android:gravity="center_horizontal"
-        android:textOff="2"
-        android:textOn="2"
-        android:checked="false"
-        android:layout_centerHorizontal="true" />
 
+    </RadioGroup>
 
 
 

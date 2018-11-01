@@ -24,12 +24,12 @@ public class PlateConfig {
     private Context context;
     private boolean isRed;
 
-    private Button blueTopPlateButton;
-    private Button blueBottomPlateButton;
+    private Button leftTopPlateButton;
+    private Button leftBottomPlateButton;
     private Button scaleTopPlateButton;
     private Button scaleBottomPlateButton;
-    private Button redTopPlateButton;
-    private Button redBottomPlateButton;
+    private Button rightTopPlateButton;
+    private Button rightBottomPlateButton;
 
     private Map<Integer, String> configMap;
 
@@ -47,25 +47,25 @@ public class PlateConfig {
 
         configMap = new HashMap<>();
 
-        blueTopPlateButton = (Button) ((Activity)context).findViewById(R.id.blueTopPlateButton);
-        configMap.put(R.id.blueTopPlateButton, "noColor");
-        blueBottomPlateButton = (Button) ((Activity)context).findViewById(R.id.blueBottomPlateButton);
-        configMap.put(R.id.blueBottomPlateButton, "noColor");
+        leftTopPlateButton = (Button) ((Activity)context).findViewById(R.id.leftTopPlateButton);
+        configMap.put(R.id.leftTopPlateButton, "noColor");
+        leftBottomPlateButton = (Button) ((Activity)context).findViewById(R.id.leftBottomPlateButton);
+        configMap.put(R.id.leftBottomPlateButton, "noColor");
         scaleTopPlateButton = (Button) ((Activity)context).findViewById(R.id.scaleTopPlateButton);
         configMap.put(R.id.scaleTopPlateButton, "noColor");
         scaleBottomPlateButton = (Button) ((Activity)context).findViewById(R.id.scaleBottomPlateButton);
         configMap.put(R.id.scaleBottomPlateButton, "noColor");
-        redTopPlateButton = (Button) ((Activity)context).findViewById(R.id.redTopPlateButton);
-        configMap.put(R.id.redTopPlateButton, "noColor");
-        redBottomPlateButton = (Button) ((Activity)context).findViewById(R.id.redBottomPlateButton);
-        configMap.put(R.id.redBottomPlateButton, "noColor");
+        rightTopPlateButton = (Button) ((Activity)context).findViewById(R.id.rightTopPlateButton);
+        configMap.put(R.id.rightTopPlateButton, "noColor");
+        rightBottomPlateButton = (Button) ((Activity)context).findViewById(R.id.rightBottomPlateButton);
+        configMap.put(R.id.rightBottomPlateButton, "noColor");
 
-        blueTopPlateButton.setBackgroundColor(Color.parseColor(grey));
-        blueBottomPlateButton.setBackgroundColor(Color.parseColor(grey));
+        leftTopPlateButton.setBackgroundColor(Color.parseColor(grey));
+        leftBottomPlateButton.setBackgroundColor(Color.parseColor(grey));
         scaleTopPlateButton.setBackgroundColor(Color.parseColor(grey));
         scaleBottomPlateButton.setBackgroundColor(Color.parseColor(grey));
-        redTopPlateButton.setBackgroundColor(Color.parseColor(grey));
-        redBottomPlateButton.setBackgroundColor(Color.parseColor(grey));
+        rightTopPlateButton.setBackgroundColor(Color.parseColor(grey));
+        rightBottomPlateButton.setBackgroundColor(Color.parseColor(grey));
     }
 
     public Map<Integer, String> getConfig() {
@@ -109,14 +109,14 @@ public class PlateConfig {
 
         switch(buttonId)
         {
-            case R.id.blueTopPlateButton:
-                blueBottomPlateButton.setBackgroundColor(Color.parseColor(oppositeButtonColor));
-                configMap.put(R.id.blueBottomPlateButton, oppositeButtonState);
+            case R.id.leftTopPlateButton:
+                leftBottomPlateButton.setBackgroundColor(Color.parseColor(oppositeButtonColor));
+                configMap.put(R.id.leftBottomPlateButton, oppositeButtonState);
                 break;
 
-            case R.id.blueBottomPlateButton:
-                blueTopPlateButton.setBackgroundColor(Color.parseColor(oppositeButtonColor));
-                configMap.put(R.id.blueTopPlateButton, oppositeButtonState);
+            case R.id.leftBottomPlateButton:
+                leftTopPlateButton.setBackgroundColor(Color.parseColor(oppositeButtonColor));
+                configMap.put(R.id.leftTopPlateButton, oppositeButtonState);
                 break;
 
             case R.id.scaleTopPlateButton:
@@ -129,14 +129,14 @@ public class PlateConfig {
                 configMap.put(R.id.scaleTopPlateButton, oppositeButtonState);
                 break;
 
-            case R.id.redTopPlateButton:
-                redBottomPlateButton.setBackgroundColor(Color.parseColor(oppositeButtonColor));
-                configMap.put(R.id.redBottomPlateButton, oppositeButtonState);
+            case R.id.rightTopPlateButton:
+                rightBottomPlateButton.setBackgroundColor(Color.parseColor(oppositeButtonColor));
+                configMap.put(R.id.rightBottomPlateButton, oppositeButtonState);
                 break;
 
-            case R.id.redBottomPlateButton:
-                redTopPlateButton.setBackgroundColor(Color.parseColor(oppositeButtonColor));
-                configMap.put(R.id.redTopPlateButton, oppositeButtonState);
+            case R.id.rightBottomPlateButton:
+                rightTopPlateButton.setBackgroundColor(Color.parseColor(oppositeButtonColor));
+                configMap.put(R.id.rightTopPlateButton, oppositeButtonState);
                 break;
         }
 
