@@ -32,6 +32,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RadioButton;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -77,6 +78,7 @@ public class MainActivity extends ActionBarActivity {
     TextView alliance;
     ListView listView;
     Boolean isRed = false;
+    String leftViewColor = "";
     Integer matchNumber = 0;
     DatabaseReference dataBase;
     //TODO: Why are these global?
@@ -214,6 +216,7 @@ public class MainActivity extends ActionBarActivity {
                     intent.putExtra("dataBaseUrl", dataBaseUrl);
                     intent.putExtra("mute", isMute);
                     intent.putExtra("allianceColor", isRed);
+                    intent.putExtra("leftViewColor", leftViewColor);
                     startActivity(intent);
                 }
             }
@@ -232,6 +235,24 @@ public class MainActivity extends ActionBarActivity {
                 item.setTitle("Override Match and Team Number");
             }
 
+        } else if (id == R.id.fieldLayout) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(context); //TODO: Add an edit alertdialog for fieldsetup and notes (maybe-check)
+            builder.setTitle("Select the alliance on your left");
+            final View fieldLayout = LayoutInflater.from(context).inflate(R.layout.field_layout, null);
+            builder.setView(fieldLayout);
+            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    RadioButton blue = (RadioButton) fieldLayout.findViewById(R.id.blueLayout);
+                    RadioButton red = (RadioButton) fieldLayout.findViewById(R.id.redLayout);
+                    if (blue.isChecked()){
+                        leftViewColor = "blue";
+                    } else if (red.isChecked()) {
+                        leftViewColor = "red";
+                    }
+
+                }
+            }).show();
         }
         return super.onOptionsItemSelected(item);
     }
