@@ -78,7 +78,7 @@ public class MainActivity extends ActionBarActivity {
     TextView alliance;
     ListView listView;
     Boolean isRed = false;
-    String leftViewColor = "";
+    String leftViewColor;
     Integer matchNumber = 0;
     DatabaseReference dataBase;
     //TODO: Why are these global?
@@ -448,6 +448,11 @@ public class MainActivity extends ActionBarActivity {
 
     public void checkPreviousMatchNumAndAlliance(){
         Intent backToHome = getIntent();
+        if (backToHome.hasExtra("leftViewColor")){
+            leftViewColor = backToHome.getExtras().getString("leftViewColor");
+        } else {
+            leftViewColor = "blue";
+        }
         if (backToHome.hasExtra("number")) {
             matchNumber = Integer.parseInt(backToHome.getExtras().getString("number")) + 1;
         } else {

@@ -144,6 +144,7 @@ public class QrDisplay extends ActionBarActivity {
         if (id == R.id.backToMainActivity) {
             Intent backToHome = new Intent(context, MainActivity.class);
             backToHome.putExtra("number", matchNumber);
+            backToHome.putExtra("leftViewColor", intent.getExtras().getString("leftViewColor"));
             if (allianceCompressed.equals("0")){
                 isRed = false;
             } else {

@@ -54,6 +54,7 @@ public class FinalDataPoints extends ActionBarActivity {
     String blueSwitch;
     String redSwitch;
     String scale;
+    String leftViewColor;
     Boolean didAutoQuest;
     Boolean didFaceBoss;
     TextView finalScore;
@@ -227,6 +228,8 @@ public class FinalDataPoints extends ActionBarActivity {
             QrDisplay.putStringArrayListExtra("teamThreeDataName", teamThreeDataName);
             QrDisplay.putStringArrayListExtra("teamThreeDataScore", teamThreeDataScore);
 
+            QrDisplay.putExtra("leftViewColor", leftViewColor);
+
             QrDisplay.putExtra("isMute", isMute);
             startActivity(QrDisplay);
         }
@@ -242,6 +245,7 @@ public class FinalDataPoints extends ActionBarActivity {
             finalNotesIntent.putExtra("teamTwoNotes", teamTwoNotes);
             finalNotesIntent.putExtra("teamThreeNotes", teamThreeNotes);
             finalNotesIntent.putExtra("qualNum", numberOfMatch);
+
             startActivity(finalNotesIntent);
         }
         return super.onOptionsItemSelected(item);
@@ -291,6 +295,7 @@ public class FinalDataPoints extends ActionBarActivity {
         forceForPowerup = intent.getExtras().getInt("forceForPowerup");
         boostForPowerup = intent.getExtras().getInt("boostForPowerup");
         levitateForPowerup = intent.getExtras().getInt("levitateForPowerup");
+        leftViewColor = intent.getExtras().getString("leftViewColor");
     }
 
     public void sendAfterMatchData(){ //TODO: Replace 'hard-coded' red abd blue with a variable (ex: alliance + "Score")

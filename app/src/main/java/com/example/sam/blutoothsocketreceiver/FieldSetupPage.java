@@ -62,17 +62,12 @@ public class FieldSetupPage extends AppCompatActivity{
         rightView = findViewById(R.id.rightColorView);
         blue = "#aa0000ff";
         red = "#aaff0000";
-
         if (leftViewColor.equals("blue")) {
             leftView.setBackgroundColor(Color.parseColor(blue));
             rightView.setBackgroundColor(Color.parseColor(red));
         } else if(leftViewColor.equals("red")) {
             leftView.setBackgroundColor(Color.parseColor(red));
             rightView.setBackgroundColor(Color.parseColor(blue));
-        } else {
-            leftView.setBackgroundColor(Color.parseColor(blue));
-            rightView.setBackgroundColor(Color.parseColor(red));
-        }
 
         plateConfig = new PlateConfig(context, isRed);
     }
