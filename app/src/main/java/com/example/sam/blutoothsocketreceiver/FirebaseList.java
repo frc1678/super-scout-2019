@@ -36,9 +36,8 @@ public class FirebaseList<T> {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 String key = dataSnapshot.getKey();
-                Log.e("Datasnapshot", dataSnapshot.toString() + " " + key);
-                T model = dataSnapshot.getValue(firebaseClass);
 
+                T model = dataSnapshot.getValue(firebaseClass);
 
                 // Insert into the correct location, based on s
                 if (s == null) {
