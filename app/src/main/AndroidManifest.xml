@@ -15,8 +15,7 @@
         android:label="Super Scout"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
-            android:label="@string/version_number"
+            android:name=".tempMainAct"
             android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

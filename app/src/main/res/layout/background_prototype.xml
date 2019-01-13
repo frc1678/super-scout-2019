@@ -1,0 +1,78 @@
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:background="@drawable/disgust"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingTop="50dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Blue Alliance"
+            android:textColor="@color/White"
+            android:textStyle="bold"
+            android:textSize="44dp"/>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/input_layout_name"
+            android:layout_marginTop="30dp"
+            android:layout_width="match_parent"
+            android:textColorHint="@color/White"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/input_name"
+                android:layout_width="500dp"
+                android:layout_height="wrap_content"
+                android:hint="Robot One"
+                android:inputType="number"
+                android:textSize="34dp"
+                android:singleLine="true"
+                android:textColor="@color/White"
+                android:textStyle="bold" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/input_layout_email"
+            android:layout_width="match_parent"
+            android:textColorHint="@color/White"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/input_email"
+                android:layout_width="500dp"
+                android:layout_height="wrap_content"
+                android:hint="Robot Two"
+                android:inputType="number"
+                android:textSize="34dp"
+                android:textColor="@color/White"
+                android:textStyle="bold" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/input_layout_password"
+            android:layout_width="match_parent"
+            android:textColorHint="@color/White"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/input_password"
+                android:layout_width="500dp"
+                android:layout_height="wrap_content"
+                android:hint="Robot Three"
+                android:textSize="34dp"
+                android:inputType="number"
+                android:textColor="@color/White"
+                android:textStyle="bold" />
+        </android.support.design.widget.TextInputLayout>
+
+    </LinearLayout>
+
+</android.support.design.widget.CoordinatorLayout>

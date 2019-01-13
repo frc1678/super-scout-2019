@@ -101,7 +101,7 @@
       <excludeFolder url="file://$MODULE_DIR$/build/outputs" />
       <excludeFolder url="file://$MODULE_DIR$/build/tmp" />
     </content>
-    <orderEntry type="jdk" jdkName="Android API 21 Platform" jdkType="Android SDK" />
+    <orderEntry type="jdk" jdkName="Android API 23 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" name="Gradle: org.jcodec:jcodec-android:0.1.9@jar" level="project" />
     <orderEntry type="library" exported="" name="Gradle: com.google.android.gms:play-services-basement-10.0.1" level="project" />
@@ -114,10 +114,10 @@
     <orderEntry type="library" exported="" name="Gradle: com.google.firebase:firebase-auth-10.0.1" level="project" />
     <orderEntry type="library" exported="" name="Gradle: io.reactivex:rxjava:1.1.9@jar" level="project" />
     <orderEntry type="library" exported="" name="Gradle: io.reactivex:rxandroid-1.2.0" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: com.android.support:design-23.0.1" level="project" />
     <orderEntry type="library" exported="" name="Gradle: com.google.android.gms:play-services-base-10.0.1" level="project" />
     <orderEntry type="library" exported="" name="Gradle: com.google.code.gson:gson:2.3.1@jar" level="project" />
     <orderEntry type="library" exported="" name="Gradle: com.squareup.mimecraft:mimecraft:1.1.1@jar" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: com.android.support:appcompat-v7-22.2.1" level="project" />
     <orderEntry type="library" exported="" name="Gradle: com.google.firebase:firebase-analytics-impl-10.0.1" level="project" />
     <orderEntry type="library" exported="" name="Gradle: com.google.firebase:firebase-database-connection-10.0.1" level="project" />
     <orderEntry type="library" exported="" name="Gradle: com.google.firebase:firebase-database-10.0.1" level="project" />
@@ -125,6 +125,7 @@
     <orderEntry type="library" exported="" name="Gradle: javax.inject:javax.inject:1@jar" level="project" />
     <orderEntry type="library" exported="" name="Gradle: com.google.firebase:firebase-iid-10.0.1" level="project" />
     <orderEntry type="library" exported="" name="Gradle: com.google.zxing:core:3.2.1@jar" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: com.android.support:appcompat-v7-23.0.1" level="project" />
     <orderEntry type="library" exported="" name="Gradle: com.android.support:support-annotations:24.2.1@jar" level="project" />
     <orderEntry type="library" exported="" name="Gradle: com.google.android.gms:play-services-tasks-10.0.1" level="project" />
     <orderEntry type="library" exported="" name="Gradle: __local_jars__:/Users/teo/super-scout-2019/app/libs/firebase-client-android-2.5.0.jar:unspecified@jar" level="project" />
