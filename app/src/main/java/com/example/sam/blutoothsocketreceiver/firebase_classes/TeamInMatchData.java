@@ -14,15 +14,18 @@ import java.util.Map;
 @IgnoreExtraProperties
 public class TeamInMatchData extends Object {
 	//TODO : Keep up with schema changes
+
 	public Integer teamNumber;
 	public Integer matchNumber;
 	public String scoutName;
 	public String superNotes;
 	public Integer rankAgility;
-	public Integer rankDefense;
 	public Integer rankSpeed;
 	public Integer numGoodDecisions;
 	public Integer numBadDecisions;
+	public String sandstormPathConflict;
+
+
 
 
 
