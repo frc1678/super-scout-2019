@@ -22,22 +22,24 @@ import java.util.Map;
 public class Match extends Object {
 	//TODO : Keep up with schema changes
 
-	public CalculatedMatchData calculatedMatchData;
-	public Integer redScore;
-	public Integer blueScore;
-	public Map<String, Object> blueCubesForPowerup;
-	public Map<String, Object> blueCubesInVaultFinal;
-	public Boolean blueDidAutoQuest;
-	public Boolean blueDidFaceBoss;
-	public Map<String, Object> blueSwitch;
-	public Map<String, Object> redCubesForPowerup;
-	public Map<String, Object> redCubesInVaultFinal;
-	public Boolean redDidAutoQuest;
-	public Boolean redDidFaceBoss;
-	public Map<String, Object> redSwitch;
-	public Map<String, Object> scale;
+	public Map<String, String> cargoShipPreloads;
+			/*	public String leftNear;
+			public String leftMid;
+			public String leftFar;
+			public String rightNear;
+			public String rightMid;
+			public String rightFar;*/
+
+	public List<String> noShowTeams;
 	public Integer foulPointsGainedRed;
 	public Integer foulPointsGainedBlue;
+	public Integer redScore;
+	public Integer blueScore;
+	public Boolean blueDidRocketRP;
+	public Boolean redDidRocketRP;
+	public Boolean blueDidClimbRP;
+	public Boolean redDidClimbRP;
+
 
 	@PropertyName("number")
 	public Integer number;
