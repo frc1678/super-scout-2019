@@ -6,7 +6,7 @@ import java.util.Map;
 
 public class Constants {
     public static final Map<String, String> dataBases = new HashMap<>();
-    public static final String dataBaseUrl = "https://1678-scouting-2018.firebaseio.com/";
+    public static final String dataBaseUrl = "https://scouting-2018-houston.firebaseio.com/";
     public static String teamOneNoteHolder = "";
     public static String teamTwoNoteHolder = "";
     public static String teamThreeNoteHolder = "";

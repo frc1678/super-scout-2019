@@ -65,11 +65,12 @@ public class FieldSetupPage extends AppCompatActivity{
         if (leftViewColor.equals("blue")) {
             leftView.setBackgroundColor(Color.parseColor(blue));
             rightView.setBackgroundColor(Color.parseColor(red));
-        } else if(leftViewColor.equals("red")) {
+            plateConfig = new PlateConfig(context, isRed);
+        } else if (leftViewColor.equals("red")) {
             leftView.setBackgroundColor(Color.parseColor(red));
             rightView.setBackgroundColor(Color.parseColor(blue));
-
-        plateConfig = new PlateConfig(context, isRed);
+            plateConfig = new PlateConfig(context, isRed);
+        }
     }
 
     //Warns the user that going back will change data
