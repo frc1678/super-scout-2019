@@ -104,7 +104,7 @@ public class ScoutingPage extends ActionBarActivity {
         setPanels();
         initializeTeamTextViews();
         context = this;
-        levitate = (ToggleButton) findViewById(R.id.Lev);
+        //levitate = (ToggleButton) findViewById(R.id.Lev);
 
         teamOneNotes = "";
         teamTwoNotes = "";
@@ -188,9 +188,9 @@ public class ScoutingPage extends ActionBarActivity {
 
                 levitateNum = 0;
 
-                if(levitate.isChecked()) {
+               /* if(levitate.isChecked()) {
                     levitateNum = 3;
-                }
+                }*/
                 listDataValues();
                 sendExtras();
             } else {
@@ -218,9 +218,9 @@ public class ScoutingPage extends ActionBarActivity {
         endDataBuilder.setCancelable(false);
         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         final View finalDataView = inflater.inflate(R.layout.finaldatapoints, null);
-        boostCounterView = (Counter) finalDataView.findViewById(R.id.BoostCounter);
-        levitateCounterView = (Counter) finalDataView.findViewById(R.id.LevitateCounter);
-        forceCounterView = (Counter) finalDataView.findViewById(R.id.ForceCounter);
+        //boostCounterView = (Counter) finalDataView.findViewById(R.id.BoostCounter);
+        //levitateCounterView = (Counter) finalDataView.findViewById(R.id.LevitateCounter);
+        //forceCounterView = (Counter) finalDataView.findViewById(R.id.ForceCounter);
         if (allianceScoreInt != null && allianceScoreInt != 0) {
             ((EditText) finalDataView.findViewById(R.id.finalScoreEditText)).setText(String.valueOf(allianceScoreInt));
         }
@@ -230,13 +230,13 @@ public class ScoutingPage extends ActionBarActivity {
         ((Switch) finalDataView.findViewById(R.id.didAutoQuestBoolean)).setChecked(didAutoQuest);
         ((Switch) finalDataView.findViewById(R.id.didFaceBossBoolean)).setChecked(facedTheBoss);
         if (boostC != null) {
-            boostCounterView.refreshCounter(boostC);
+            //boostCounterView.refreshCounter(boostC);
         }
         if (levitateC != null) {
-            levitateCounterView.refreshCounter(levitateC);
+            //levitateCounterView.refreshCounter(levitateC);
         }
         if (forceC != null) {
-            forceCounterView.refreshCounter(forceC);
+            //forceCounterView.refreshCounter(forceC);
         }
         endDataBuilder.setView(finalDataView);
         endDataBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -258,9 +258,9 @@ public class ScoutingPage extends ActionBarActivity {
                 allianceScoreData = scoreText.getText().toString();
                 didAutoQuest = completedAutoQuest.isChecked();
                 facedTheBoss = facedBoss.isChecked();
-                boostC = boostCounterView.getDataValue();
-                forceC = forceCounterView.getDataValue();
-                levitateC = levitateCounterView.getDataValue();
+                //boostC = boostCounterView.getDataValue();
+               // forceC = forceCounterView.getDataValue();
+                //levitateC = levitateCounterView.getDataValue();
 
                 try {
                     allianceScoreInt = Integer.parseInt(allianceScoreData);

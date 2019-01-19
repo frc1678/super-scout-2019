@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="fill_parent"
+    android:orientation="vertical" android:layout_width="fill_parent" android:background="@color/White"
     android:layout_height="fill_parent">
 
     <LinearLayout
@@ -34,51 +34,48 @@
 
     </LinearLayout>
 
-    <RelativeLayout
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:divider="@color/KateGray"
+        android:showDividers="middle"
+        android:dividerPadding="2dp"
+        android:paddingTop="10dp"
         android:layout_gravity="center_horizontal">
 
-
+        <Button
+            android:id="@+id/defenseRobotOneButton"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:textColor="@color/KateGray"
+            android:textStyle="bold"
+            android:text="Defense"
+            android:background="@color/White"
+            android:layout_height="wrap_content" />
 
         <Button
-            android:id="@+id/Force"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Force"
-            android:onClick="ForceDialogs"
-            />
+            android:id="@+id/defenseRobotTwoButton"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:textColor="@color/KateGray"
+            android:textStyle="bold"
+            android:text="Defense"
+            android:background="@color/White"
+            android:layout_height="wrap_content" />
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="100dp">
-
-            <ToggleButton
-                android:id="@+id/Lev"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textOff="Lev Off"
-                android:textOn="lev On"
-                android:checked="false"
-
-                />
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="100dp">
-
-                <Button
-                    android:id="@+id/Boost"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Boost"
-                    android:onClick="BoostDialogs"
-                    />
-            </RelativeLayout>
-        </RelativeLayout>
-    </RelativeLayout>
+        <Button
+            android:id="@+id/defenseRobotThreeButton"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:textColor="@color/KateGray"
+            android:textStyle="bold"
+            android:text="Defense"
+            android:background="@color/White"
+            android:layout_height="wrap_content" />
 
 
+    </LinearLayout>
 
 </LinearLayout>
+
