@@ -1,8 +1,10 @@
 package com.example.sam.blutoothsocketreceiver;
 
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,9 +39,9 @@ public class SuperScoutingPanel extends Fragment {
         TextView teamNumberTextView = (TextView) getView().findViewById(R.id.teamNumberTextView);
         this.isRed = allianceColor;
         if (isRed) {
-            teamNumberTextView.setTextColor(Color.RED);
+            teamNumberTextView.setTextColor(ContextCompat.getColor(getContext(), R.color.TeamNumberRed));
         } else {
-            teamNumberTextView.setTextColor(Color.BLUE);
+            teamNumberTextView.setTextColor(ContextCompat.getColor(getContext(), R.color.TeamNumberBlue));
         }
     }
 

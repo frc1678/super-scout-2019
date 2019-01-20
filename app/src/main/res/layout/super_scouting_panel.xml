@@ -3,13 +3,16 @@
     xmlns:custom="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/White"
     android:gravity="center_horizontal">
 
     <TextView
         android:id="@+id/teamNumberTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="25sp"
+        android:paddingTop="5dp"
+        android:textSize="20sp"
+        android:textStyle="bold"
         android:clickable="true"
         android:onClick="onClickTeamNumber"/>
 
@@ -18,10 +21,11 @@
     <com.example.sam.blutoothsocketreceiver.Counter
         android:id="@+id/Speed"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingTop="3dp"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:paddingTop="5dp"
         custom:dataName="Speed"
-        custom:startingValue="2"
+        custom:startingValue="0"
         custom:max="4"
         custom:min="0"
         custom:increment="1"/>
@@ -29,21 +33,23 @@
     <com.example.sam.blutoothsocketreceiver.Counter
         android:id="@+id/Agility"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingTop="10dp"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:paddingTop="3dp"
         custom:dataName="Agility"
-        custom:startingValue="2"
+        custom:startingValue="0"
         custom:max="4"
         custom:min="0"
         custom:increment="1"/>
 
     <com.example.sam.blutoothsocketreceiver.Counter
-        android:id="@+id/Defense"
+        android:id="@+id/counterDefense"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingTop="10dp"
-        custom:dataName="Defense"
-        custom:startingValue="1"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:paddingTop="3dp"
+        custom:dataName="Counter Defense"
+        custom:startingValue="0"
         custom:max="4"
         custom:min="0"
         custom:increment="1"/>
@@ -51,8 +57,9 @@
     <com.example.sam.blutoothsocketreceiver.Counter
         android:id="@+id/GoodDecision"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingTop="10dp"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:paddingTop="3dp"
         custom:dataName="Good Decisions"
         custom:startingValue="0"
         custom:max="100"
@@ -62,15 +69,14 @@
     <com.example.sam.blutoothsocketreceiver.Counter
         android:id="@+id/BadDecision"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingTop="10dp"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:paddingTop="3dp"
         custom:dataName="Bad Decisions"
         custom:startingValue="0"
         custom:max="100"
         custom:min="0"
         custom:increment="1"/>
-
-
 
 
 
