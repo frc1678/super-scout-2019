@@ -21,7 +21,8 @@ import java.util.Map;
 @IgnoreExtraProperties
 public class Match extends Object {
 	//TODO : Keep up with schema changes
-
+	
+	public CalculatedMatchData calculatedMatchData;	
 	public Map<String, String> cargoShipPreloads;
 			/*	public String leftNear;
 			public String leftMid;
