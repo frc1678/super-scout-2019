@@ -21,6 +21,7 @@ public class TeamInMatchData extends Object {
 	public String superNotes;
 	public Integer rankAgility;
 	public Integer rankSpeed;
+	public Integer rankCounterDefense;	
 	public Integer numGoodDecisions;
 	public Integer numBadDecisions;
 	public String sandstormPathConflict;
