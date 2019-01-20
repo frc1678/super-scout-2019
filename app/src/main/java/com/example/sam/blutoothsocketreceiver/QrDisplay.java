@@ -48,25 +48,9 @@ public class QrDisplay extends ActionBarActivity {
     String superNotesThree;
     String score;
     String foul;
-    String blueSwitch;
-    String redSwitch;
-    String scale;
     String compressedData;
-    String autoQuestCompressed;
-    String faceBossCompressed;
-    String blueSwitchCompressed;
-    String redSwitchCompressed;
-    String scaleCompressed;
     Boolean isRed;
     Boolean isMute;
-    Integer boostForPowerUp;
-    Integer forceForPowerUp;
-    Integer levitateForPowerUp;
-    Integer boostInVaultFinal;
-    Integer forceInVaultFinal;
-    Integer levitateInVaultFinal;
-    Boolean didAutoQuest;
-    Boolean didFaceBoss;
     ArrayList<String> teamOneDataName;
     ArrayList<String> teamOneDataScore;
     ArrayList<String> teamTwoDataName;
@@ -104,21 +88,8 @@ public class QrDisplay extends ActionBarActivity {
         superNotesTwo = intent.getExtras().getString("superNotesTwo");
         superNotesThree = intent.getExtras().getString("superNotesThree");
 
-        boostForPowerUp = intent.getExtras().getInt("boostForPowerUp");
-        forceForPowerUp = intent.getExtras().getInt("forceForPowerUp");
-        levitateForPowerUp = intent.getExtras().getInt("levitateForPowerUp");
-        boostInVaultFinal = intent.getExtras().getInt("boostInVaultFinal");
-        forceInVaultFinal = intent.getExtras().getInt("forceInVaultFinal");
-        levitateInVaultFinal = intent.getExtras().getInt("levitateInVaultFinal");
-
-        didAutoQuest = intent.getExtras().getBoolean("didAutoQuest");
-        didFaceBoss = intent.getExtras().getBoolean("didFaceBoss");
         score = intent.getExtras().getString("score");
         foul = intent.getExtras().getString("foul");
-
-        blueSwitch = intent.getExtras().getString("blueSwitch");
-        redSwitch = intent.getExtras().getString("redSwitch");
-        scale = intent.getExtras().getString("scale");
 
         teamOneDataName = intent.getStringArrayListExtra("teamOneDataName");
         teamOneDataScore = intent.getStringArrayListExtra("teamOneDataScore");
@@ -161,7 +132,7 @@ public class QrDisplay extends ActionBarActivity {
             allianceCompressed = "0";
         } else {
             allianceCompressed = "1"; }
-        if (didAutoQuest.equals(false)){
+       /* if (didAutoQuest.equals(false)){
             autoQuestCompressed = "0";
         } else {
             autoQuestCompressed = "1"; }
@@ -180,8 +151,8 @@ public class QrDisplay extends ActionBarActivity {
         if (scale.equals("blue")){
             scaleCompressed = "0";
         } else {
-            scaleCompressed= "1"; }
-        compressedData = "S!" + matchNumber + "_" + allianceCompressed + "|p(g" + boostForPowerUp.toString() + "h" + forceForPowerUp.toString() + "i" + levitateForPowerUp.toString() + "),v(g" + boostInVaultFinal.toString() + "h" + forceInVaultFinal.toString() + "i" + levitateInVaultFinal.toString() + "),q" + autoQuestCompressed + ",b" + faceBossCompressed + ",s" + score + ",j" + foul + ",r(d" + blueSwitchCompressed + "e" + scaleCompressed + "f" + redSwitchCompressed + "),t(" + "M" + teamNumberOne + "B" + teamOneDataScore.get(3) + "G" + teamOneDataScore.get(1) + "A" + teamOneDataScore.get(2) + "D" + teamOneDataScore.get(0) + "S" + teamOneDataScore.get(4) + "N[" + superNotesOne + "]," + "M" + teamNumberTwo + "B" + teamTwoDataScore.get(3) + "G" + teamTwoDataScore.get(1) + "A" + teamTwoDataScore.get(2) + "D" + teamTwoDataScore.get(0) + "S" + teamTwoDataScore.get(4) + "N[" + superNotesTwo + "]," + "M" + teamNumberThree + "B" + teamThreeDataScore.get(3) + "G" + teamThreeDataScore.get(1) + "A" + teamThreeDataScore.get(2) + "D" + teamThreeDataScore.get(0) + "S" + teamThreeDataScore.get(4) + "N[" + superNotesThree + "])";
+            scaleCompressed= "1"; }*/
+        compressedData = "S!" + matchNumber + "_" + allianceCompressed + "|p(g" + ",s" + score + ",j" + foul + ",r(d" + "),t(" + "M" + teamNumberOne + "B" + teamOneDataScore.get(3) + "G" + teamOneDataScore.get(1) + "A" + teamOneDataScore.get(2) + "D" + teamOneDataScore.get(0) + "S" + teamOneDataScore.get(4) + "N[" + superNotesOne + "]," + "M" + teamNumberTwo + "B" + teamTwoDataScore.get(3) + "G" + teamTwoDataScore.get(1) + "A" + teamTwoDataScore.get(2) + "D" + teamTwoDataScore.get(0) + "S" + teamTwoDataScore.get(4) + "N[" + superNotesTwo + "]," + "M" + teamNumberThree + "B" + teamThreeDataScore.get(3) + "G" + teamThreeDataScore.get(1) + "A" + teamThreeDataScore.get(2) + "D" + teamThreeDataScore.get(0) + "S" + teamThreeDataScore.get(4) + "N[" + superNotesThree + "])";
 
         new Thread() {
             @Override

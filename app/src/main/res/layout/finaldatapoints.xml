@@ -57,9 +57,9 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/didFaceBoss"
+        android:id="@+id/didHabClimb_tv"
         android:clickable="false"
-        android:text="Faced the Boss"
+        android:text="Did Hab Climb"
         android:textSize="25sp"
         android:gravity="center"
         android:layout_centerHorizontal="true"
@@ -69,8 +69,8 @@
     <Switch
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/didFaceBossBoolean"
-        android:layout_below="@+id/didFaceBoss"
+        android:id="@+id/didHabClimb"
+        android:layout_below="@+id/didHabClimb_tv"
         android:gravity="center"
         android:layout_centerHorizontal="true"
         />
@@ -80,8 +80,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/didAutoQuest"
         android:clickable="false"
-        android:text="Did Auto Quest"
-        android:layout_below="@+id/didFaceBossBoolean"
+        android:text="Did Rocket RP"
+        android:layout_below="@+id/didHabClimb"
         android:textSize="25sp"
         android:gravity="center"
         android:layout_centerHorizontal="true"
@@ -89,7 +89,7 @@
     <Switch
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/didAutoQuestBoolean"
+        android:id="@+id/didRocketRP"
         android:layout_below="@+id/didAutoQuest"
         android:gravity="center"
         android:layout_centerHorizontal="true"
@@ -113,41 +113,6 @@
         android:layout_centerHorizontal="true"
         />
 
-    <com.example.sam.blutoothsocketreceiver.Counter
-        android:id="@+id/BoostCounter"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/powerUpCount"
-        android:layout_centerHorizontal="true"
-        custom:dataName="Boost"
-        custom:startingValue="0"
-        custom:max="3"
-        custom:min="0"
-        custom:increment="1"/>
-
-    <com.example.sam.blutoothsocketreceiver.Counter
-        android:id="@+id/LevitateCounter"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/BoostCounter"
-        android:layout_centerHorizontal="true"
-        custom:dataName="Levitate"
-        custom:startingValue="0"
-        custom:max="3"
-        custom:min="0"
-        custom:increment="1"/>
-
-    <com.example.sam.blutoothsocketreceiver.Counter
-        android:id="@+id/ForceCounter"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/LevitateCounter"
-        android:layout_centerHorizontal="true"
-        custom:dataName="Force"
-        custom:startingValue="0"
-        custom:max="3"
-        custom:min="0"
-        custom:increment="1"/>
 
 
 </RelativeLayout>

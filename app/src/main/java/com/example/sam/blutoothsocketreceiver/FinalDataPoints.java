@@ -51,22 +51,9 @@ public class FinalDataPoints extends ActionBarActivity {
     String allianceSimple;
     String dataBaseUrl;
     String allianceScoreData, allianceFoulData;
-    String blueSwitch;
-    String redSwitch;
-    String scale;
     String leftViewColor;
-    Boolean didAutoQuest;
-    Boolean didFaceBoss;
     TextView finalScore;
     EditText allianceScore, allianceFoul;
-    Switch facedTheBoss;
-    Switch completedAutoQuest;
-    Counter boostCounterView;
-    Counter levitateCounterView;
-    Counter forceCounterView;
-    Integer forceForPowerup;
-    Integer boostForPowerup;
-    Integer levitateForPowerup;
     JSONObject superExternalData;
     ArrayList<String> teamOneDataName;
     ArrayList<String> teamOneDataScore;
@@ -89,26 +76,15 @@ public class FinalDataPoints extends ActionBarActivity {
         intent = getIntent();
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         superExternalData = new JSONObject();
-
-        boostCounterView = (Counter) findViewById(R.id.BoostCounter);
-        levitateCounterView = (Counter) findViewById(R.id.LevitateCounter);
-        forceCounterView = (Counter) findViewById(R.id.ForceCounter);
-
         getExtrasForFinalData();
         firebaseRef = FirebaseDatabase.getInstance().getReference();
         allianceScore = (EditText) findViewById(R.id.finalScoreEditText);
         allianceFoul = (EditText) findViewById(R.id.finalFoulEditText);
         //
-        facedTheBoss = (Switch) findViewById(R.id.didFaceBossBoolean);
-        facedTheBoss.setChecked(intent.getExtras().getBoolean("facedTheBoss"));
-        completedAutoQuest = (Switch) findViewById(R.id.didAutoQuestBoolean);
-        completedAutoQuest.setChecked(intent.getExtras().getBoolean("completedAutoQuest"));
-        boostCounterView = (Counter) findViewById(R.id.BoostCounter);
-        boostCounterView.refreshCounter(intent.getExtras().getInt("boostCount"));
-        levitateCounterView = (Counter) findViewById(R.id.LevitateCounter);
-        levitateCounterView.refreshCounter(intent.getExtras().getInt("levitateCount"));
-        forceCounterView = (Counter) findViewById(R.id.ForceCounter);
-        forceCounterView.refreshCounter(intent.getExtras().getInt("forceCount"));
+        //facedTheBoss = (Switch) findViewById(R.id.didHabClimb);
+        //facedTheBoss.setChecked(intent.getExtras().getBoolean("facedTheBoss")); //todo update
+        //completedAutoQuest = (Switch) findViewById(R.id.didRocketRP);
+        //completedAutoQuest.setChecked(intent.getExtras().getBoolean("completedAutoQuest"));
         //
         finalScore = (TextView)findViewById(R.id.finalScoreTextView);
         allianceScore.setCursorVisible(false);
@@ -175,23 +151,6 @@ public class FinalDataPoints extends ActionBarActivity {
                 return false;
             }
 
-            final int boostFinal = boostCounterView.getDataValue();
-            final int levitateFinal = levitateCounterView.getDataValue();
-            final int forceFinal = forceCounterView.getDataValue();
-
-            if(boostFinal < boostForPowerup) {
-                Toast.makeText(this, "Boost can't be lower than " + boostForPowerup, Toast.LENGTH_LONG).show();
-                return false;
-            }
-            if(levitateFinal < levitateForPowerup) {
-                Toast.makeText(this, "Levitate can't be lower than " + levitateForPowerup, Toast.LENGTH_LONG).show();
-                return false;
-            }
-            if(forceFinal < forceForPowerup) {
-                Toast.makeText(this, "Force can't be lower than " + forceForPowerup, Toast.LENGTH_LONG).show();
-                return false;
-            }
-
             updateNotes();
             Intent QrDisplay = new Intent(context, QrDisplay.class);
             QrDisplay.putExtra("matchNumber", numberOfMatch);
@@ -203,23 +162,9 @@ public class FinalDataPoints extends ActionBarActivity {
             QrDisplay.putExtra("superNotesOne", teamOneNotes);
             QrDisplay.putExtra("superNotesTwo", teamTwoNotes);
             QrDisplay.putExtra("superNotesThree", teamThreeNotes);
-
-            QrDisplay.putExtra("boostForPowerUp", boostForPowerup);
-            QrDisplay.putExtra("forceForPowerUp", forceForPowerup);
-            QrDisplay.putExtra("levitateForPowerUp", levitateForPowerup);
-
-            QrDisplay.putExtra("boostInVaultFinal", boostCounterView.getDataValue());
-            QrDisplay.putExtra("forceInVaultFinal", forceCounterView.getDataValue());
-            QrDisplay.putExtra("levitateInVaultFinal", levitateCounterView.getDataValue());
-
-            QrDisplay.putExtra("didAutoQuest", completedAutoQuest.isChecked());
-            QrDisplay.putExtra("didFaceBoss", facedTheBoss.isChecked());
             QrDisplay.putExtra("score", allianceScore.getText().toString());
             QrDisplay.putExtra("foul", allianceFoul.getText().toString());
 
-            QrDisplay.putExtra("blueSwitch", blueSwitch);
-            QrDisplay.putExtra("redSwitch", redSwitch);
-            QrDisplay.putExtra("scale", scale);
 
             QrDisplay.putStringArrayListExtra("teamOneDataName", teamOneDataName);
             QrDisplay.putStringArrayListExtra("teamOneDataScore", teamOneDataScore);
@@ -285,16 +230,6 @@ public class FinalDataPoints extends ActionBarActivity {
         allianceScoreData = intent.getExtras().getString("allianceScore");
         allianceFoulData = intent.getExtras().getString("allianceFoul");
 
-        blueSwitch = intent.getExtras().getString("blueSwitch");
-        redSwitch = intent.getExtras().getString("redSwitch");
-        scale = intent.getExtras().getString("scale");
-
-        didAutoQuest = intent.getExtras().getBoolean("completedAutoQuest");
-        didFaceBoss = intent.getExtras().getBoolean("facedTheBoss");
-
-        forceForPowerup = intent.getExtras().getInt("forceForPowerup");
-        boostForPowerup = intent.getExtras().getInt("boostForPowerup");
-        levitateForPowerup = intent.getExtras().getInt("levitateForPowerup");
         leftViewColor = intent.getExtras().getString("leftViewColor");
     }
 
