@@ -2,13 +2,19 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.neenbedankt.android-apt'
 
 android {
+<<<<<<< HEAD
     compileSdkVersion 21
+=======
+    compileSdkVersion 22
+>>>>>>> c1e8814... Complete initial Preload UI left side blue field
     buildToolsVersion '25.0.0'
 
     defaultConfig {
         applicationId "com.example.sam.blutoothsocketreceiver"
-        minSdkVersion 21
-        targetSdkVersion 21
+
+        minSdkVersion 22
+        targetSdkVersion 22
+
         versionCode 1
         versionName "1.0"
     }
@@ -30,6 +36,10 @@ dependencies {
     compile 'com.google.firebase:firebase-auth:10.0.1'
     compile files('libs/firebase-client-android-2.5.0.jar')
     compile 'com.jakewharton:butterknife:8.0.1'
+<<<<<<< HEAD
+=======
+    compile 'com.android.support:design:22.2.1'
+>>>>>>> c1e8814... Complete initial Preload UI left side blue field
     compile 'com.google.dagger:dagger:2.0'
     compile 'com.dlazaro66.qrcodereaderview:qrcodereaderview:2.0.3'
     annotationProcessor 'com.google.dagger:dagger-compiler:2.0'

@@ -151,4 +151,7 @@
     <color name="CarlGreenTwo">#b7e1cd</color>
     <color name="TeamNumberRed">#ff4d4d</color>
     <color name="TeamNumberBlue">#3399ff</color>
+    <color name="Bloo">#04caf4</color>
+    <color name="Oroonge">#ffac0c</color>
+    <color name="Hootch">#ffe824</color>
 </resources>

@@ -1,3 +1,4 @@
+/*
 package com.example.sam.blutoothsocketreceiver;
 
 import android.app.Activity;
@@ -14,9 +15,11 @@ import org.jcodec.common.RunLength;
 import java.util.HashMap;
 import java.util.Map;
 
+*/
 /**
  * Created by niraq on 1/15/2018.
- */
+ *//*
+
 
 //This class is for getting and setting the color of plates in FieldSetup.
 public class PlateConfig {
@@ -142,3 +145,4 @@ public class PlateConfig {
 
     }
 }
+*/
