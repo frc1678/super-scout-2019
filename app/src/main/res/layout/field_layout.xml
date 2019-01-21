@@ -2,11 +2,23 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <TextView
+        android:layout_marginTop="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Select the Alliance to your left."
+        android:textSize="24dp"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textColor="@color/KateGray"
+        android:fontFamily="sans-serif"/>
     <RadioGroup
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal">
         <RadioButton
+            android:layout_marginTop="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/blueLayout"
@@ -19,6 +31,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/redLayout"
+            android:layout_marginTop="8dp"
             android:gravity="center_horizontal"
             android:checked="false"
             android:text="Red"

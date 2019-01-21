@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_margin="0dp"
+    android:background="@color/KateGray"
     android:layout_width="match_parent" android:layout_height="match_parent">
 
 
@@ -19,21 +20,21 @@
 
             <Button
                 android:gravity="end"
-                android:layout_marginEnd="10dp"
+                android:layout_marginEnd="@dimen/teo_separation"
                 android:layout_width="@dimen/bay_dim"
                 android:layout_height="@dimen/bay_dim"
-                android:layout_marginBottom="@dimen/frontOfCargoShip_separation"
-                android:background="@drawable/teobutton"
+                android:layout_marginBottom="@dimen/teo_separation"
+                android:background="@color/Oroonge"
                 android:id="@+id/left_frontOfCargoShip"
                 />
 
             <Button
                 android:gravity="end"
-                android:layout_marginEnd="10dp"
+                android:layout_marginEnd="@dimen/teo_separation"
                 android:layout_width="@dimen/bay_dim"
                 android:layout_height="@dimen/bay_dim"
-                android:layout_marginTop="@dimen/frontOfCargoShip_separation"
-                android:background="@drawable/teobutton"
+                android:layout_marginTop="@dimen/teo_separation"
+                android:background="@color/Oroonge"
                 android:id="@+id/right_frontOfCargoShip"
                 />
 
@@ -48,26 +49,29 @@
             >
 
             <Button
-                android:layout_margin="5dp"
+                android:layout_margin="@dimen/teo_separation"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/bay_dim"
                 android:layout_gravity="center_horizontal"
-                android:background="@drawable/teobutton"
+                android:background="@color/DarkGray"
                 android:id="@+id/leftNear"
                 />
 
             <Button
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@drawable/teobutton"
+                android:layout_height="30dp"
+                android:background="@color/DarkGray"
+                android:layout_marginLeft="@dimen/teo_separation"
+                android:layout_marginTop="@dimen/teo_separation"
+                android:layout_marginBottom="@dimen/teo_separation"
                 android:id="@+id/centerNear"/>
 
             <Button
-                android:layout_margin="5dp"
+                android:layout_margin="@dimen/teo_separation"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/bay_dim"
                 android:layout_gravity="center_horizontal"
-                android:background="@drawable/teobutton"
+                android:background="@color/DarkGray"
                 android:id="@+id/rightNear"
                 />
 
@@ -82,28 +86,30 @@
             >
 
             <Button
-                android:layout_margin="5dp"
+                android:layout_margin="@dimen/teo_separation"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/bay_dim"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="@dimen/frontOfCargoShip_separation"
-                android:background="@drawable/teobutton"
+                android:layout_marginBottom="@dimen/teo_separation"
+                android:background="@color/DarkGray"
                 android:id="@+id/leftMid"
                 />
 
             <Button
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@drawable/teobutton"
+                android:layout_height="30dp"
+                android:background="@color/DarkGray"
+                android:layout_marginTop="@dimen/teo_separation"
+                android:layout_marginBottom="@dimen/teo_separation"
                 android:id="@+id/centerMid"/>
 
             <Button
-                android:layout_margin="5dp"
+                android:layout_margin="@dimen/teo_separation"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/bay_dim"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="@dimen/frontOfCargoShip_separation"
-                android:background="@drawable/teobutton"
+                android:layout_marginTop="@dimen/teo_separation"
+                android:background="@color/DarkGray"
                 android:id="@+id/rightMid"
                 />
 
@@ -117,35 +123,38 @@
             >
 
             <Button
-                android:layout_margin="5dp"
+                android:layout_margin="@dimen/teo_separation"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/bay_dim"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="@dimen/frontOfCargoShip_separation"
-                android:background="@drawable/teobutton"
+                android:layout_marginBottom="@dimen/teo_separation"
+                android:background="@color/DarkGray"
                 android:id="@+id/leftFar"
                 />
 
             <Button
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@drawable/teobutton"
+                android:layout_height="30dp"
+                android:background="@color/DarkGray"
+                android:layout_marginRight="@dimen/teo_separation"
+                android:layout_marginTop="@dimen/teo_separation"
+                android:layout_marginBottom="@dimen/teo_separation"
                 android:id="@+id/centerFar"/>
 
             <Button
-                android:layout_margin="5dp"
+                android:layout_margin="@dimen/teo_separation"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/bay_dim"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="@dimen/frontOfCargoShip_separation"
-                android:background="@drawable/teobutton"
+                android:layout_marginTop="@dimen/teo_separation"
+                android:background="@color/DarkGray"
                 android:id="@+id/rightFar"
                 />
 
         </LinearLayout>
 
         <View
-            android:layout_width="40dp"
+            android:layout_width="80dp"
             android:layout_height="match_parent" />
 
 

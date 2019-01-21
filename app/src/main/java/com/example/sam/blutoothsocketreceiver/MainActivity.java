@@ -116,7 +116,14 @@ public class MainActivity extends ActionBarActivity {
         //If got intent from the last activity
         checkPreviousMatchNumAndAlliance();
         updateUI();
-        numberOfMatch.setText(matchNumber.toString());
+        Log.e("LEFT VIEW COLOR ",leftViewColor);
+        if (leftViewColor == null) {
+            numberOfMatch.setText("SET FIELD LAYOUT");
+            numberOfMatch.setTextColor(Color.RED);
+            numberOfMatch.setTextSize(28);
+        } else {
+            numberOfMatch.setText(matchNumber.toString());
+        }
         matchNumber = Integer.parseInt(numberOfMatch.getText().toString());
         disenableEditTextEditing();
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
@@ -236,8 +243,7 @@ public class MainActivity extends ActionBarActivity {
             }
 
         } else if (id == R.id.fieldLayout) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(context); //TODO: Add an edit alertdialog for fieldsetup and notes (maybe-check)
-            builder.setTitle("Select the alliance on your left");
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
             final View fieldLayout = LayoutInflater.from(context).inflate(R.layout.field_layout, null);
             builder.setView(fieldLayout);
             builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
