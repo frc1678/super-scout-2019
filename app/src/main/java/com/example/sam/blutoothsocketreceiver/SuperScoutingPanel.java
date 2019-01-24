@@ -5,6 +5,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,6 +47,7 @@ public class SuperScoutingPanel extends Fragment {
     }
 
     public void setTeamNumber(String teamNumber) {
+        Log.e("AYO","HIT THE FRO");
         TextView teamNumberTextView = (TextView) getView().findViewById(R.id.teamNumberTextView);
         teamNumberTextView.setText(teamNumber);
     }

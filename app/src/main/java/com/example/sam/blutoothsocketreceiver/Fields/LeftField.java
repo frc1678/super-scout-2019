@@ -50,13 +50,15 @@ public class LeftField extends AppCompatActivity {
     Boolean leftNearBoolean = true, leftMidBoolean = true, leftFarBoolean = true;
     Boolean rightNearBoolean = true, rightMidBoolean = true, rightFarBoolean = true;
 
+    String teamNumberOne, teamNumberTwo, teamNumberThree;
+
     Map<String, String> cargoShipInputValues = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.left_field); setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE); previous = getIntent(); bundle = previous.getExtras();
-        getMatchNumber(); getAlliance(); getLeftViewColor(); getXML();
+        getMatchNumber(); getTeamNumbers(); getAlliance(); getLeftViewColor(); getXML();
         prepareField(); startFieldListener();
     }
     public void getMatchNumber() {
@@ -72,6 +74,13 @@ public class LeftField extends AppCompatActivity {
     public void getLeftViewColor() {
         if (bundle != null) {
             leftViewColor = getIntent().getStringExtra("leftViewColor");
+        }
+    }
+    public void getTeamNumbers() {
+        if (bundle != null) {
+            teamNumberOne = previous.getExtras().getString("teamNumberOne");
+            teamNumberTwo = previous.getExtras().getString("teamNumberTwo");
+            teamNumberThree = previous.getExtras().getString("teamNumberThree");
         }
     }
     public void getXML() {
@@ -196,6 +205,9 @@ public class LeftField extends AppCompatActivity {
                 next.putExtra(Constants.rightMid, cargoShipInputValues.get(Constants.rightMid));
                 next.putExtra(Constants.rightFar, cargoShipInputValues.get(Constants.rightFar));
                 next.putExtra("alliance", alliance);
+                next.putExtra("teamNumberOne",teamNumberOne);
+                next.putExtra("teamNumberTwo",teamNumberTwo);
+                next.putExtra("teamNumberThree", teamNumberThree);
                 startActivity(next);
             }
         }
