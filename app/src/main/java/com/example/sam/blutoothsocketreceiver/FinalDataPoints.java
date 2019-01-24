@@ -80,12 +80,6 @@ public class FinalDataPoints extends ActionBarActivity {
         firebaseRef = FirebaseDatabase.getInstance().getReference();
         allianceScore = (EditText) findViewById(R.id.finalScoreEditText);
         allianceFoul = (EditText) findViewById(R.id.finalFoulEditText);
-        //
-        //facedTheBoss = (Switch) findViewById(R.id.didHabClimb);
-        //facedTheBoss.setChecked(intent.getExtras().getBoolean("facedTheBoss")); //todo update
-        //completedAutoQuest = (Switch) findViewById(R.id.didRocketRP);
-        //completedAutoQuest.setChecked(intent.getExtras().getBoolean("completedAutoQuest"));
-        //
         finalScore = (TextView)findViewById(R.id.finalScoreTextView);
         allianceScore.setCursorVisible(false);
 
