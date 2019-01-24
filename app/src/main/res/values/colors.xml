@@ -149,6 +149,9 @@
     <color name="CarlGreen">#a6ff6b</color>
     <color name="CarlRed">#f4c7c3</color>
     <color name="CarlGreenTwo">#b7e1cd</color>
-    <color name="TeamNumberRed">#ff4d4d</color>
+    <color name="TeamNumberRed">#d8675e</color>
     <color name="TeamNumberBlue">#3399ff</color>
+    <color name="Bloo">#4E87CB</color>
+    <color name="Oroonge">#ffac0c</color>
+    <color name="Hootch">#ffe824</color>
 </resources>

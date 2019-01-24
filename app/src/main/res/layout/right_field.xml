@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_margin="0dp"
+    android:background="@color/KateGray"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <View
+            android:layout_width="80dp"
+            android:layout_height="match_parent" />
+
+
+
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical"
+            >
+
+            <Button
+                android:layout_margin="@dimen/teo_separation"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/bay_dim"
+                android:layout_gravity="center_horizontal"
+                android:background="@color/DarkGray"
+                android:id="@+id/leftNear"
+                />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:background="@color/DarkGray"
+                android:layout_marginLeft="@dimen/teo_separation"
+                android:layout_marginTop="@dimen/teo_separation"
+                android:layout_marginBottom="@dimen/teo_separation"
+                android:id="@+id/centerNear"/>
+
+            <Button
+                android:layout_margin="@dimen/teo_separation"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/bay_dim"
+                android:layout_gravity="center_horizontal"
+                android:background="@color/DarkGray"
+                android:id="@+id/rightNear"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|center_vertical"
+            android:orientation="vertical"
+            >
+
+            <Button
+                android:layout_margin="@dimen/teo_separation"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/bay_dim"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="@dimen/teo_separation"
+                android:background="@color/DarkGray"
+                android:id="@+id/leftMid"
+                />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:background="@color/DarkGray"
+                android:layout_marginTop="@dimen/teo_separation"
+                android:layout_marginBottom="@dimen/teo_separation"
+                android:id="@+id/centerMid"/>
+
+            <Button
+                android:layout_margin="@dimen/teo_separation"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/bay_dim"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/teo_separation"
+                android:background="@color/DarkGray"
+                android:id="@+id/rightMid"
+                />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="start|center_vertical"
+            >
+
+            <Button
+                android:layout_margin="@dimen/teo_separation"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/bay_dim"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="@dimen/teo_separation"
+                android:background="@color/DarkGray"
+                android:id="@+id/leftFar"
+                />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:background="@color/DarkGray"
+                android:layout_marginRight="@dimen/teo_separation"
+                android:layout_marginTop="@dimen/teo_separation"
+                android:layout_marginBottom="@dimen/teo_separation"
+                android:id="@+id/centerFar"/>
+
+            <Button
+                android:layout_margin="@dimen/teo_separation"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/bay_dim"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/teo_separation"
+                android:background="@color/DarkGray"
+                android:id="@+id/rightFar"
+                />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="start"
+            android:layout_gravity="end|center_vertical"
+            >
+
+            <Button
+                android:gravity="end"
+                android:layout_marginStart="@dimen/teo_separation"
+                android:layout_width="@dimen/bay_dim"
+                android:layout_height="@dimen/bay_dim"
+                android:layout_marginBottom="@dimen/teo_separation"
+                android:background="@color/Oroonge"
+                android:id="@+id/left_frontOfCargoShip"
+                />
+
+            <Button
+                android:gravity="end"
+                android:layout_marginStart="@dimen/teo_separation"
+                android:layout_width="@dimen/bay_dim"
+                android:layout_height="@dimen/bay_dim"
+                android:layout_marginTop="@dimen/teo_separation"
+                android:background="@color/Oroonge"
+                android:id="@+id/right_frontOfCargoShip"
+                />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</RelativeLayout>

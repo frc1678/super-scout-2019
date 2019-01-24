@@ -10,7 +10,7 @@
         android:text="Data Name"
         android:layout_margin="5dp"
         android:textSize="15sp"
-        android:textColor="@color/PastelRed"
+        android:textColor="@color/DarkGray"
         android:textStyle="bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -18,7 +18,7 @@
     <Button
         android:id="@+id/minusButton"
         android:text="-"
-        android:textColor="@color/White"
+        android:textColor="@color/KateGray"
         android:textStyle="bold"
         android:background="@color/CarlRed"
         android:textSize="24sp"
@@ -32,7 +32,7 @@
 
         android:id="@+id/plusButton"
         android:text="+"
-        android:textColor="@color/White"
+        android:textColor="@color/KateGray"
         android:textStyle="bold"
         android:background="@color/CarlGreenTwo"
         android:textSize="24sp"
