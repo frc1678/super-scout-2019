@@ -16,8 +16,6 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
-
-
             android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -29,9 +27,7 @@
         <activity android:name=".ScoutingPage"/>
         <activity android:name=".FinalDataPoints"/>
         <activity android:name=".Fields.LeftField"/>
-
         <activity android:name=".Fields.RightField"/>
-
         <activity
             android:name=".finalNotes"
             android:windowSoftInputMode="adjustPan"
