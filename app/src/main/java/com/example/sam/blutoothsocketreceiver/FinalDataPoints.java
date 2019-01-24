@@ -89,10 +89,12 @@ public class FinalDataPoints extends ActionBarActivity {
         finalScore = (TextView)findViewById(R.id.finalScoreTextView);
         allianceScore.setCursorVisible(false);
 
-        if(alliance.equals("Blue Alliance")){
+        if(alliance.equals("blue")){
             finalScore.setTextColor(Color.BLUE);
-        }else if(alliance.equals("Red Alliance")){
+            alliance = "Blue Alliance";
+        }else if(alliance.equals("red")){
             finalScore.setTextColor(Color.RED);
+            alliance = "Red Alliance";
         }
 
         allianceSimple = alliance.substring(0,1).toLowerCase() + alliance.substring(1,alliance.indexOf(" "));

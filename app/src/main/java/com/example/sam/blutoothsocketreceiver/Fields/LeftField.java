@@ -22,6 +22,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.sam.blutoothsocketreceiver.Constants;
+import com.example.sam.blutoothsocketreceiver.FieldSetupPage;
+import com.example.sam.blutoothsocketreceiver.MainActivity;
 import com.example.sam.blutoothsocketreceiver.R;
 import com.example.sam.blutoothsocketreceiver.ScoutingPage;
 
@@ -37,6 +39,7 @@ public class LeftField extends AppCompatActivity {
     Intent previous;
     boolean isRed;
     String alliance;
+    String leftViewColor;
 
     Bundle bundle;
 
@@ -53,7 +56,7 @@ public class LeftField extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.left_field); setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE); previous = getIntent(); bundle = previous.getExtras();
-        getMatchNumber(); getAlliance(); getXML();
+        getMatchNumber(); getAlliance(); getLeftViewColor(); getXML();
         prepareField(); startFieldListener();
     }
     public void getMatchNumber() {
@@ -64,6 +67,11 @@ public class LeftField extends AppCompatActivity {
     public void getAlliance() {
         if (bundle != null) {
             alliance = getIntent().getStringExtra("allianceColor");
+        }
+    }
+    public void getLeftViewColor() {
+        if (bundle != null) {
+            leftViewColor = getIntent().getStringExtra("leftViewColor");
         }
     }
     public void getXML() {
@@ -80,7 +88,7 @@ public class LeftField extends AppCompatActivity {
         rightMid = (Button) findViewById(R.id.rightMid);
         rightFar = (Button) findViewById(R.id.rightFar);
 
-        // SEPARATORS LMAOOOOOOOOO haahahahhahaahahaaahahahhhaaahhahahah
+        // SEPARATORS for baysLMAOOOOOOOOO haahahahhahaahahaaahahahhhaaahhahahah
         centerNear = (Button) findViewById(R.id.centerNear);
         centerMid = (Button) findViewById(R.id.centerMid);
         centerFar = (Button ) findViewById(R.id.centerFar);
@@ -152,7 +160,9 @@ public class LeftField extends AppCompatActivity {
         final Activity activity = this;
         new AlertDialog.Builder(this)
                 .setTitle("WARNING").setMessage("GOING BACK WILL CAUSE LOSS OF DATA").setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) { activity.finish();}}).setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent FieldSetupPageIntent = new Intent(LeftField.this, MainActivity.class);
+                        startActivity(FieldSetupPageIntent);}}).setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         // do nothing
                     }
@@ -185,6 +195,7 @@ public class LeftField extends AppCompatActivity {
                 next.putExtra(Constants.rightNear, cargoShipInputValues.get(Constants.rightNear));
                 next.putExtra(Constants.rightMid, cargoShipInputValues.get(Constants.rightMid));
                 next.putExtra(Constants.rightFar, cargoShipInputValues.get(Constants.rightFar));
+                next.putExtra("alliance", alliance);
                 startActivity(next);
             }
         }
