@@ -29,8 +29,6 @@ public class FieldSetupPage extends AppCompatActivity{
     Activity context;
     Intent previous;
     Intent next;
-    View leftView;
-    View rightView;
     String red;
     String blue;
     String redTeam="red";
@@ -52,12 +50,14 @@ public class FieldSetupPage extends AppCompatActivity{
         dataBase = FirebaseDatabase.getInstance().getReference();
         blue = "#aa0000ff";
         red = "#aaff0000";
-        if (leftViewColor.equals("blue")) {
-                setUpLeftField();
-                Log.e("leftField","true");
-        } else if (leftViewColor.equals("red")) {
-            Log.e("rightFIeld","true");
-                setUpRightField();
+        if (leftViewColor.equals("blue") && alliance.equals(blueTeam)) {
+            setUpLeftField();
+        } else if (leftViewColor.equals("blue") && alliance.equals(redTeam)) {
+            setUpRightField();
+        } else if (leftViewColor.equals("red") && alliance.equals(blueTeam)) {
+            setUpRightField();
+        } else if (leftViewColor.equals("red") && alliance.equals(redTeam)) {
+            setUpLeftField();
         }
     }
 
