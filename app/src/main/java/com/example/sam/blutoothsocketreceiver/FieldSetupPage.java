@@ -36,6 +36,7 @@ public class FieldSetupPage extends AppCompatActivity{
     String numberOfMatch;
     String leftViewColor;
     DatabaseReference dataBase;
+    String teamNumberOne, teamNumberTwo, teamNumberThree;
     boolean isRed;
     String alliance;
 
@@ -95,6 +96,9 @@ public class FieldSetupPage extends AppCompatActivity{
             numberOfMatch = previous.getExtras().getString("matchNumber");
             isRed = previous.getExtras().getBoolean("allianceColor");
             leftViewColor = previous.getExtras().getString("leftViewColor");
+            teamNumberOne = previous.getExtras().getString("teamNumberOne");
+            teamNumberTwo = previous.getExtras().getString("teamNumberTwo");
+            teamNumberThree = previous.getExtras().getString("teamNumberThree");
         }
         public void getAllianceColor() {
             if (isRed) {
@@ -114,6 +118,9 @@ public class FieldSetupPage extends AppCompatActivity{
             intent.putExtra("matchNumber", numberOfMatch);
             intent.putExtra("leftViewColor", leftViewColor);
             intent.putExtra("allianceColor", alliance);
+            intent.putExtra("teamNumberOne",teamNumberOne);
+            intent.putExtra("teamNumberTwo",teamNumberTwo);
+            intent.putExtra("teamNumberThree", teamNumberThree);
             FieldSetupPage.this.startActivity(intent);
         }
 
@@ -122,6 +129,9 @@ public class FieldSetupPage extends AppCompatActivity{
             intent.putExtra("matchNumber", numberOfMatch);
             intent.putExtra("leftViewColor", leftViewColor);
             intent.putExtra("allianceColor", alliance);
+            intent.putExtra("teamNumberOne",teamNumberOne);
+            intent.putExtra("teamNumberTwo",teamNumberTwo);
+            intent.putExtra("teamNumberThree", teamNumberThree);
             FieldSetupPage.this.startActivity(intent);
         }
 
