@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -61,6 +62,8 @@ public class FinalDataPoints extends ActionBarActivity {
     ArrayList<String> teamTwoDataScore;
     ArrayList<String> teamThreeDataName;
     ArrayList<String> teamThreeDataScore;
+    TextInputLayout allianceFoulInput;
+    TextInputLayout allianceScoreInput;
     Boolean isMute;
     File dir;
     PrintWriter file;
@@ -81,6 +84,7 @@ public class FinalDataPoints extends ActionBarActivity {
         allianceScore = (EditText) findViewById(R.id.finalScoreEditText);
         allianceFoul = (EditText) findViewById(R.id.finalFoulEditText);
         finalScore = (TextView)findViewById(R.id.finalScoreTextView);
+
         allianceScore.setCursorVisible(false);
 
         if(alliance.equals("blue")){

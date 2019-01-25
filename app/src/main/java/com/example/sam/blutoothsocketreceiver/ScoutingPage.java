@@ -338,30 +338,23 @@ public class ScoutingPage extends ActionBarActivity {
             @Override
             public void onClick(View view) {
                 final String teamNumber = teamNumberOneTextview.getText().toString();
-
                 LayoutInflater layoutInflater = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 final LinearLayout teamOneNotesLayout = (LinearLayout)layoutInflater.inflate(R.layout.team_notes, null);
                 final EditText teamOneNotesEditText = (EditText)teamOneNotesLayout.findViewById(R.id.notesEditText);
-
                 if (!teamOneNotes.equals("")) {
-                    teamOneNotesEditText.setText(teamOneNotes);
-                }
+                    teamOneNotesEditText.setText(teamOneNotes); }
                 teamOneNotesEditText.setTextColor(Color.BLACK);
-
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
-
                 builder.setTitle("Super Notes for team " + teamNumber)
                         .setView(teamOneNotesLayout)
                         .setPositiveButton("Submit", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 teamOneNotes = teamOneNotesEditText.getText().toString();
-                            }
-                        })
+                            }})
                         .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 dialog.cancel();
-                            }
-                        })
+                            }})
                         .show();
             }
         });
@@ -373,26 +366,20 @@ public class ScoutingPage extends ActionBarActivity {
                 LayoutInflater layoutInflater = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 final LinearLayout teamTwoNotesLayout = (LinearLayout)layoutInflater.inflate(R.layout.team_notes, null);
                 final EditText teamTwoNotesEditText = (EditText)teamTwoNotesLayout.findViewById(R.id.notesEditText);
-
                 if (!teamTwoNotes.equals("")) {
-                    teamTwoNotesEditText.setText(teamTwoNotes);
-                }
+                    teamTwoNotesEditText.setText(teamTwoNotes);}
                 teamTwoNotesEditText.setTextColor(Color.BLACK);
-
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
-
                 builder.setTitle("Super Notes for " + teamNumber)
                         .setView(teamTwoNotesLayout)
                         .setPositiveButton("Submit", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 teamTwoNotes = teamTwoNotesEditText.getText().toString();
-                            }
-                        })
+                            }})
                         .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 dialog.cancel();
-                            }
-                        })
+                            }})
                         .show();
             }
         });
@@ -400,30 +387,22 @@ public class ScoutingPage extends ActionBarActivity {
             @Override
             public void onClick(View view) {
                 final String teamNumber = teamNumberThreeTextview.getText().toString();
-
                 LayoutInflater layoutInflater = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 final LinearLayout teamThreeNotesLayout = (LinearLayout)layoutInflater.inflate(R.layout.team_notes, null);
                 final EditText teamThreeNotesEditText = (EditText)teamThreeNotesLayout.findViewById(R.id.notesEditText);
-
-                if (!teamThreeNotes.equals("")) {
-                    teamThreeNotesEditText.setText(teamThreeNotes);
-                }
+                if (!teamThreeNotes.equals("")) {teamThreeNotesEditText.setText(teamThreeNotes); }
                 teamThreeNotesEditText.setTextColor(Color.BLACK);
-
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
-
                 builder.setTitle("Super Notes for " + teamNumber)
                         .setView(teamThreeNotesLayout)
                         .setPositiveButton("Submit", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 teamThreeNotes = teamThreeNotesEditText.getText().toString();
-                            }
-                        })
+                            }})
                         .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 dialog.cancel();
-                            }
-                        })
+                            }})
                         .show();
             }
         });
