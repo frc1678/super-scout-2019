@@ -7,35 +7,36 @@
         android:layout_marginTop="30dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Select the Alliance to your left."
+        android:text="Select the field configuration"
         android:textSize="24dp"
         android:gravity="center"
         android:textStyle="bold"
-        android:textColor="@color/KateGray"
-        android:fontFamily="sans-serif"/>
-    <RadioGroup
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal">
-        <RadioButton
-            android:layout_marginTop="20dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/blueLayout"
-            android:gravity="center_horizontal"
-            android:checked="false"
-            android:text="Blue"
-            android:textSize="20dp"
-            />
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/redLayout"
-            android:layout_marginTop="8dp"
-            android:gravity="center_horizontal"
-            android:checked="false"
-            android:text="Red"
-            android:textSize="20dp"/>
+        android:textColor="@color/Black" />
+    <LinearLayout
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_height="match_parent">
 
-    </RadioGroup>
+        <Button
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:background="@color/DarkGray"
+            android:layout_marginRight="@dimen/teo_separation"
+            android:layout_marginTop="@dimen/teo_separation"
+            android:layout_marginBottom="@dimen/teo_separation"
+            android:id="@+id/leftSide"/>
+        <Button
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:background="@color/DarkGray"
+            android:layout_marginRight="@dimen/teo_separation"
+            android:layout_marginTop="@dimen/teo_separation"
+            android:layout_marginBottom="@dimen/teo_separation"
+            android:id="@+id/rightSide"/>
+
+
+    </LinearLayout>
 </LinearLayout>
