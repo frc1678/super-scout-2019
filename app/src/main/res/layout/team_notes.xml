@@ -7,6 +7,7 @@
     android:gravity="left">
 
     <CheckBox
+        android:id="@+id/checkboxTippy"
         android:theme="@style/TeoCheck"
         android:layout_marginTop="20dp"
         android:layout_marginStart="5dp" android:paddingStart="5dp"
@@ -15,34 +16,29 @@
         android:textColor="@color/KateGray"
         android:text="Is the robot tippy?"/>
     <CheckBox
+        android:id="@+id/checkboxAlignment"
         android:theme="@style/TeoCheck"
         android:layout_marginStart="5dp" android:paddingStart="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/KateGray"
-        android:text="Does the team misuse game elements?"/>
+        android:text="Poor alignment"/>
     <CheckBox
+        android:id="@+id/checkboxGrip"
         android:theme="@style/TeoCheck"
         android:layout_marginStart="5dp" android:paddingStart="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/KateGray"
-        android:text="ex3"/>
+        android:text="Unreliable grip"/>
     <CheckBox
+        android:id="@+id/checkboxInterference"
         android:theme="@style/TeoCheck"
         android:layout_marginStart="5dp" android:paddingStart="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/KateGray"
-        android:text="ex4"/>
-    <CheckBox
-        android:theme="@style/TeoCheck"
-        android:layout_marginStart="5dp" android:paddingStart="5dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="@color/KateGray"
-        android:text="ex5"/>
-
+        android:text="Interferes with Alliance"/>
     <EditText
         android:id="@+id/notesEditText"
         android:layout_width="match_parent"
