@@ -25,6 +25,7 @@ import com.example.sam.blutoothsocketreceiver.Constants;
 import com.example.sam.blutoothsocketreceiver.FieldSetupPage;
 import com.example.sam.blutoothsocketreceiver.MainActivity;
 import com.example.sam.blutoothsocketreceiver.R;
+import com.example.sam.blutoothsocketreceiver.SandstormConflict;
 import com.example.sam.blutoothsocketreceiver.ScoutingPage;
 
 import java.util.HashMap;
@@ -181,15 +182,15 @@ public class RightField extends AppCompatActivity {
     }
     @Override
     public boolean onCreateOptionsMenu (Menu menu){
-        getMenuInflater().inflate(R.menu.teleop, menu);
+        getMenuInflater().inflate(R.menu.sandstorm, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected (MenuItem item){
         int id = item.getItemId();
-        if (id == R.id.teleop) {
-            Intent next = new Intent(RightField.this, ScoutingPage.class);
+        if (id == R.id.sandstorm) {
+            Intent next = new Intent(RightField.this, SandstormConflict.class);
             getCargoShipInputValues();
             if (cargoShipInputValues.containsValue(Bay.noValue)) {
                 Toast toast = Toast.makeText(RightField.this, Bay.errorMessage, Toast.LENGTH_SHORT);

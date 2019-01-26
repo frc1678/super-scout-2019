@@ -8,4 +8,9 @@ public class FieldLayout {
     public static String red = "red";
     public static String blue = "blue";
 
+    public static String alliance = "alliance";
+    public static String teamNumberOne = "teamNumberOne";
+    public static String teamNumberTwo = "teamNumberTwo";
+    public static String teamNumberThree = "teamNumberThree";
+
 }
