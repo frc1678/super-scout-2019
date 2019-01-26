@@ -1,15 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:custom="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
+    android:gravity="center"
     android:layout_height="match_parent">
-    <View
-        android:id="@+id/centerShim"
-        android:layout_height="match_parent"
-        android:layout_width="0dp"
-        android:visibility="invisible"
-        android:layout_centerHorizontal="true"/>
 
     <TextView
         android:id="@+id/finalScoreTextView"
@@ -17,44 +13,32 @@
         android:layout_height="wrap_content"
         android:text = "Final Alliance Data"
         android:textStyle="bold"
-        android:textColor="#0000FF"
         android:textSize="30sp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="20dp"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
         />
 
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_below="@+id/finalScoreTextView"
-    android:layout_toLeftOf="@id/centerShim">
-
-
     <EditText
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
         android:hint="Score"
         android:inputType="number"
-        android:textSize="25sp"
+        android:textSize="28sp"
         android:id="@+id/finalScoreEditText"
-        android:gravity="center"
         />
 
     <EditText
-        android:layout_width="wrap_content"
+
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:id="@+id/finalFoulEditText"
-        android:layout_below="@+id/finalScoreEditText"
-        android:layout_centerHorizontal="true"
         android:inputType="number"
         android:hint="Fouls"
-        android:gravity="center"
-        android:textSize="25sp"
+        android:textSize="28sp"
         />
 
     <TextView
+        android:layout_marginTop="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/didHabClimb_tv"
@@ -95,28 +79,8 @@
         android:layout_centerHorizontal="true"
         />
 
-</RelativeLayout>
 
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_below="@id/finalScoreTextView"
-    android:layout_toRightOf="@+id/centerShim"
-    >
-    <TextView
-        android:id="@+id/powerUpCount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:clickable="false"
-        android:textSize="25sp"
-        android:text="Cubes in Vault"
-        android:layout_centerHorizontal="true"
-        />
-
-
-
-</RelativeLayout>
-</RelativeLayout>
+</LinearLayout>
 
 
 
