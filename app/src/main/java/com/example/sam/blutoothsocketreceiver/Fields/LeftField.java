@@ -55,6 +55,10 @@ public class LeftField extends AppCompatActivity {
 
     Map<String, String> cargoShipInputValues = new HashMap<>();
 
+    String noShowOne;
+    String noShowTwo;
+    String noShowThree;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,6 +86,13 @@ public class LeftField extends AppCompatActivity {
             teamNumberOne = previous.getExtras().getString("teamNumberOne");
             teamNumberTwo = previous.getExtras().getString("teamNumberTwo");
             teamNumberThree = previous.getExtras().getString("teamNumberThree");
+
+            //get noShow teams
+
+            noShowOne = previous.getExtras().getString("noShowOne");
+            noShowTwo = previous.getExtras().getString("noShowTwo");
+            noShowThree = previous.getExtras().getString("noShowThree");
+
         }
     }
     public void getXML() {
@@ -205,10 +216,14 @@ public class LeftField extends AppCompatActivity {
                 next.putExtra(Constants.rightNear, cargoShipInputValues.get(Constants.rightNear));
                 next.putExtra(Constants.rightMid, cargoShipInputValues.get(Constants.rightMid));
                 next.putExtra(Constants.rightFar, cargoShipInputValues.get(Constants.rightFar));
+                next.putExtra("noShowOne",noShowOne);
+                next.putExtra("noShowTwo",noShowTwo);
+                next.putExtra("noShowThree",noShowThree);
                 next.putExtra("alliance", alliance);
                 next.putExtra("teamNumberOne",teamNumberOne);
                 next.putExtra("teamNumberTwo",teamNumberTwo);
                 next.putExtra("teamNumberThree", teamNumberThree);
+                next.putExtra("matchNumber",numberOfMatch);
                 startActivity(next);
             }
         }

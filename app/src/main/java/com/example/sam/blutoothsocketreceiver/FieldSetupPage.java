@@ -39,6 +39,9 @@ public class FieldSetupPage extends AppCompatActivity{
     String teamNumberOne, teamNumberTwo, teamNumberThree;
     boolean isRed;
     String alliance;
+    String noShowTeamOne;
+    String noShowTeamTwo;
+    String noShowTeamThree;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,16 +102,18 @@ public class FieldSetupPage extends AppCompatActivity{
             teamNumberOne = previous.getExtras().getString("teamNumberOne");
             teamNumberTwo = previous.getExtras().getString("teamNumberTwo");
             teamNumberThree = previous.getExtras().getString("teamNumberThree");
+
+            noShowTeamOne = previous.getExtras().getString("teamNumberOneNoShow");
+            noShowTeamTwo = previous.getExtras().getString("teamNumberTwoNoShow");
+            noShowTeamThree = previous.getExtras().getString("teamNumberThreeNoShow");
+
         }
         public void getAllianceColor() {
             if (isRed) {
                 alliance = "red";
-                Log.e("fieldSETUP","red");
             } else if (!isRed) {
                 alliance = "blue";
-                Log.e("fieldSETUP","blue");
             } else {
-                Log.e("alliance","cry");
                 //Do null.
             }
         }
@@ -121,6 +126,9 @@ public class FieldSetupPage extends AppCompatActivity{
             intent.putExtra("teamNumberOne",teamNumberOne);
             intent.putExtra("teamNumberTwo",teamNumberTwo);
             intent.putExtra("teamNumberThree", teamNumberThree);
+            intent.putExtra("noShowOne",noShowTeamOne);
+            intent.putExtra("noShowTwo",noShowTeamTwo);
+            intent.putExtra("noShowThree",noShowTeamThree);
             FieldSetupPage.this.startActivity(intent);
         }
 
@@ -132,6 +140,9 @@ public class FieldSetupPage extends AppCompatActivity{
             intent.putExtra("teamNumberOne",teamNumberOne);
             intent.putExtra("teamNumberTwo",teamNumberTwo);
             intent.putExtra("teamNumberThree", teamNumberThree);
+            intent.putExtra("noShowOne",noShowTeamOne);
+            intent.putExtra("noShowTwo",noShowTeamTwo);
+            intent.putExtra("noShowThree",noShowTeamThree);
             FieldSetupPage.this.startActivity(intent);
         }
 

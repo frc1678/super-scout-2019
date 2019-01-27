@@ -70,6 +70,13 @@ public class QrDisplay extends ActionBarActivity {
     String rightMid;
     String rightFar;
 
+    String noShowOne;
+    String noShowTwo;
+    String noShowThree;
+
+    String didRocketRP;
+    String didHabClimb;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,9 +86,12 @@ public class QrDisplay extends ActionBarActivity {
         context = this;
         intent = getIntent();
         getExtras();
+        Log.e("TeamOneDataScore",teamOneDataScore.toString());
+        Log.e("TeamOneDataName",teamOneDataName.toString());
         QRImage = (ImageView) findViewById(R.id.QRCode_Display);
         convertValues();
         createCompressedFormat();
+        Log.e("COMPRESSED", compressedData);
         displayQR(compressedData);
     }
 
@@ -114,6 +124,14 @@ public class QrDisplay extends ActionBarActivity {
         rightFar = intent.getStringExtra(Constants.rightFar);
 
         isMute = intent.getExtras().getBoolean("isMute");
+
+        noShowOne = intent.getExtras().getString("noShowOne");
+        noShowTwo = intent.getExtras().getString("noShowTwo");
+        noShowThree = intent.getExtras().getString("noShowThree");
+
+        didRocketRP = intent.getExtras().getString("didRocketRP");
+        didHabClimb = intent.getExtras().getString("didHabClimb");
+
     }
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -140,17 +158,18 @@ public class QrDisplay extends ActionBarActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-    public void createCompressedFormat(){
-        if (alliance.equals("Blue Alliance")){
+    public void createCompressedFormat() {
+        if (alliance.equals("Blue Alliance")) {
             allianceCompressed = "B";
         } else {
-            allianceCompressed = "R"; }
+            allianceCompressed = "R";
+        }
 
-        compressedData = "S!"
+        compressedData = "S!Q"
                 + matchNumber
-                + "_"
+                + "-"
                 + allianceCompressed
-                + "a{b"
+                + "|a{b"
                 + leftNear
                 + ";c"
                 + leftMid
@@ -161,9 +180,65 @@ public class QrDisplay extends ActionBarActivity {
                 + ";f"
                 + rightMid
                 + ";g"
-                + rightFar;
+                + rightFar
+                + "},h"
+                + generateNoShowList(noShowOne, noShowTwo, noShowThree)
+                + ",j"
+                + "todoSandstorm,"//todo SANDSTORM CONFLICT
+                + getStringAlliance(alliance)
+                + score + ","
+                + getFoulAlliance(alliance)
+                + foul + ","
+                + getRocketRPAlliance(alliance)
+                + didRocketRP + ","
+                + getHabClimbAlliance(alliance)
+                + didHabClimb
+                + "_1{u"
+                + teamNumberOne
+                + ";v"
+                + teamOneDataScore.get(1)
+                + ";w"
+                + teamOneDataScore.get(0)
+                + ";y"
+                + teamOneDataScore.get(4)
+                + ";z\""
+                + superNotesOne
+                + "\";A"
+                + teamOneDataScore.get(2)
+                + ";B"
+                + teamOneDataScore.get(3)
+                + "},2{u"
+                + teamNumberTwo
+                + ";v"
+                + teamTwoDataScore.get(1)
+                + ";w"
+                + teamTwoDataScore.get(0)
+                + ";y"
+                + teamTwoDataScore.get(4)
+                + ";z\""
+                + superNotesTwo
+                + "\";A"
+                + teamTwoDataScore.get(2)
+                + ";B"
+                + teamTwoDataScore.get(3)
+                + "},3{u"
+                + teamNumberThree
+                + ";v"
+                + teamThreeDataScore.get(1)
+                + ";w"
+                + teamThreeDataScore.get(0)
+                + ";y"
+                + teamThreeDataScore.get(4)
+                + ";z\""
+                + superNotesThree
+                + "\";A"
+                + teamThreeDataScore.get(2)
+                + ";B"
+                + teamThreeDataScore.get(3)
+                + "}";
 
         new Thread() {
+
             @Override
             public void run() {
                 try {
@@ -265,10 +340,80 @@ public class QrDisplay extends ActionBarActivity {
             rightFar = "G";
         }
 
+        if (noShowOne.equals("true")) {
+            noShowOne = teamNumberOne;
+        } else {
+            noShowOne = "";
+        }
+        if (noShowTwo.equals("true")) {
+            noShowTwo = teamNumberTwo;
+        } else {
+            noShowTwo = "";
+        }
+        if (noShowThree.equals("true")) {
+            noShowThree = teamNumberThree;
+        } else {
+            noShowThree = "";
+        }
+        if (didRocketRP.equals("true")) {
+            didRocketRP = "T";
+        } else {
+            didRocketRP = "F";
+        }
+        Log.e("didHabClimb",didHabClimb +"");
+        if (didHabClimb.equals("true")) {
+            didHabClimb = "T";
+        } else {
+            didHabClimb = "F";
+        }
 
 
 
-
-
+    }
+    public String getStringAlliance(String alliance) {
+        if (alliance.equals("Red Alliance")) {
+            return "k";
+        }
+        else if (alliance.equals("Blue Alliance")) {
+            return "m";
+        }
+        return "null";
+    }
+    public String getFoulAlliance(String alliance) {
+        if (alliance.equals("Red Alliance")) {
+            return "n";
+        } else if (alliance.equals("Blue Alliance")) {
+            return "p";
+        }
+        return "null";
+    }
+    public String getRocketRPAlliance(String alliance) {
+        if (alliance.equals("Red Alliance")) {
+            return "r";
+        } else if (alliance.equals("Blue Alliance")) {
+            return "q";
+        }
+        return "null";
+    }
+    public String getHabClimbAlliance(String alliance) {
+        if (alliance.equals("Red Alliance")) {
+            return "t";
+        } else if (alliance.equals("Blue Alliance")) {
+            return "s";
+        }
+        return "null";
+    }
+    public ArrayList<String> generateNoShowList(String noShowOne, String noShowTwo, String noShowThree) {
+        ArrayList<String> noShowList = new ArrayList<>();
+        if (!noShowOne.equals("")) {
+            noShowList.add(noShowOne);
+        }
+        if (!noShowTwo.equals("")) {
+            noShowList.add(noShowTwo);
+        }
+        if (!noShowThree.equals("")) {
+            noShowList.add(noShowThree);
+        }
+        return noShowList;
     }
 }

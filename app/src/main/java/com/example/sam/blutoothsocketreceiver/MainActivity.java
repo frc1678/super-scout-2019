@@ -234,9 +234,9 @@ public class MainActivity extends ActionBarActivity {
                     intent.putExtra("mute", isMute);
                     intent.putExtra("allianceColor", isRed);
                     intent.putExtra("leftViewColor", leftViewColor);
-                    intent.putExtra("teamNumberOneNoShow",teamNumberOneNoShow);
-                    intent.putExtra("teamNumberTwoNoShow",teamNumberTwoNoShow);
-                    intent.putExtra("teamNumberThreeNoShow",teamNumberThreeNoShow);
+                    intent.putExtra("teamNumberOneNoShow",String.valueOf(teamNumberOneNoShow));
+                    intent.putExtra("teamNumberTwoNoShow",String.valueOf(teamNumberTwoNoShow));
+                    intent.putExtra("teamNumberThreeNoShow",String.valueOf(teamNumberThreeNoShow));
                     startActivity(intent);
                 }
             }

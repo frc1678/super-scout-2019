@@ -58,6 +58,13 @@ public class SandstormConflict extends AppCompatActivity {
     Integer teamTwoButtonColor;
     Integer teamThreeButtonColor;
 
+    String matchNumber;
+
+    String noShowOne;
+    String noShowTwo;
+    String noShowThree;
+
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,9 +81,23 @@ public class SandstormConflict extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected (MenuItem item){
         int id = item.getItemId();
-        if (id == R.id.sandstorm) {
+        if (id == R.id.teleop) {
             next = new Intent(SandstormConflict.this, ScoutingPage.class);
-
+            next.putExtras(previous);
+            next.putExtra(Constants.leftNear, leftNear);
+            next.putExtra(Constants.leftMid, leftMid);
+            next.putExtra(Constants.leftFar, leftFar);
+            next.putExtra(Constants.rightNear, rightNear);
+            next.putExtra(Constants.rightMid, rightMid);
+            next.putExtra(Constants.rightFar, rightFar);
+            next.putExtra("noShowOne",noShowOne);
+            next.putExtra("noShowTwo",noShowTwo);
+            next.putExtra("noShowThree",noShowThree);
+            next.putExtra("alliance", alliance);
+            next.putExtra("teamNumberOne",teamNumberOne);
+            next.putExtra("teamNumberTwo",teamNumberTwo);
+            next.putExtra("teamNumberThree", teamNumberThree);
+            next.putExtra("matchNumber",matchNumber);
             startActivity(next);
         }
         return super.onOptionsItemSelected(item);
@@ -110,6 +131,13 @@ public class SandstormConflict extends AppCompatActivity {
             teamNumberOne = getIntent().getStringExtra(FieldLayout.teamNumberOne);
             teamNumberTwo = getIntent().getStringExtra(FieldLayout.teamNumberTwo);
             teamNumberThree = getIntent().getStringExtra(FieldLayout.teamNumberThree);
+
+            matchNumber = getIntent().getStringExtra("matchNumber");
+
+            noShowOne = getIntent().getStringExtra("noShowOne");
+            noShowTwo = getIntent().getStringExtra("noShowTwo");
+            noShowThree = getIntent().getStringExtra("noShowThree");
+
         }
     }
     public void initXML() {
