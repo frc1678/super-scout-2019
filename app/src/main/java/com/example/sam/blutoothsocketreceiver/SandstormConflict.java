@@ -5,10 +5,12 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -51,10 +53,15 @@ public class SandstormConflict extends AppCompatActivity {
 
     RelativeLayout radiobuttonLayout;
 
+    Integer dataCounter;
+    Integer teamOneButtonColor;
+    Integer teamTwoButtonColor;
+    Integer teamThreeButtonColor;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.sandstorm); setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE); previous = getIntent(); bundle = previous.getExtras();
+        setContentView(R.layout.sandstorm); setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE); previous = getIntent(); bundle = previous.getExtras(); dataCounter = 0;
         getExtras(); initXML(); initActivity();
     }
 
@@ -117,6 +124,10 @@ public class SandstormConflict extends AppCompatActivity {
         teamOneButton.setText(String.valueOf(teamNumberOne));
         teamTwoButton.setText(String.valueOf(teamNumberTwo));
         teamThreeButton.setText(String.valueOf(teamNumberThree));
+
+        teamOneButtonColor = ((ColorDrawable)teamOneButton.getBackground()).getColor();
+        teamTwoButtonColor = ((ColorDrawable)teamTwoButton.getBackground()).getColor();
+        teamThreeButtonColor = ((ColorDrawable)teamThreeButton.getBackground()).getColor();
     }
     public void hideRadioButtonLayout() {
         radiobuttonLayout.setVisibility(View.GONE);
@@ -136,9 +147,75 @@ public class SandstormConflict extends AppCompatActivity {
     public void makeEqualConflict(Button button) {
         button.setBackgroundColor(ContextCompat.getColor(SandstormConflict.this, R.color.JustinOrange));
     }
+    public Boolean isCaused(Button button) {
+        Integer buttonColor = ((ColorDrawable)button.getBackground()).getColor();
+        if (String.valueOf(buttonColor).equals(FieldLayout.causedColor)) {
+            return true;
+        }
+        return false;
+    }
+    public Boolean isAffected(Button button) {
+        Integer buttonColor = ((ColorDrawable)button.getBackground()).getColor();
+        if (String.valueOf(buttonColor).equals(FieldLayout.affectedColor)) {
+            return true;
+        }
+        return false;
+    }
+    public Boolean isNeutral(Button button) {
+        Integer buttonColor = ((ColorDrawable)button.getBackground()).getColor();
+        if (String.valueOf(buttonColor).equals(FieldLayout.neutralColor)) {
+            return true;
+        }
+        return false;
+    }
+    public Boolean isEqualConflict(Button button) {
+        Integer buttonColor = ((ColorDrawable)button.getBackground()).getColor();
+        if (String.valueOf(buttonColor).equals(FieldLayout.equalConflictColor)) {
+            return true;
+        }
+        return false;
+    }
+
 
     public void initActivity() {
-        
+
+
+        teamOneButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                initColors(teamOneButton);
+
+            }
+        });
+        teamTwoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                initColors(teamTwoButton);
+
+            }
+        });
+        teamThreeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                initColors(teamThreeButton);
+
+            }
+        });
+    }
+
+    public void initColors(Button button) {
+        if (isNeutral(button)) {
+            makeCaused(button);
+        } else if (isCaused(button)) {
+            makeAffected(button);
+        } else if (isAffected(button)) {
+            makeEqualConflict(button);
+        } else if (isEqualConflict(button)) {
+            makeNeutral(button);
+        }
     }
 
 }
