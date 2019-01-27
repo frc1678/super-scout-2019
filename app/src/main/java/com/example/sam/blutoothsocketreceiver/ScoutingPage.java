@@ -18,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -66,6 +67,9 @@ public class ScoutingPage extends ActionBarActivity {
     String teamOneNotes;
     String teamTwoNotes;
     String teamThreeNotes;
+    Boolean teamNumberOneBooleanTippy, teamNumberOneBooleanAlignment, teamNumberOneBooleanGrip, teamNumberOneBooleanInterference;
+    Boolean teamNumberTwoBooleanTippy, teamNumberTwoBooleanAlignment, teamNumberTwoBooleanGrip, teamNumberTwoBooleanInterference;
+    Boolean teamNumberThreeBooleanTippy, teamNumberThreeBooleanAlignment, teamNumberThreeBooleanGrip, teamNumberThreeBooleanInterference;
     Integer levitateNum = 0;
     SuperScoutingPanel panelOne;
     SuperScoutingPanel panelTwo;
@@ -167,7 +171,6 @@ public class ScoutingPage extends ActionBarActivity {
         if (id == R.id.endDataShortcut) {
             inflateFinalDataMenu();
         }
-
 
         if (id == R.id.finalNext) {
             if (canProceed()) {
@@ -283,6 +286,18 @@ public class ScoutingPage extends ActionBarActivity {
         intent.putExtra("teamOneNotes", teamOneNotes);
         intent.putExtra("teamTwoNotes", teamTwoNotes);
         intent.putExtra("teamThreeNotes", teamThreeNotes);
+        intent.putExtra("teamOneBooleanTippy", teamNumberOneBooleanTippy);
+        intent.putExtra("teamTwoBooleanTippy",teamNumberTwoBooleanTippy);
+        intent.putExtra("teamThreeBooleanTippy",teamNumberThreeBooleanTippy);
+        intent.putExtra("teamOneBooleanAlignment", teamNumberOneBooleanAlignment);
+        intent.putExtra("teamTwoBooleanAlignment",teamNumberTwoBooleanAlignment);
+        intent.putExtra("teamThreeBooleanAlignment", teamNumberThreeBooleanAlignment);
+        intent.putExtra("teamOneBooleanGrip",teamNumberOneBooleanGrip);
+        intent.putExtra("teamTwoBooleanGrip",teamNumberTwoBooleanGrip);
+        intent.putExtra("teamThreeBooleanGrip",teamNumberThreeBooleanGrip);
+        intent.putExtra("teamOneBooleanInterference",teamNumberThreeBooleanInterference);
+        intent.putExtra("teamTwoBooleanInterference",teamNumberTwoBooleanInterference);
+        intent.putExtra("teamThreeBooleanInterference", teamNumberThreeBooleanInterference);
         intent.putExtra("matchNumber", numberOfMatch);
         intent.putExtra("teamNumberOne", teamNumberOne);
         intent.putExtra("teamNumberTwo", teamNumberTwo);
@@ -338,31 +353,29 @@ public class ScoutingPage extends ActionBarActivity {
             @Override
             public void onClick(View view) {
                 final String teamNumber = teamNumberOneTextview.getText().toString();
-
                 LayoutInflater layoutInflater = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 final LinearLayout teamOneNotesLayout = (LinearLayout)layoutInflater.inflate(R.layout.team_notes, null);
                 final EditText teamOneNotesEditText = (EditText)teamOneNotesLayout.findViewById(R.id.notesEditText);
+                final CheckBox teamNumberOneCheckboxTippy = (CheckBox) teamOneNotesLayout.findViewById(R.id.checkboxTippy);
+                final CheckBox teamNumberOneCheckboxAlignment = (CheckBox) teamOneNotesLayout.findViewById(R.id.checkboxAlignment);
+                final CheckBox teamNumberOneCheckboxGrip = (CheckBox) teamOneNotesLayout.findViewById(R.id.checkboxGrip);
+                final CheckBox teamNumberOneCheckboxInterference = (CheckBox) teamOneNotesLayout.findViewById(R.id.checkboxInterference);
 
-                if (!teamOneNotes.equals("")) {
-                    teamOneNotesEditText.setText(teamOneNotes);
-                }
+                if (!teamOneNotes.equals("")) {teamOneNotesEditText.setText(teamOneNotes); }
                 teamOneNotesEditText.setTextColor(Color.BLACK);
-
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
-
-                builder.setTitle("Super Notes for team " + teamNumber)
-                        .setView(teamOneNotesLayout)
-                        .setPositiveButton("Submit", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                teamOneNotes = teamOneNotesEditText.getText().toString();
-                            }
-                        })
-                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                builder.setTitle("Super Notes for team " + teamNumber).setView(teamOneNotesLayout).setPositiveButton("Submit", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) { teamOneNotes = teamOneNotesEditText.getText().toString();
+                                teamNumberOneBooleanTippy = teamNumberOneCheckboxTippy.isChecked();
+                                teamNumberOneBooleanAlignment = teamNumberOneCheckboxAlignment.isChecked();
+                                teamNumberOneBooleanGrip = teamNumberOneCheckboxGrip.isChecked();
+                                teamNumberOneBooleanInterference = teamNumberOneCheckboxInterference.isChecked();}
+                        }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 dialog.cancel();
                             }
-                        })
-                        .show();
+                        }).show();
+
             }
         });
         teamNumberTwoTextview.setOnClickListener(new View.OnClickListener() {
@@ -373,61 +386,58 @@ public class ScoutingPage extends ActionBarActivity {
                 LayoutInflater layoutInflater = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 final LinearLayout teamTwoNotesLayout = (LinearLayout)layoutInflater.inflate(R.layout.team_notes, null);
                 final EditText teamTwoNotesEditText = (EditText)teamTwoNotesLayout.findViewById(R.id.notesEditText);
+                final CheckBox teamNumberTwoCheckboxTippy = (CheckBox) teamTwoNotesLayout.findViewById(R.id.checkboxTippy);
+                final CheckBox teamNumberTwoCheckboxAlignment = (CheckBox) teamTwoNotesLayout.findViewById(R.id.checkboxAlignment);
+                final CheckBox teamNumberTwoCheckboxGrip = (CheckBox) teamTwoNotesLayout.findViewById(R.id.checkboxGrip);
+                final CheckBox teamNumberTwoCheckboxInterference = (CheckBox) teamTwoNotesLayout.findViewById(R.id.checkboxInterference);
 
-                if (!teamTwoNotes.equals("")) {
-                    teamTwoNotesEditText.setText(teamTwoNotes);
-                }
+                if (!teamTwoNotes.equals("")) {teamTwoNotesEditText.setText(teamTwoNotes); }
                 teamTwoNotesEditText.setTextColor(Color.BLACK);
-
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
 
-                builder.setTitle("Super Notes for " + teamNumber)
-                        .setView(teamTwoNotesLayout)
-                        .setPositiveButton("Submit", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                teamTwoNotes = teamTwoNotesEditText.getText().toString();
-                            }
-                        })
-                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                builder.setTitle("Super Notes for " + teamNumber).setView(teamTwoNotesLayout).setPositiveButton("Submit", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) { teamTwoNotes = teamTwoNotesEditText.getText().toString();
+                                teamNumberTwoBooleanTippy = teamNumberTwoCheckboxTippy.isChecked();
+                                teamNumberTwoBooleanAlignment = teamNumberTwoCheckboxAlignment.isChecked();
+                                teamNumberTwoBooleanGrip = teamNumberTwoCheckboxGrip.isChecked();
+                                teamNumberTwoBooleanInterference = teamNumberTwoCheckboxInterference.isChecked();}
+                        }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 dialog.cancel();
                             }
-                        })
-                        .show();
+                        }).show();
             }
         });
         teamNumberThreeTextview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 final String teamNumber = teamNumberThreeTextview.getText().toString();
-
                 LayoutInflater layoutInflater = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 final LinearLayout teamThreeNotesLayout = (LinearLayout)layoutInflater.inflate(R.layout.team_notes, null);
                 final EditText teamThreeNotesEditText = (EditText)teamThreeNotesLayout.findViewById(R.id.notesEditText);
+                final CheckBox teamNumberThreeCheckboxTippy = (CheckBox) teamThreeNotesLayout.findViewById(R.id.checkboxTippy);
+                final CheckBox teamNumberThreeCheckboxAlignment = (CheckBox) teamThreeNotesLayout.findViewById(R.id.checkboxAlignment);
+                final CheckBox teamNumberThreeCheckboxGrip = (CheckBox) teamThreeNotesLayout.findViewById(R.id.checkboxGrip);
+                final CheckBox teamNumberThreeCheckboxInterference = (CheckBox) teamThreeNotesLayout.findViewById(R.id.checkboxInterference);
 
-                if (!teamThreeNotes.equals("")) {
-                    teamThreeNotesEditText.setText(teamThreeNotes);
-                }
+                if (!teamThreeNotes.equals("")) {teamThreeNotesEditText.setText(teamThreeNotes); }
                 teamThreeNotesEditText.setTextColor(Color.BLACK);
-
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
-
-                builder.setTitle("Super Notes for " + teamNumber)
-                        .setView(teamThreeNotesLayout)
-                        .setPositiveButton("Submit", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                teamThreeNotes = teamThreeNotesEditText.getText().toString();
-                            }
-                        })
-                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                builder.setTitle("Super Notes for " + teamNumber).setView(teamThreeNotesLayout).setPositiveButton("Submit", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {teamThreeNotes = teamThreeNotesEditText.getText().toString();
+                                teamNumberThreeBooleanTippy = teamNumberThreeCheckboxTippy.isChecked();
+                                teamNumberThreeBooleanAlignment = teamNumberThreeCheckboxAlignment.isChecked();
+                                teamNumberThreeBooleanGrip = teamNumberThreeCheckboxGrip.isChecked();
+                                teamNumberThreeBooleanInterference = teamNumberThreeCheckboxInterference.isChecked();}
+                        }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 dialog.cancel();
                             }
-                        })
-                        .show();
+                        }).show();
             }
         });
     }
+
 
 }
 

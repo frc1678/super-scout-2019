@@ -13,7 +13,9 @@ import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Point;
+import android.graphics.drawable.ColorDrawable;
 import android.media.MediaPlayer;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -29,6 +31,7 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -53,6 +56,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.example.sam.blutoothsocketreceiver.Fields.FieldLayout;
+import com.example.sam.blutoothsocketreceiver.Fields.LeftField;
 import com.example.sam.blutoothsocketreceiver.firebase_classes.Match;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -81,6 +86,7 @@ public class MainActivity extends ActionBarActivity {
     String leftViewColor;
     Integer matchNumber = 0;
     DatabaseReference dataBase;
+    Boolean leftSideBoolean = true, rightSideBoolean = true, firstClick = true;
     //TODO: Why are these global?
     //String previousScore, previousFoul, previousAllianceSimple;
     //Boolean facedTheBoss = false, didAutoQuest = false;
@@ -245,16 +251,28 @@ public class MainActivity extends ActionBarActivity {
         } else if (id == R.id.fieldLayout) {
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
             final View fieldLayout = LayoutInflater.from(context).inflate(R.layout.field_layout, null);
-            builder.setView(fieldLayout);
-            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            final Button leftSide = (Button) fieldLayout.findViewById(R.id.leftSide);
+            final Button rightSide = (Button) fieldLayout.findViewById(R.id.rightSide);
+
+            if (leftViewColor.equals(FieldLayout.blue)) {
+                leftSide.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.Bloo));
+                rightSide.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.TeamNumberRed));
+            } else if (leftViewColor.equals(FieldLayout.red)) {
+                rightSide.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.Bloo));
+                leftSide.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.TeamNumberRed));
+            }
+            initializeColorConcept(rightSide, leftSide);
+
+            builder.setView(fieldLayout); builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    RadioButton blue = (RadioButton) fieldLayout.findViewById(R.id.blueLayout);
-                    RadioButton red = (RadioButton) fieldLayout.findViewById(R.id.redLayout);
-                    if (blue.isChecked()){
-                        leftViewColor = "blue";
-                    } else if (red.isChecked()) {
-                        leftViewColor = "red";
+                    Integer leftSideColor = ((ColorDrawable)leftSide.getBackground()).getColor();
+                    if (String.valueOf(leftSideColor).equals(String.valueOf(FieldLayout.Blue))) {
+                        leftViewColor = FieldLayout.blue;
+                    } else if (String.valueOf(leftSideColor).equals(String.valueOf(FieldLayout.Red))) {
+                        leftViewColor = FieldLayout.red;
+                    } else {
+                        Log.e("this is when we cry","");
                     }
 
                 }
@@ -456,6 +474,7 @@ public class MainActivity extends ActionBarActivity {
         Intent backToHome = getIntent();
         if (backToHome.hasExtra("leftViewColor")){
             leftViewColor = backToHome.getExtras().getString("leftViewColor");
+            firstClick = false;
         } else {
             leftViewColor = "blue";
         }
@@ -544,6 +563,63 @@ public class MainActivity extends ActionBarActivity {
         }catch (Exception er){
             Log.e("QrGenerate",er.getMessage());
         }
+    }
+
+    public void initializeColorConceptLeft(final Button buttonSide) {
+        buttonSide.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.e("onclickcc","left");
+                if (leftSideBoolean) {
+                    buttonSide.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.Bloo));leftSideBoolean = false;
+                } else if (!leftSideBoolean) {
+                    buttonSide.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.TeamNumberRed)); leftSideBoolean = true;
+                }}});
+    }
+    public void initializeColorConceptRight(final Button buttonSide) {
+        buttonSide.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.e("onclickcc","left");
+                if (rightSideBoolean) {
+                    buttonSide.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.Bloo));rightSideBoolean = false;
+                } else if (!rightSideBoolean) {
+                    buttonSide.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.TeamNumberRed)); rightSideBoolean = true;
+                }}});
+    }
+    public void setPrimaryFieldLayout(Button left, Button right) {
+        right.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.Bloo));
+        left.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.TeamNumberRed));
+
+
+    }
+    public void initializeColorConcept(final Button rightSide, final Button leftSide) {
+        rightSide.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final Integer rightSideColor = ((ColorDrawable)rightSide.getBackground()).getColor();
+                if (String.valueOf(rightSideColor).equals(String.valueOf(FieldLayout.Blue))) {
+                    rightSide.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.TeamNumberRed));
+                    leftSide.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.Bloo));
+                } else if (String.valueOf(rightSideColor).equals(String.valueOf(FieldLayout.Red))) {
+                    leftSide.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.TeamNumberRed));
+                    rightSide.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.Bloo));
+                }
+            }
+        });
+        leftSide.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final Integer leftSideColor = ((ColorDrawable)leftSide.getBackground()).getColor();
+                if (String.valueOf(leftSideColor).equals(String.valueOf(FieldLayout.Blue))) {
+                    leftSide.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.TeamNumberRed));
+                    rightSide.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.Bloo));
+                } else if (String.valueOf(leftSideColor).equals(String.valueOf(FieldLayout.Red))) {
+                    rightSide.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.TeamNumberRed));
+                    leftSide.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.Bloo));
+                }
+            }
+        });
     }
 
 }

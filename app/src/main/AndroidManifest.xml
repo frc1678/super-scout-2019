@@ -12,7 +12,7 @@
         android:allowBackup="true"
         android:clearTaskOnLaunch="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="Super Scout"
+        android:label="@string/app_name"
         android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
