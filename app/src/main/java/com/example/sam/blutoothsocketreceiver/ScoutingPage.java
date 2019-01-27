@@ -82,6 +82,13 @@ public class ScoutingPage extends ActionBarActivity {
     RadioButton b1;
     RadioButton b2;
     RadioButton b3;
+    String leftNear;
+    String leftMid;
+    String leftFar;
+    String rightNear;
+    String rightMid;
+    String rightFar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -269,6 +276,13 @@ public class ScoutingPage extends ActionBarActivity {
         dataBaseUrl = next.getExtras().getString("dataBaseUrl");
         isMute = next.getExtras().getBoolean("mute");
         isRed = next.getExtras().getBoolean("allianceColor");
+
+        leftNear = next.getStringExtra(Constants.leftNear);
+        leftFar = next.getStringExtra(Constants.leftMid);
+        leftFar = next.getStringExtra(Constants.leftFar);
+        rightNear = next.getStringExtra(Constants.rightNear);
+        rightMid = next.getStringExtra(Constants.rightMid);
+        rightFar = next.getStringExtra(Constants.rightFar);
     }
 
 
@@ -298,6 +312,12 @@ public class ScoutingPage extends ActionBarActivity {
         intent.putExtra("teamOneBooleanInterference",teamNumberThreeBooleanInterference);
         intent.putExtra("teamTwoBooleanInterference",teamNumberTwoBooleanInterference);
         intent.putExtra("teamThreeBooleanInterference", teamNumberThreeBooleanInterference);
+        intent.putExtra(Constants.leftNear,leftNear);
+        intent.putExtra(Constants.leftMid,leftMid);
+        intent.putExtra(Constants.leftFar,leftFar);
+        intent.putExtra(Constants.rightNear,rightNear);
+        intent.putExtra(Constants.rightMid,rightMid);
+        intent.putExtra(Constants.rightFar, rightFar);
         intent.putExtra("matchNumber", numberOfMatch);
         intent.putExtra("teamNumberOne", teamNumberOne);
         intent.putExtra("teamNumberTwo", teamNumberTwo);

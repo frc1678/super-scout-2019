@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.sam.blutoothsocketreceiver.Fields.Bay;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
 import com.google.zxing.MultiFormatWriter;
@@ -62,6 +63,12 @@ public class QrDisplay extends ActionBarActivity {
     Activity context;
     File dir;
     PrintWriter file;
+    String leftNear;
+    String leftMid;
+    String leftFar;
+    String rightNear;
+    String rightMid;
+    String rightFar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +80,7 @@ public class QrDisplay extends ActionBarActivity {
         intent = getIntent();
         getExtras();
         QRImage = (ImageView) findViewById(R.id.QRCode_Display);
+        convertValues();
         createCompressedFormat();
         displayQR(compressedData);
     }
@@ -98,6 +106,13 @@ public class QrDisplay extends ActionBarActivity {
         teamThreeDataName = intent.getStringArrayListExtra("teamThreeDataName");
         teamThreeDataScore = intent.getStringArrayListExtra("teamThreeDataScore");
 
+        leftNear = intent.getStringExtra(Constants.leftNear);
+        leftMid = intent.getStringExtra(Constants.leftMid);
+        leftFar = intent.getStringExtra(Constants.leftFar);
+        rightNear = intent.getStringExtra(Constants.rightNear);
+        rightMid = intent.getStringExtra(Constants.rightMid);
+        rightFar = intent.getStringExtra(Constants.rightFar);
+
         isMute = intent.getExtras().getBoolean("isMute");
     }
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -107,9 +122,7 @@ public class QrDisplay extends ActionBarActivity {
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
+
         int id = item.getItemId();
         //noinspection SimplifiableIfStatement
         if (id == R.id.backToMainActivity) {
@@ -129,30 +142,26 @@ public class QrDisplay extends ActionBarActivity {
     }
     public void createCompressedFormat(){
         if (alliance.equals("Blue Alliance")){
-            allianceCompressed = "0";
+            allianceCompressed = "B";
         } else {
-            allianceCompressed = "1"; }
-       /* if (didAutoQuest.equals(false)){
-            autoQuestCompressed = "0";
-        } else {
-            autoQuestCompressed = "1"; }
-        if (didFaceBoss.equals(false)){
-            faceBossCompressed = "0";
-        } else {
-            faceBossCompressed = "1"; }
-        if (blueSwitch.equals("blue")){
-            blueSwitchCompressed = "0";
-        } else {
-            blueSwitchCompressed = "1"; }
-        if (redSwitch.equals("blue")){
-            redSwitchCompressed = "0";
-        } else {
-            redSwitchCompressed = "1"; }
-        if (scale.equals("blue")){
-            scaleCompressed = "0";
-        } else {
-            scaleCompressed= "1"; }*/
-        compressedData = "S!" + matchNumber + "_" + allianceCompressed + "|p(g" + ",s" + score + ",j" + foul + ",r(d" + "),t(" + "M" + teamNumberOne + "B" + teamOneDataScore.get(3) + "G" + teamOneDataScore.get(1) + "A" + teamOneDataScore.get(2) + "D" + teamOneDataScore.get(0) + "S" + teamOneDataScore.get(4) + "N[" + superNotesOne + "]," + "M" + teamNumberTwo + "B" + teamTwoDataScore.get(3) + "G" + teamTwoDataScore.get(1) + "A" + teamTwoDataScore.get(2) + "D" + teamTwoDataScore.get(0) + "S" + teamTwoDataScore.get(4) + "N[" + superNotesTwo + "]," + "M" + teamNumberThree + "B" + teamThreeDataScore.get(3) + "G" + teamThreeDataScore.get(1) + "A" + teamThreeDataScore.get(2) + "D" + teamThreeDataScore.get(0) + "S" + teamThreeDataScore.get(4) + "N[" + superNotesThree + "])";
+            allianceCompressed = "R"; }
+
+        compressedData = "S!"
+                + matchNumber
+                + "_"
+                + allianceCompressed
+                + "a{b"
+                + leftNear
+                + ";c"
+                + leftMid
+                + ";d"
+                + leftFar
+                + ";e"
+                + rightNear
+                + ";f"
+                + rightMid
+                + ";g"
+                + rightFar;
 
         new Thread() {
             @Override
@@ -224,6 +233,42 @@ public class QrDisplay extends ActionBarActivity {
         }
     }
 
+    public void convertValues() {
+        if (leftNear.equals(Bay.yellowValue)) {
+            leftNear = "L";
+        } else if (leftNear.equals(Bay.orangeValue)) {
+            leftNear = "G";
+        }
+        if (leftMid.equals(Bay.yellowValue)) {
+            leftMid = "L";
+        } else if (leftMid.equals(Bay.orangeValue)) {
+            leftMid = "G";
+        }
+        if (leftFar.equals(Bay.yellowValue)) {
+            leftFar = "L";
+        } else if (leftFar.equals(Bay.orangeValue)) {
+            leftFar = "G";
+        }
+        if (rightNear.equals(Bay.yellowValue)) {
+            rightNear = "L";
+        } else if (rightNear.equals(Bay.orangeValue)) {
+            rightNear = "G";
+        }
+        if (rightMid.equals(Bay.yellowValue)) {
+            rightMid = "L";
+        } else if (rightMid.equals(Bay.orangeValue)) {
+            rightMid = "G";
+        }
+        if (rightFar.equals(Bay.yellowValue)) {
+            rightFar = "L";
+        } else if (rightFar.equals(Bay.orangeValue)) {
+            rightFar = "G";
+        }
 
 
+
+
+
+
+    }
 }

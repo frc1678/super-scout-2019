@@ -76,6 +76,8 @@ public class SandstormConflict extends AppCompatActivity {
         int id = item.getItemId();
         if (id == R.id.sandstorm) {
             next = new Intent(SandstormConflict.this, ScoutingPage.class);
+
+            startActivity(next);
         }
         return super.onOptionsItemSelected(item);
     }

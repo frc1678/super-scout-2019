@@ -70,6 +70,16 @@ public class FinalDataPoints extends ActionBarActivity {
     DatabaseReference firebaseRef;
     Intent intent;
     boolean hasRun;
+    String teamNumberOneBooleanTippy, teamNumberOneBooleanAlignment, teamNumberOneBooleanGrip, teamNumberOneBooleanInterference;
+    String teamNumberTwoBooleanTippy, teamNumberTwoBooleanAlignment, teamNumberTwoBooleanGrip, teamNumberTwoBooleanInterference;
+    String teamNumberThreeBooleanTippy, teamNumberThreeBooleanAlignment, teamNumberThreeBooleanGrip, teamNumberThreeBooleanInterference;
+    
+    String leftNear;
+    String leftMid;
+    String leftFar;
+    String rightNear;
+    String rightMid;
+    String rightFar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -152,6 +162,7 @@ public class FinalDataPoints extends ActionBarActivity {
             }
 
             updateNotes();
+            appendNotes();
             Intent QrDisplay = new Intent(context, QrDisplay.class);
             QrDisplay.putExtra("matchNumber", numberOfMatch);
             QrDisplay.putExtra("alliance", alliance);
@@ -162,9 +173,15 @@ public class FinalDataPoints extends ActionBarActivity {
             QrDisplay.putExtra("superNotesOne", teamOneNotes);
             QrDisplay.putExtra("superNotesTwo", teamTwoNotes);
             QrDisplay.putExtra("superNotesThree", teamThreeNotes);
-            QrDisplay.putExtra("score", allianceScore.getText().toString());
-            QrDisplay.putExtra("foul", allianceFoul.getText().toString());
+            QrDisplay.putExtra("score", score);
+            QrDisplay.putExtra("foul", foul);
 
+            QrDisplay.putExtra(Constants.leftNear,leftNear);
+            QrDisplay.putExtra(Constants.leftMid,leftMid);
+            QrDisplay.putExtra(Constants.leftFar,leftFar);
+            QrDisplay.putExtra(Constants.rightNear,rightNear);
+            QrDisplay.putExtra(Constants.rightMid,rightMid);
+            QrDisplay.putExtra(Constants.rightFar, rightFar);
 
             QrDisplay.putStringArrayListExtra("teamOneDataName", teamOneDataName);
             QrDisplay.putStringArrayListExtra("teamOneDataScore", teamOneDataScore);
@@ -176,6 +193,7 @@ public class FinalDataPoints extends ActionBarActivity {
             QrDisplay.putExtra("leftViewColor", leftViewColor);
 
             QrDisplay.putExtra("isMute", isMute);
+            
             startActivity(QrDisplay);
         }
 
@@ -231,6 +249,27 @@ public class FinalDataPoints extends ActionBarActivity {
         allianceFoulData = intent.getExtras().getString("allianceFoul");
 
         leftViewColor = intent.getExtras().getString("leftViewColor");
+        
+        teamNumberOneBooleanTippy = intent.getStringExtra("teamOneBooleanTippy");
+        teamNumberTwoBooleanTippy = intent.getStringExtra("teamTwoBooleanTippy");
+        teamNumberThreeBooleanTippy = intent.getStringExtra("teamThreeBooleanTippy");
+        teamNumberOneBooleanAlignment = intent.getStringExtra("teamOneBooleanAlignment");
+        teamNumberTwoBooleanAlignment = intent.getStringExtra("teamTwoBooleanAlignment");
+        teamNumberThreeBooleanAlignment = intent.getStringExtra("teamThreeBooleanAlignment");
+        teamNumberOneBooleanGrip = intent.getStringExtra("teamOneBooleanGrip");
+        teamNumberTwoBooleanGrip = intent.getStringExtra("teamTwoBooleanGrip");
+        teamNumberThreeBooleanGrip = intent.getStringExtra("teamThreeBooleanGrip");
+        teamNumberOneBooleanInterference = intent.getStringExtra("teamOneBooleanInterference");
+        teamNumberTwoBooleanInterference = intent.getStringExtra("teamTwoBooleanInterference");
+        teamNumberThreeBooleanInterference = intent.getStringExtra("teamThreeBooleanInterference");
+        
+        leftNear = intent.getStringExtra(Constants.leftNear);
+        leftMid = intent.getStringExtra(Constants.leftMid);
+        leftFar = intent.getStringExtra(Constants.leftFar);
+        rightNear = intent.getStringExtra(Constants.rightNear);
+        rightMid = intent.getStringExtra(Constants.rightMid);
+        rightFar = intent.getStringExtra(Constants.rightFar);
+        
     }
 
     public void sendAfterMatchData(){ //TODO: Replace 'hard-coded' red abd blue with a variable (ex: alliance + "Score")
@@ -260,4 +299,43 @@ public class FinalDataPoints extends ActionBarActivity {
             teamThreeNotes = Constants.teamThreeNoteHolder;
         }
     }
+    public void appendNotes() {
+        if (teamNumberOneBooleanTippy.equals("true")) {
+            teamOneNotes = teamOneNotes + ". The robot is tippy.";
+        }
+        if (teamNumberOneBooleanAlignment.equals("true")) {
+            teamOneNotes = teamOneNotes + ". The robot has poor alignment skills.";
+        }
+        if (teamNumberOneBooleanGrip.equals("true")) {
+            teamOneNotes = teamOneNotes + ". The robot has a poor grip.";
+        }
+        if (teamNumberOneBooleanInterference.equals("true")) {
+            teamOneNotes = teamOneNotes + ". The robot easily interferes with other robots.";
+        }
+        if (teamNumberTwoBooleanTippy.equals("true")) {
+            teamTwoNotes = teamTwoNotes + ". The robot is tippy.";
+        }
+        if (teamNumberTwoBooleanAlignment.equals("true")) {
+            teamTwoNotes = teamTwoNotes + ". The robot has poor alignment skills.";
+        }
+        if (teamNumberTwoBooleanGrip.equals("true")) {
+            teamTwoNotes = teamTwoNotes + ". The robot has a poor grip.";
+        }
+        if (teamNumberTwoBooleanInterference.equals("true")) {
+            teamTwoNotes = teamTwoNotes + ". The robot easily interferes with other robots.";
+        }
+        if (teamNumberThreeBooleanTippy.equals("true")) {
+            teamThreeNotes = teamThreeNotes + ". The robot is tippy.";
+        }
+        if (teamNumberThreeBooleanAlignment.equals("true")) {
+            teamThreeNotes = teamThreeNotes + ". The robot has poor alignment skills.";
+        }
+        if (teamNumberThreeBooleanGrip.equals("true")) {
+            teamThreeNotes = teamThreeNotes + ". The robot has a poor grip.";
+        }
+        if (teamNumberThreeBooleanInterference.equals("true")) {
+            teamThreeNotes = teamThreeNotes + ". The robot easily interferes with other robots.";
+        }
+    }
+            
 }

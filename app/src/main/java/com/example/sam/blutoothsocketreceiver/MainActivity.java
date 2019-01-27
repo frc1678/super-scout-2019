@@ -56,6 +56,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.example.sam.blutoothsocketreceiver.Fields.Bay;
 import com.example.sam.blutoothsocketreceiver.Fields.FieldLayout;
 import com.example.sam.blutoothsocketreceiver.Fields.LeftField;
 import com.example.sam.blutoothsocketreceiver.firebase_classes.Match;
@@ -75,6 +76,9 @@ import org.json.JSONObject;
 public class MainActivity extends ActionBarActivity {
     protected SuperScoutApplication app;
     Activity context;
+    Boolean teamNumberOneNoShow;
+    Boolean teamNumberTwoNoShow;
+    Boolean teamNumberThreeNoShow;
     EditText numberOfMatch;
     EditText teamNumberOne;
     EditText teamNumberTwo;
@@ -230,6 +234,9 @@ public class MainActivity extends ActionBarActivity {
                     intent.putExtra("mute", isMute);
                     intent.putExtra("allianceColor", isRed);
                     intent.putExtra("leftViewColor", leftViewColor);
+                    intent.putExtra("teamNumberOneNoShow",teamNumberOneNoShow);
+                    intent.putExtra("teamNumberTwoNoShow",teamNumberTwoNoShow);
+                    intent.putExtra("teamNumberThreeNoShow",teamNumberThreeNoShow);
                     startActivity(intent);
                 }
             }
@@ -277,6 +284,79 @@ public class MainActivity extends ActionBarActivity {
 
                 }
             }).show();
+        } else if (id == R.id.noShowTeams) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            final View noShowLayout = LayoutInflater.from(context).inflate(R.layout.noshowteams, null);
+            final Button noShowTeamOne = (Button) noShowLayout.findViewById(R.id.noShowTeamOne);
+            final Button noShowTeamTwo = (Button) noShowLayout.findViewById(R.id.noShowTeamTwo);
+            final Button noShowTeamThree = (Button) noShowLayout.findViewById(R.id.noShowTeamThree);
+
+            noShowTeamOne.setText(teamNumberOne.getText().toString());
+            noShowTeamTwo.setText(teamNumberTwo.getText().toString());
+            noShowTeamThree.setText(teamNumberThree.getText().toString());
+
+            noShowTeamOne.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Integer buttonColor = ((ColorDrawable) noShowTeamOne.getBackground()).getColor();
+                    if (String.valueOf(buttonColor).equals(FieldLayout.neutralColor)) {
+                        noShowTeamOne.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.TeamNumberRed));
+                    } else {
+                        noShowTeamOne.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.LightGrey));
+                    }
+
+                }
+            });
+            noShowTeamTwo.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Integer buttonColor = ((ColorDrawable) noShowTeamTwo.getBackground()).getColor();
+                    if (String.valueOf(buttonColor).equals(FieldLayout.neutralColor)) {
+                        noShowTeamTwo.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.TeamNumberRed));
+                    } else {
+                        noShowTeamTwo.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.LightGrey));
+                    }
+
+                }
+            });
+            noShowTeamThree.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Integer buttonColor = ((ColorDrawable) noShowTeamThree.getBackground()).getColor();
+                    if (String.valueOf(buttonColor).equals(FieldLayout.neutralColor)) {
+                        noShowTeamThree.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.TeamNumberRed));
+                    } else {
+                        noShowTeamThree.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.LightGrey));
+                    }
+
+                }
+            });
+            builder.setView(noShowLayout); builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Integer teamOneColor = ((ColorDrawable) noShowTeamOne.getBackground()).getColor();
+                    Integer teamTwoColor = ((ColorDrawable) noShowTeamTwo.getBackground()).getColor();
+                    Integer teamThreeColor = ((ColorDrawable) noShowTeamThree.getBackground()).getColor();
+
+                    if (String.valueOf(teamOneColor).equals(String.valueOf(FieldLayout.causedColor))) {
+                        teamNumberOneNoShow = true;
+                    } else {
+                        teamNumberOneNoShow = false;
+                    }
+                    if (String.valueOf(teamTwoColor).equals(String.valueOf(FieldLayout.causedColor))) {
+                        teamNumberTwoNoShow = true;
+                    } else {
+                        teamNumberTwoNoShow = false;
+                    }
+                    if (String.valueOf(teamThreeColor).equals(String.valueOf(FieldLayout.causedColor))) {
+                        teamNumberThreeNoShow = true;
+                    } else {
+                        teamNumberThreeNoShow = false;
+                    }
+
+                }
+            }).show();
+
         }
         return super.onOptionsItemSelected(item);
     }
