@@ -33,6 +33,7 @@
             android:windowSoftInputMode="adjustPan"
             />
         <activity android:name=".QrDisplay"/>
+        <activity android:name=".SandstormConflict"/>
     </application>
 
 </manifest>

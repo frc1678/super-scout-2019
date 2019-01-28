@@ -82,6 +82,27 @@ public class ScoutingPage extends ActionBarActivity {
     RadioButton b1;
     RadioButton b2;
     RadioButton b3;
+    String leftNear;
+    String leftMid;
+    String leftFar;
+    String rightNear;
+    String rightMid;
+    String rightFar;
+
+    String noShowOne;
+    String noShowTwo;
+    String noShowThree;
+
+    static String noShowOnePanel;
+    static String noShowTwoPanel;
+    static String noShowThreePanel;
+    static String teamOne;
+    static String teamTwo;
+    static String teamThree;
+
+    String teamOneConflict;
+    String teamTwoConflict;
+    String teamThreeConflict;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -269,16 +290,41 @@ public class ScoutingPage extends ActionBarActivity {
         dataBaseUrl = next.getExtras().getString("dataBaseUrl");
         isMute = next.getExtras().getBoolean("mute");
         isRed = next.getExtras().getBoolean("allianceColor");
+
+        leftNear = next.getStringExtra(Constants.leftNear);
+        leftFar = next.getStringExtra(Constants.leftMid);
+        leftFar = next.getStringExtra(Constants.leftFar);
+        rightNear = next.getStringExtra(Constants.rightNear);
+        rightMid = next.getStringExtra(Constants.rightMid);
+        rightFar = next.getStringExtra(Constants.rightFar);
+
+        noShowOne = next.getExtras().getString("noShowOne");
+        noShowTwo = next.getExtras().getString("noShowTwo");
+        noShowThree = next.getExtras().getString("noShowThree");
+
+        teamOneConflict = next.getExtras().getString("teamOneConflict");
+        teamTwoConflict = next.getExtras().getString("teamTwoConflict");
+        teamThreeConflict = next.getExtras().getString("teamThreeConflict");
+
+
+        noShowOnePanel = noShowOne;
+        noShowTwoPanel = noShowTwo;
+        noShowThreePanel = noShowThree;
+
+        teamOne = teamNumberOne;
+        teamTwo = teamNumberTwo;
+        teamThree = teamNumberThree;
     }
 
 
     public void setPanels() {
-        panelOne.setAllianceColor(isRed);
-        panelOne.setTeamNumber(teamNumberOne);
-        panelTwo.setAllianceColor(isRed);
-        panelTwo.setTeamNumber(teamNumberTwo);
-        panelThree.setAllianceColor(isRed);
-        panelThree.setTeamNumber(teamNumberThree);
+
+        panelOne.setAllianceColor(isRed, noShowOnePanel);
+        panelOne.setTeamNumber(teamNumberOne, noShowOnePanel);
+        panelTwo.setAllianceColor(isRed, noShowTwoPanel);
+        panelTwo.setTeamNumber(teamNumberTwo, noShowTwoPanel);
+        panelThree.setAllianceColor(isRed, noShowThreePanel);
+        panelThree.setTeamNumber(teamNumberThree, noShowThreePanel);
     }
     // TODO: Fix the above error.
     public void sendExtras() {
@@ -286,18 +332,24 @@ public class ScoutingPage extends ActionBarActivity {
         intent.putExtra("teamOneNotes", teamOneNotes);
         intent.putExtra("teamTwoNotes", teamTwoNotes);
         intent.putExtra("teamThreeNotes", teamThreeNotes);
-        intent.putExtra("teamOneBooleanTippy", teamNumberOneBooleanTippy);
-        intent.putExtra("teamTwoBooleanTippy",teamNumberTwoBooleanTippy);
-        intent.putExtra("teamThreeBooleanTippy",teamNumberThreeBooleanTippy);
-        intent.putExtra("teamOneBooleanAlignment", teamNumberOneBooleanAlignment);
-        intent.putExtra("teamTwoBooleanAlignment",teamNumberTwoBooleanAlignment);
-        intent.putExtra("teamThreeBooleanAlignment", teamNumberThreeBooleanAlignment);
-        intent.putExtra("teamOneBooleanGrip",teamNumberOneBooleanGrip);
-        intent.putExtra("teamTwoBooleanGrip",teamNumberTwoBooleanGrip);
-        intent.putExtra("teamThreeBooleanGrip",teamNumberThreeBooleanGrip);
-        intent.putExtra("teamOneBooleanInterference",teamNumberThreeBooleanInterference);
-        intent.putExtra("teamTwoBooleanInterference",teamNumberTwoBooleanInterference);
-        intent.putExtra("teamThreeBooleanInterference", teamNumberThreeBooleanInterference);
+        intent.putExtra("teamOneBooleanTippy", String.valueOf(teamNumberOneBooleanTippy));
+        intent.putExtra("teamTwoBooleanTippy",String.valueOf(teamNumberTwoBooleanTippy));
+        intent.putExtra("teamThreeBooleanTippy",String.valueOf(teamNumberThreeBooleanTippy));
+        intent.putExtra("teamOneBooleanAlignment", String.valueOf(teamNumberOneBooleanAlignment));
+        intent.putExtra("teamTwoBooleanAlignment",String.valueOf(teamNumberTwoBooleanAlignment));
+        intent.putExtra("teamThreeBooleanAlignment", String.valueOf(teamNumberThreeBooleanAlignment));
+        intent.putExtra("teamOneBooleanGrip",String.valueOf(teamNumberOneBooleanGrip));
+        intent.putExtra("teamTwoBooleanGrip",String.valueOf(teamNumberTwoBooleanGrip));
+        intent.putExtra("teamThreeBooleanGrip",String.valueOf(teamNumberThreeBooleanGrip));
+        intent.putExtra("teamOneBooleanInterference",String.valueOf(teamNumberThreeBooleanInterference));
+        intent.putExtra("teamTwoBooleanInterference",String.valueOf(teamNumberTwoBooleanInterference));
+        intent.putExtra("teamThreeBooleanInterference", String.valueOf(teamNumberThreeBooleanInterference));
+        intent.putExtra(Constants.leftNear,leftNear);
+        intent.putExtra(Constants.leftMid,leftMid);
+        intent.putExtra(Constants.leftFar,leftFar);
+        intent.putExtra(Constants.rightNear,rightNear);
+        intent.putExtra(Constants.rightMid,rightMid);
+        intent.putExtra(Constants.rightFar, rightFar);
         intent.putExtra("matchNumber", numberOfMatch);
         intent.putExtra("teamNumberOne", teamNumberOne);
         intent.putExtra("teamNumberTwo", teamNumberTwo);
@@ -307,12 +359,20 @@ public class ScoutingPage extends ActionBarActivity {
         intent.putExtra("allianceScore", allianceScoreData);
         intent.putExtra("allianceFoul", allianceFoulData);
         intent.putExtra("mute", isMute);
+        intent.putExtra("noShowOne",noShowOne);
+        intent.putExtra("noShowTwo",noShowTwo);
+        intent.putExtra("noShowThree",noShowThree);
         intent.putStringArrayListExtra("dataNameOne", teamOneDataName);
         intent.putStringArrayListExtra("ranksOfOne", teamOneDataScore);
         intent.putStringArrayListExtra("dataNameTwo", teamTwoDataName);
         intent.putStringArrayListExtra("ranksOfTwo", teamTwoDataScore);
         intent.putStringArrayListExtra("dataNameThree", teamThreeDataName);
         intent.putStringArrayListExtra("ranksOfThree", teamThreeDataScore);
+        intent.putExtra("didRocketRP",String.valueOf(didRocketRP));
+        intent.putExtra("didHabClimb",String.valueOf(didHabClimb));
+        intent.putExtra("teamOneConflict", teamOneConflict);
+        intent.putExtra("teamTwoConflict",teamTwoConflict);
+        intent.putExtra("teamThreeConflict",teamThreeConflict);
         intent.putExtras(next);
         startActivity(intent);
     }
