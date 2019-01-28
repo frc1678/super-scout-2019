@@ -92,6 +92,10 @@ public class FinalDataPoints extends ActionBarActivity {
     Switch didHabClimbSwitch;
     Switch didRocketRPSwitch;
 
+    String teamOneConflict;
+    String teamTwoConflict;
+    String teamThreeConflict;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -215,6 +219,10 @@ public class FinalDataPoints extends ActionBarActivity {
             QrDisplay.putExtra("noShowTwo",noShowTwo);
             QrDisplay.putExtra("noShowThree",noShowThree);
 
+            QrDisplay.putExtra("teamOneConflict", teamOneConflict);
+            QrDisplay.putExtra("teamTwoConflict",teamTwoConflict);
+            QrDisplay.putExtra("teamThreeConflict",teamThreeConflict);
+
             QrDisplay.putStringArrayListExtra("teamOneDataName", teamOneDataName);
             QrDisplay.putStringArrayListExtra("teamOneDataScore", teamOneDataScore);
             QrDisplay.putStringArrayListExtra("teamTwoDataName", teamTwoDataName);
@@ -314,6 +322,10 @@ public class FinalDataPoints extends ActionBarActivity {
 
         prevDidHabClimb = intent.getExtras().getString("didHabClimb");
         prevDidRocketRP = intent.getExtras().getString("didRocketRP");
+
+        teamOneConflict = intent.getExtras().getString("teamOneConflict");
+        teamTwoConflict = intent.getExtras().getString("teamTwoConflict");
+        teamThreeConflict = intent.getExtras().getString("teamThreeConflict");
         
     }
 
@@ -347,40 +359,40 @@ public class FinalDataPoints extends ActionBarActivity {
     public void appendNotes() {
         Log.e("teamNumberOooleanTippy",teamNumberOneBooleanTippy + "");
         if (teamNumberOneBooleanTippy.equals("true")) {
-            teamOneNotes = teamOneNotes + ". The robot is tippy.";
+            teamOneNotes = teamOneNotes + " The robot is tippy.";
         }
         if (teamNumberOneBooleanAlignment.equals("true")) {
-            teamOneNotes = teamOneNotes + ". The robot has poor alignment skills.";
+            teamOneNotes = teamOneNotes + " The robot has poor alignment skills.";
         }
         if (teamNumberOneBooleanGrip.equals("true")) {
-            teamOneNotes = teamOneNotes + ". The robot has a poor grip.";
+            teamOneNotes = teamOneNotes + " The robot has a poor grip.";
         }
         if (teamNumberOneBooleanInterference.equals("true")) {
-            teamOneNotes = teamOneNotes + ". The robot easily interferes with other robots.";
+            teamOneNotes = teamOneNotes + " The robot easily interferes with other robots.";
         }
         if (teamNumberTwoBooleanTippy.equals("true")) {
-            teamTwoNotes = teamTwoNotes + ". The robot is tippy.";
+            teamTwoNotes = teamTwoNotes + " The robot is tippy.";
         }
         if (teamNumberTwoBooleanAlignment.equals("true")) {
-            teamTwoNotes = teamTwoNotes + ". The robot has poor alignment skills.";
+            teamTwoNotes = teamTwoNotes + " The robot has poor alignment skills.";
         }
         if (teamNumberTwoBooleanGrip.equals("true")) {
-            teamTwoNotes = teamTwoNotes + ". The robot has a poor grip.";
+            teamTwoNotes = teamTwoNotes + " The robot has a poor grip.";
         }
         if (teamNumberTwoBooleanInterference.equals("true")) {
-            teamTwoNotes = teamTwoNotes + ". The robot easily interferes with other robots.";
+            teamTwoNotes = teamTwoNotes + " The robot easily interferes with other robots.";
         }
         if (teamNumberThreeBooleanTippy.equals("true")) {
-            teamThreeNotes = teamThreeNotes + ". The robot is tippy.";
+            teamThreeNotes = teamThreeNotes + " The robot is tippy.";
         }
         if (teamNumberThreeBooleanAlignment.equals("true")) {
-            teamThreeNotes = teamThreeNotes + ". The robot has poor alignment skills.";
+            teamThreeNotes = teamThreeNotes + " The robot has poor alignment skills.";
         }
         if (teamNumberThreeBooleanGrip.equals("true")) {
-            teamThreeNotes = teamThreeNotes + ". The robot has a poor grip.";
+            teamThreeNotes = teamThreeNotes + " The robot has a poor grip.";
         }
         if (teamNumberThreeBooleanInterference.equals("true")) {
-            teamThreeNotes = teamThreeNotes + ". The robot easily interferes with other robots.";
+            teamThreeNotes = teamThreeNotes + " The robot easily interferes with other robots.";
         }
     }
             

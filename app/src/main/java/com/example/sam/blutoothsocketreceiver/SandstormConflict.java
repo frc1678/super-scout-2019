@@ -18,11 +18,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.sam.blutoothsocketreceiver.Fields.FieldLayout;
 import com.example.sam.blutoothsocketreceiver.Fields.LeftField;
 import com.example.sam.blutoothsocketreceiver.Fields.RightField;
+
+import org.w3c.dom.Text;
 
 
 public class SandstormConflict extends AppCompatActivity {
@@ -43,17 +46,11 @@ public class SandstormConflict extends AppCompatActivity {
     String teamNumberTwo;
     String teamNumberThree;
 
-    RadioButton teleopCollision;
-    RadioButton autoCollision;
-    RadioButton habInterference;
-
     Button teamOneButton;
     Button teamTwoButton;
     Button teamThreeButton;
 
-    RelativeLayout radiobuttonLayout;
-
-    Integer dataCounter;
+    Integer dataCounter = 0;
     Integer teamOneButtonColor;
     Integer teamTwoButtonColor;
     Integer teamThreeButtonColor;
@@ -63,6 +60,14 @@ public class SandstormConflict extends AppCompatActivity {
     String noShowOne;
     String noShowTwo;
     String noShowThree;
+
+    TextView conflictBarRight;
+    TextView conflictBarLeft;
+
+    String teamOneConflict;
+    String teamTwoConflict;
+    String teamThreeConflict;
+
 
 
     @Override
@@ -83,6 +88,7 @@ public class SandstormConflict extends AppCompatActivity {
         int id = item.getItemId();
         if (id == R.id.teleop) {
             next = new Intent(SandstormConflict.this, ScoutingPage.class);
+            updateConflict();
             next.putExtras(previous);
             next.putExtra(Constants.leftNear, leftNear);
             next.putExtra(Constants.leftMid, leftMid);
@@ -98,6 +104,10 @@ public class SandstormConflict extends AppCompatActivity {
             next.putExtra("teamNumberTwo",teamNumberTwo);
             next.putExtra("teamNumberThree", teamNumberThree);
             next.putExtra("matchNumber",matchNumber);
+            next.putExtra("teamOneConflict", teamOneConflict);
+            next.putExtra("teamTwoConflict",teamTwoConflict);
+            next.putExtra("teamThreeConflict",teamThreeConflict);
+
             startActivity(next);
         }
         return super.onOptionsItemSelected(item);
@@ -141,15 +151,10 @@ public class SandstormConflict extends AppCompatActivity {
         }
     }
     public void initXML() {
-        autoCollision = (RadioButton) findViewById(R.id.autoCollision);
-        teleopCollision = (RadioButton) findViewById(R.id.teleopCollision);
-        habInterference = (RadioButton) findViewById(R.id.habInterference);
 
         teamOneButton = (Button) findViewById(R.id.teamNumberOneButton);
         teamTwoButton = (Button) findViewById(R.id.teamNumberTwoButton);
         teamThreeButton = (Button) findViewById(R.id.teamNumberThreeButton);
-
-        radiobuttonLayout = (RelativeLayout) findViewById(R.id.radioButtonLayout);
 
         teamOneButton.setText(String.valueOf(teamNumberOne));
         teamTwoButton.setText(String.valueOf(teamNumberTwo));
@@ -158,31 +163,30 @@ public class SandstormConflict extends AppCompatActivity {
         teamOneButtonColor = ((ColorDrawable)teamOneButton.getBackground()).getColor();
         teamTwoButtonColor = ((ColorDrawable)teamTwoButton.getBackground()).getColor();
         teamThreeButtonColor = ((ColorDrawable)teamThreeButton.getBackground()).getColor();
+
+        conflictBarLeft = (TextView) findViewById(R.id.conflictBarLeft);
+        conflictBarRight = (TextView) findViewById(R.id.conflictBarRight);
+
+        if (alliance.equals("blue")) {
+            conflictBarLeft.setTextColor(ContextCompat.getColor(this, R.color.Bloo));
+            conflictBarRight.setTextColor(ContextCompat.getColor(this, R.color.Bloo));
+        }
+        if (alliance.equals("red")) {
+            conflictBarRight.setTextColor(ContextCompat.getColor(this, R.color.Rausch));
+            conflictBarLeft.setTextColor(ContextCompat.getColor(this, R.color.Rausch));
+        }
     }
-    public void hideRadioButtonLayout() {
+/*    public void hideRadioButtonLayout() {
         radiobuttonLayout.setVisibility(View.GONE);
     }
     public void revealRadioButtonLayout() {
         radiobuttonLayout.setVisibility(View.VISIBLE);
-    }
-    public void makeCaused(Button button) {
-        button.setBackgroundColor(ContextCompat.getColor(SandstormConflict.this, R.color.TeamNumberRed));
-    }
+    }*/
     public void makeAffected(Button button) {
-        button.setBackgroundColor(ContextCompat.getColor(SandstormConflict.this, R.color.JustinYellow));
+        button.setBackgroundColor(ContextCompat.getColor(SandstormConflict.this, R.color.JustinOrange));
     }
     public void makeNeutral(Button button) {
         button.setBackgroundColor(ContextCompat.getColor(SandstormConflict.this, R.color.LightGrey));
-    }
-    public void makeEqualConflict(Button button) {
-        button.setBackgroundColor(ContextCompat.getColor(SandstormConflict.this, R.color.JustinOrange));
-    }
-    public Boolean isCaused(Button button) {
-        Integer buttonColor = ((ColorDrawable)button.getBackground()).getColor();
-        if (String.valueOf(buttonColor).equals(FieldLayout.causedColor)) {
-            return true;
-        }
-        return false;
     }
     public Boolean isAffected(Button button) {
         Integer buttonColor = ((ColorDrawable)button.getBackground()).getColor();
@@ -194,13 +198,6 @@ public class SandstormConflict extends AppCompatActivity {
     public Boolean isNeutral(Button button) {
         Integer buttonColor = ((ColorDrawable)button.getBackground()).getColor();
         if (String.valueOf(buttonColor).equals(FieldLayout.neutralColor)) {
-            return true;
-        }
-        return false;
-    }
-    public Boolean isEqualConflict(Button button) {
-        Integer buttonColor = ((ColorDrawable)button.getBackground()).getColor();
-        if (String.valueOf(buttonColor).equals(FieldLayout.equalConflictColor)) {
             return true;
         }
         return false;
@@ -236,15 +233,31 @@ public class SandstormConflict extends AppCompatActivity {
         });
     }
 
+
     public void initColors(Button button) {
         if (isNeutral(button)) {
-            makeCaused(button);
-        } else if (isCaused(button)) {
             makeAffected(button);
+            dataCounter ++;
         } else if (isAffected(button)) {
-            makeEqualConflict(button);
-        } else if (isEqualConflict(button)) {
             makeNeutral(button);
+            dataCounter --;
+        }
+    }
+    public void updateConflict() {
+        if (isAffected(teamOneButton)) {
+            teamOneConflict = "true";
+        } else if (isNeutral(teamOneButton)) {
+            teamOneConflict = "false";
+        }
+        if (isAffected(teamTwoButton)) {
+            teamTwoConflict = "true";
+        } else if (isNeutral(teamTwoButton)) {
+            teamTwoConflict = "false";
+        }
+        if (isAffected(teamThreeButton)) {
+            teamThreeConflict = "true";
+        } else if (isNeutral(teamThreeButton)) {
+            teamThreeConflict = "false";
         }
     }
 

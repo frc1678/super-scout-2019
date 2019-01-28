@@ -36,7 +36,8 @@ public class SuperScoutingPanel extends Fragment {
         return inflater.inflate(R.layout.super_scouting_panel, container, false);
     }
 
-    public void setAllianceColor(boolean allianceColor) {
+
+    public void setAllianceColor(boolean allianceColor, String teamNumberNoShow) {
         TextView teamNumberTextView = (TextView) getView().findViewById(R.id.teamNumberTextView);
         this.isRed = allianceColor;
         if (isRed) {
@@ -44,12 +45,19 @@ public class SuperScoutingPanel extends Fragment {
         } else {
             teamNumberTextView.setTextColor(ContextCompat.getColor(getContext(), R.color.TeamNumberBlue));
         }
+        if (teamNumberNoShow.equals("true")) {
+            teamNumberTextView.setTextColor(ContextCompat.getColor(getContext(), R.color.KateGray));
+        }
     }
 
-    public void setTeamNumber(String teamNumber) {
-        Log.e("AYO","HIT THE FRO");
+    public void setTeamNumber(String teamNumber, String teamNumberNoShow) {
         TextView teamNumberTextView = (TextView) getView().findViewById(R.id.teamNumberTextView);
         teamNumberTextView.setText(teamNumber);
+
+        String noShowText = " (NO SHOW) ";
+        if (teamNumberNoShow.equals("true")) {
+            teamNumberTextView.setText(teamNumber + noShowText);
+        }
     }
 
     public int getDataNameCount() {

@@ -19,8 +19,7 @@ public class FieldLayout {
     //gray -2894893
 
     public static String causedColor = "-2594978";
-    public static String affectedColor = "-66921";
-    public static String equalConflictColor = "-277703";
+    public static String affectedColor = "-277703";
     public static String neutralColor = "-2894893";
 
 

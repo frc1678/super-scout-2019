@@ -93,6 +93,17 @@ public class ScoutingPage extends ActionBarActivity {
     String noShowTwo;
     String noShowThree;
 
+    static String noShowOnePanel;
+    static String noShowTwoPanel;
+    static String noShowThreePanel;
+    static String teamOne;
+    static String teamTwo;
+    static String teamThree;
+
+    String teamOneConflict;
+    String teamTwoConflict;
+    String teamThreeConflict;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -246,7 +257,6 @@ public class ScoutingPage extends ActionBarActivity {
                 didRocketRP = rocketRP.isChecked();
                 didHabClimb = habClimb.isChecked();
 
-                Log.e("didididHab",didHabClimb.toString());
                 try {
                     allianceScoreInt = Integer.parseInt(allianceScoreData);
                     allianceFoulInt = Integer.parseInt(allianceFoulData);
@@ -291,16 +301,30 @@ public class ScoutingPage extends ActionBarActivity {
         noShowOne = next.getExtras().getString("noShowOne");
         noShowTwo = next.getExtras().getString("noShowTwo");
         noShowThree = next.getExtras().getString("noShowThree");
+
+        teamOneConflict = next.getExtras().getString("teamOneConflict");
+        teamTwoConflict = next.getExtras().getString("teamTwoConflict");
+        teamThreeConflict = next.getExtras().getString("teamThreeConflict");
+
+
+        noShowOnePanel = noShowOne;
+        noShowTwoPanel = noShowTwo;
+        noShowThreePanel = noShowThree;
+
+        teamOne = teamNumberOne;
+        teamTwo = teamNumberTwo;
+        teamThree = teamNumberThree;
     }
 
 
     public void setPanels() {
-        panelOne.setAllianceColor(isRed);
-        panelOne.setTeamNumber(teamNumberOne);
-        panelTwo.setAllianceColor(isRed);
-        panelTwo.setTeamNumber(teamNumberTwo);
-        panelThree.setAllianceColor(isRed);
-        panelThree.setTeamNumber(teamNumberThree);
+
+        panelOne.setAllianceColor(isRed, noShowOnePanel);
+        panelOne.setTeamNumber(teamNumberOne, noShowOnePanel);
+        panelTwo.setAllianceColor(isRed, noShowTwoPanel);
+        panelTwo.setTeamNumber(teamNumberTwo, noShowTwoPanel);
+        panelThree.setAllianceColor(isRed, noShowThreePanel);
+        panelThree.setTeamNumber(teamNumberThree, noShowThreePanel);
     }
     // TODO: Fix the above error.
     public void sendExtras() {
@@ -346,6 +370,9 @@ public class ScoutingPage extends ActionBarActivity {
         intent.putStringArrayListExtra("ranksOfThree", teamThreeDataScore);
         intent.putExtra("didRocketRP",String.valueOf(didRocketRP));
         intent.putExtra("didHabClimb",String.valueOf(didHabClimb));
+        intent.putExtra("teamOneConflict", teamOneConflict);
+        intent.putExtra("teamTwoConflict",teamTwoConflict);
+        intent.putExtra("teamThreeConflict",teamThreeConflict);
         intent.putExtras(next);
         startActivity(intent);
     }

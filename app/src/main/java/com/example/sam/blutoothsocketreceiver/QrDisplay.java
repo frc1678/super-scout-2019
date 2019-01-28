@@ -77,6 +77,10 @@ public class QrDisplay extends ActionBarActivity {
     String didRocketRP;
     String didHabClimb;
 
+    String teamOneConflict;
+    String teamTwoConflict;
+    String teamThreeConflict;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -132,6 +136,11 @@ public class QrDisplay extends ActionBarActivity {
         didRocketRP = intent.getExtras().getString("didRocketRP");
         didHabClimb = intent.getExtras().getString("didHabClimb");
 
+        teamOneConflict = intent.getExtras().getString("teamOneConflict");
+        teamTwoConflict = intent.getExtras().getString("teamTwoConflict");
+        teamThreeConflict = intent.getExtras().getString("teamThreeConflict");
+
+
     }
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -182,9 +191,7 @@ public class QrDisplay extends ActionBarActivity {
                 + ";g"
                 + rightFar
                 + "},h"
-                + generateNoShowList(noShowOne, noShowTwo, noShowThree)
-                + ",j"
-                + "todoSandstorm,"//todo SANDSTORM CONFLICT
+                + generateNoShowList(noShowOne, noShowTwo, noShowThree) + ","
                 + getStringAlliance(alliance)
                 + score + ","
                 + getFoulAlliance(alliance)
@@ -207,6 +214,8 @@ public class QrDisplay extends ActionBarActivity {
                 + teamOneDataScore.get(2)
                 + ";B"
                 + teamOneDataScore.get(3)
+                + ";j"
+                + teamOneConflict
                 + "},2{u"
                 + teamNumberTwo
                 + ";v"
@@ -221,6 +230,8 @@ public class QrDisplay extends ActionBarActivity {
                 + teamTwoDataScore.get(2)
                 + ";B"
                 + teamTwoDataScore.get(3)
+                + ";j"
+                + teamTwoConflict
                 + "},3{u"
                 + teamNumberThree
                 + ";v"
@@ -235,6 +246,8 @@ public class QrDisplay extends ActionBarActivity {
                 + teamThreeDataScore.get(2)
                 + ";B"
                 + teamThreeDataScore.get(3)
+                + ";j"
+                + teamThreeConflict
                 + "}";
 
         new Thread() {
@@ -365,6 +378,21 @@ public class QrDisplay extends ActionBarActivity {
             didHabClimb = "T";
         } else {
             didHabClimb = "F";
+        }
+        if (teamOneConflict.equals("true")) {
+            teamOneConflict = "T";
+        } else {
+            teamOneConflict = "F";
+        }
+        if (teamTwoConflict.equals("true")) {
+            teamTwoConflict = "T";
+        } else {
+            teamTwoConflict = "F";
+        }
+        if (teamThreeConflict.equals("true")) {
+            teamThreeConflict = "T";
+        } else {
+            teamThreeConflict = "F";
         }
 
 
