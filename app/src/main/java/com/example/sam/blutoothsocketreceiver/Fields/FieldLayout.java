@@ -8,4 +8,19 @@ public class FieldLayout {
     public static String red = "red";
     public static String blue = "blue";
 
+    public static String alliance = "alliance";
+    public static String teamNumberOne = "teamNumberOne";
+    public static String teamNumberTwo = "teamNumberTwo";
+    public static String teamNumberThree = "teamNumberThree";
+
+    //yellow -66921
+    //red -2594978
+    //orange -277703
+    //gray -2894893
+
+    public static String causedColor = "-2594978";
+    public static String affectedColor = "-277703";
+    public static String neutralColor = "-2894893";
+
+
 }

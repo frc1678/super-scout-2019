@@ -25,6 +25,7 @@ import com.example.sam.blutoothsocketreceiver.Constants;
 import com.example.sam.blutoothsocketreceiver.FieldSetupPage;
 import com.example.sam.blutoothsocketreceiver.MainActivity;
 import com.example.sam.blutoothsocketreceiver.R;
+import com.example.sam.blutoothsocketreceiver.SandstormConflict;
 import com.example.sam.blutoothsocketreceiver.ScoutingPage;
 
 import java.util.HashMap;
@@ -54,6 +55,10 @@ public class RightField extends AppCompatActivity {
 
     Map<String, String> cargoShipInputValues = new HashMap<>();
 
+    String noShowOne;
+    String noShowTwo;
+    String noShowThree;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,6 +86,13 @@ public class RightField extends AppCompatActivity {
             teamNumberOne = previous.getExtras().getString("teamNumberOne");
             teamNumberTwo = previous.getExtras().getString("teamNumberTwo");
             teamNumberThree = previous.getExtras().getString("teamNumberThree");
+
+            //get noShow teams
+
+            noShowOne = previous.getExtras().getString("noShowOne");
+            noShowTwo = previous.getExtras().getString("noShowTwo");
+            noShowThree = previous.getExtras().getString("noShowThree");
+
         }
     }
     public void getXML() {
@@ -181,15 +193,15 @@ public class RightField extends AppCompatActivity {
     }
     @Override
     public boolean onCreateOptionsMenu (Menu menu){
-        getMenuInflater().inflate(R.menu.teleop, menu);
+        getMenuInflater().inflate(R.menu.sandstorm, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected (MenuItem item){
         int id = item.getItemId();
-        if (id == R.id.teleop) {
-            Intent next = new Intent(RightField.this, ScoutingPage.class);
+        if (id == R.id.sandstorm) {
+            Intent next = new Intent(RightField.this, SandstormConflict.class);
             getCargoShipInputValues();
             if (cargoShipInputValues.containsValue(Bay.noValue)) {
                 Toast toast = Toast.makeText(RightField.this, Bay.errorMessage, Toast.LENGTH_SHORT);
@@ -204,10 +216,14 @@ public class RightField extends AppCompatActivity {
                 next.putExtra(Constants.rightNear, cargoShipInputValues.get(Constants.rightNear));
                 next.putExtra(Constants.rightMid, cargoShipInputValues.get(Constants.rightMid));
                 next.putExtra(Constants.rightFar, cargoShipInputValues.get(Constants.rightFar));
+                next.putExtra("noShowOne",noShowOne);
+                next.putExtra("noShowTwo",noShowTwo);
+                next.putExtra("noShowThree",noShowThree);
                 next.putExtra("alliance", alliance);
                 next.putExtra("teamNumberOne",teamNumberOne);
                 next.putExtra("teamNumberTwo",teamNumberTwo);
                 next.putExtra("teamNumberThree", teamNumberThree);
+                next.putExtra("matchNumber",numberOfMatch);
                 startActivity(next);
             }
         }

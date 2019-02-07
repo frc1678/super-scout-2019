@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:layout_height="0dp">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent">
+
+            <Button
+                android:id="@+id/teamNumberOneButton"
+                android:background="@color/LightGrey"
+                android:text="1678"
+                android:gravity="center"
+                android:textSize="48dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="20dp"
+            android:background="@color/KateGray"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/conflictBarLeft"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textColor="@color/Rausch"
+                android:gravity="center"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:text="CONFL I CT CONFL I CT CONFL I CT"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent">
+
+            <Button
+                android:id="@+id/teamNumberTwoButton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/LightGrey"
+                android:gravity="center"
+                android:text="1678"
+                android:textSize="48dp"
+                />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="20dp"
+            android:background="@color/KateGray"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/conflictBarRight"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textColor="@color/Rausch"
+                android:gravity="center"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:text="CONFL I CT CONFL I CT CONFL I CT"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent">
+
+            <Button
+                android:id="@+id/teamNumberThreeButton"
+                android:background="@color/LightGrey"
+                android:text="1678"
+                android:gravity="center"
+                android:textSize="48dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">BlutoothSocketReceiver</string>
+    <string name="app_name">Super Scout</string>
 
     <!-- The version number of the app. Must be updated with every pull request. Format: yy.mm.dd.[pull request #] -->
     <string name="version_number">Super Scout | 18.09.27:48</string>

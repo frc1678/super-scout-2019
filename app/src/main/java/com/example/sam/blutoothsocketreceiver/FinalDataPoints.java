@@ -70,6 +70,31 @@ public class FinalDataPoints extends ActionBarActivity {
     DatabaseReference firebaseRef;
     Intent intent;
     boolean hasRun;
+    String teamNumberOneBooleanTippy, teamNumberOneBooleanAlignment, teamNumberOneBooleanGrip, teamNumberOneBooleanInterference;
+    String teamNumberTwoBooleanTippy, teamNumberTwoBooleanAlignment, teamNumberTwoBooleanGrip, teamNumberTwoBooleanInterference;
+    String teamNumberThreeBooleanTippy, teamNumberThreeBooleanAlignment, teamNumberThreeBooleanGrip, teamNumberThreeBooleanInterference;
+    
+    String leftNear;
+    String leftMid;
+    String leftFar;
+    String rightNear;
+    String rightMid;
+    String rightFar;
+
+    String noShowOne;
+    String noShowTwo;
+    String noShowThree;
+
+    String didHabClimb;
+    String didRocketRP;
+    String prevDidHabClimb;
+    String prevDidRocketRP;
+    Switch didHabClimbSwitch;
+    Switch didRocketRPSwitch;
+
+    String teamOneConflict;
+    String teamTwoConflict;
+    String teamThreeConflict;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,9 +108,19 @@ public class FinalDataPoints extends ActionBarActivity {
         firebaseRef = FirebaseDatabase.getInstance().getReference();
         allianceScore = (EditText) findViewById(R.id.finalScoreEditText);
         allianceFoul = (EditText) findViewById(R.id.finalFoulEditText);
+        didHabClimbSwitch = (Switch) findViewById(R.id.didHabClimb);
+        didRocketRPSwitch = (Switch) findViewById(R.id.didRocketRP);
+        if (prevDidHabClimb.equals("true")) {
+            didHabClimbSwitch.setChecked(true);
+        }
+        if (prevDidRocketRP.equals("true")) {
+            didRocketRPSwitch.setChecked(true);
+        }
         finalScore = (TextView)findViewById(R.id.finalScoreTextView);
 
         allianceScore.setCursorVisible(false);
+
+
 
         if(alliance.equals("blue")){
             finalScore.setTextColor(Color.BLUE);
@@ -151,7 +186,15 @@ public class FinalDataPoints extends ActionBarActivity {
                 return false;
             }
 
+            if (didRocketRPSwitch.isChecked()) {
+                didRocketRP = "true";
+            }
+            if (didHabClimbSwitch.isChecked()) {
+                didHabClimb = "true";
+            }
+
             updateNotes();
+            appendNotes();
             Intent QrDisplay = new Intent(context, QrDisplay.class);
             QrDisplay.putExtra("matchNumber", numberOfMatch);
             QrDisplay.putExtra("alliance", alliance);
@@ -162,9 +205,23 @@ public class FinalDataPoints extends ActionBarActivity {
             QrDisplay.putExtra("superNotesOne", teamOneNotes);
             QrDisplay.putExtra("superNotesTwo", teamTwoNotes);
             QrDisplay.putExtra("superNotesThree", teamThreeNotes);
-            QrDisplay.putExtra("score", allianceScore.getText().toString());
-            QrDisplay.putExtra("foul", allianceFoul.getText().toString());
+            QrDisplay.putExtra("score", String.valueOf(score));
+            QrDisplay.putExtra("foul", String.valueOf(foul));
 
+            QrDisplay.putExtra(Constants.leftNear,leftNear);
+            QrDisplay.putExtra(Constants.leftMid,leftMid);
+            QrDisplay.putExtra(Constants.leftFar,leftFar);
+            QrDisplay.putExtra(Constants.rightNear,rightNear);
+            QrDisplay.putExtra(Constants.rightMid,rightMid);
+            QrDisplay.putExtra(Constants.rightFar, rightFar);
+
+            QrDisplay.putExtra("noShowOne",noShowOne);
+            QrDisplay.putExtra("noShowTwo",noShowTwo);
+            QrDisplay.putExtra("noShowThree",noShowThree);
+
+            QrDisplay.putExtra("teamOneConflict", teamOneConflict);
+            QrDisplay.putExtra("teamTwoConflict",teamTwoConflict);
+            QrDisplay.putExtra("teamThreeConflict",teamThreeConflict);
 
             QrDisplay.putStringArrayListExtra("teamOneDataName", teamOneDataName);
             QrDisplay.putStringArrayListExtra("teamOneDataScore", teamOneDataScore);
@@ -176,6 +233,12 @@ public class FinalDataPoints extends ActionBarActivity {
             QrDisplay.putExtra("leftViewColor", leftViewColor);
 
             QrDisplay.putExtra("isMute", isMute);
+
+            QrDisplay.putExtra("didHabClimb", String.valueOf(didHabClimb));
+            QrDisplay.putExtra("didRocketRP", String.valueOf(didRocketRP));
+            Log.e("didHabCLimmmn",didHabClimb + "");
+            Log.e("didRockeetttt",didRocketRP + "");
+            
             startActivity(QrDisplay);
         }
 
@@ -186,6 +249,7 @@ public class FinalDataPoints extends ActionBarActivity {
             finalNotesIntent.putExtra("teamNumTwo", teamNumberTwo);
             finalNotesIntent.putExtra("teamNumThree", teamNumberThree);
             updateNotes();
+            appendNotes();
             finalNotesIntent.putExtra("teamOneNotes", teamOneNotes); //TODO: Make sure notes are saved on return & save notes to teamOneNotes.
             finalNotesIntent.putExtra("teamTwoNotes", teamTwoNotes);
             finalNotesIntent.putExtra("teamThreeNotes", teamThreeNotes);
@@ -231,6 +295,38 @@ public class FinalDataPoints extends ActionBarActivity {
         allianceFoulData = intent.getExtras().getString("allianceFoul");
 
         leftViewColor = intent.getExtras().getString("leftViewColor");
+        
+        teamNumberOneBooleanTippy = intent.getExtras().getString("teamOneBooleanTippy");
+        teamNumberTwoBooleanTippy = intent.getExtras().getString("teamTwoBooleanTippy");
+        teamNumberThreeBooleanTippy = intent.getExtras().getString("teamThreeBooleanTippy");
+        teamNumberOneBooleanAlignment = intent.getExtras().getString("teamOneBooleanAlignment");
+        teamNumberTwoBooleanAlignment = intent.getExtras().getString("teamTwoBooleanAlignment");
+        teamNumberThreeBooleanAlignment = intent.getExtras().getString("teamThreeBooleanAlignment");
+        teamNumberOneBooleanGrip = intent.getExtras().getString("teamOneBooleanGrip");
+        teamNumberTwoBooleanGrip = intent.getExtras().getString("teamTwoBooleanGrip");
+        teamNumberThreeBooleanGrip = intent.getExtras().getString("teamThreeBooleanGrip");
+        teamNumberOneBooleanInterference = intent.getExtras().getString("teamOneBooleanInterference");
+        teamNumberTwoBooleanInterference = intent.getExtras().getString("teamTwoBooleanInterference");
+        teamNumberThreeBooleanInterference = intent.getExtras().getString("teamThreeBooleanInterference");
+        
+        leftNear = intent.getExtras().getString(Constants.leftNear);
+        leftMid = intent.getExtras().getString(Constants.leftMid);
+        leftFar = intent.getExtras().getString(Constants.leftFar);
+        rightNear = intent.getExtras().getString(Constants.rightNear);
+        rightMid = intent.getExtras().getString(Constants.rightMid);
+        rightFar = intent.getExtras().getString(Constants.rightFar);
+
+        noShowOne = intent.getExtras().getString("noShowOne");
+        noShowTwo = intent.getExtras().getString("noShowTwo");
+        noShowThree = intent.getExtras().getString("noShowThree");
+
+        prevDidHabClimb = intent.getExtras().getString("didHabClimb");
+        prevDidRocketRP = intent.getExtras().getString("didRocketRP");
+
+        teamOneConflict = intent.getExtras().getString("teamOneConflict");
+        teamTwoConflict = intent.getExtras().getString("teamTwoConflict");
+        teamThreeConflict = intent.getExtras().getString("teamThreeConflict");
+        
     }
 
     public void sendAfterMatchData(){ //TODO: Replace 'hard-coded' red abd blue with a variable (ex: alliance + "Score")
@@ -260,4 +356,44 @@ public class FinalDataPoints extends ActionBarActivity {
             teamThreeNotes = Constants.teamThreeNoteHolder;
         }
     }
+    public void appendNotes() {
+        Log.e("teamNumberOooleanTippy",teamNumberOneBooleanTippy + "");
+        if (teamNumberOneBooleanTippy.equals("true")) {
+            teamOneNotes = teamOneNotes + " The robot is tippy.";
+        }
+        if (teamNumberOneBooleanAlignment.equals("true")) {
+            teamOneNotes = teamOneNotes + " The robot has poor alignment skills.";
+        }
+        if (teamNumberOneBooleanGrip.equals("true")) {
+            teamOneNotes = teamOneNotes + " The robot has a poor grip.";
+        }
+        if (teamNumberOneBooleanInterference.equals("true")) {
+            teamOneNotes = teamOneNotes + " The robot easily interferes with other robots.";
+        }
+        if (teamNumberTwoBooleanTippy.equals("true")) {
+            teamTwoNotes = teamTwoNotes + " The robot is tippy.";
+        }
+        if (teamNumberTwoBooleanAlignment.equals("true")) {
+            teamTwoNotes = teamTwoNotes + " The robot has poor alignment skills.";
+        }
+        if (teamNumberTwoBooleanGrip.equals("true")) {
+            teamTwoNotes = teamTwoNotes + " The robot has a poor grip.";
+        }
+        if (teamNumberTwoBooleanInterference.equals("true")) {
+            teamTwoNotes = teamTwoNotes + " The robot easily interferes with other robots.";
+        }
+        if (teamNumberThreeBooleanTippy.equals("true")) {
+            teamThreeNotes = teamThreeNotes + " The robot is tippy.";
+        }
+        if (teamNumberThreeBooleanAlignment.equals("true")) {
+            teamThreeNotes = teamThreeNotes + " The robot has poor alignment skills.";
+        }
+        if (teamNumberThreeBooleanGrip.equals("true")) {
+            teamThreeNotes = teamThreeNotes + " The robot has a poor grip.";
+        }
+        if (teamNumberThreeBooleanInterference.equals("true")) {
+            teamThreeNotes = teamThreeNotes + " The robot easily interferes with other robots.";
+        }
+    }
+            
 }

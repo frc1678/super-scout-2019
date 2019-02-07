@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.sam.blutoothsocketreceiver.Fields.Bay;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
 import com.google.zxing.MultiFormatWriter;
@@ -62,6 +63,23 @@ public class QrDisplay extends ActionBarActivity {
     Activity context;
     File dir;
     PrintWriter file;
+    String leftNear;
+    String leftMid;
+    String leftFar;
+    String rightNear;
+    String rightMid;
+    String rightFar;
+
+    String noShowOne;
+    String noShowTwo;
+    String noShowThree;
+
+    String didRocketRP;
+    String didHabClimb;
+
+    String teamOneConflict;
+    String teamTwoConflict;
+    String teamThreeConflict;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,8 +90,12 @@ public class QrDisplay extends ActionBarActivity {
         context = this;
         intent = getIntent();
         getExtras();
+        Log.e("TeamOneDataScore",teamOneDataScore.toString());
+        Log.e("TeamOneDataName",teamOneDataName.toString());
         QRImage = (ImageView) findViewById(R.id.QRCode_Display);
+        convertValues();
         createCompressedFormat();
+        Log.e("COMPRESSED", compressedData);
         displayQR(compressedData);
     }
 
@@ -98,7 +120,27 @@ public class QrDisplay extends ActionBarActivity {
         teamThreeDataName = intent.getStringArrayListExtra("teamThreeDataName");
         teamThreeDataScore = intent.getStringArrayListExtra("teamThreeDataScore");
 
+        leftNear = intent.getStringExtra(Constants.leftNear);
+        leftMid = intent.getStringExtra(Constants.leftMid);
+        leftFar = intent.getStringExtra(Constants.leftFar);
+        rightNear = intent.getStringExtra(Constants.rightNear);
+        rightMid = intent.getStringExtra(Constants.rightMid);
+        rightFar = intent.getStringExtra(Constants.rightFar);
+
         isMute = intent.getExtras().getBoolean("isMute");
+
+        noShowOne = intent.getExtras().getString("noShowOne");
+        noShowTwo = intent.getExtras().getString("noShowTwo");
+        noShowThree = intent.getExtras().getString("noShowThree");
+
+        didRocketRP = intent.getExtras().getString("didRocketRP");
+        didHabClimb = intent.getExtras().getString("didHabClimb");
+
+        teamOneConflict = intent.getExtras().getString("teamOneConflict");
+        teamTwoConflict = intent.getExtras().getString("teamTwoConflict");
+        teamThreeConflict = intent.getExtras().getString("teamThreeConflict");
+
+
     }
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -107,9 +149,7 @@ public class QrDisplay extends ActionBarActivity {
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
+
         int id = item.getItemId();
         //noinspection SimplifiableIfStatement
         if (id == R.id.backToMainActivity) {
@@ -127,34 +167,91 @@ public class QrDisplay extends ActionBarActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-    public void createCompressedFormat(){
-        if (alliance.equals("Blue Alliance")){
-            allianceCompressed = "0";
+    public void createCompressedFormat() {
+        if (alliance.equals("Blue Alliance")) {
+            allianceCompressed = "B";
         } else {
-            allianceCompressed = "1"; }
-       /* if (didAutoQuest.equals(false)){
-            autoQuestCompressed = "0";
-        } else {
-            autoQuestCompressed = "1"; }
-        if (didFaceBoss.equals(false)){
-            faceBossCompressed = "0";
-        } else {
-            faceBossCompressed = "1"; }
-        if (blueSwitch.equals("blue")){
-            blueSwitchCompressed = "0";
-        } else {
-            blueSwitchCompressed = "1"; }
-        if (redSwitch.equals("blue")){
-            redSwitchCompressed = "0";
-        } else {
-            redSwitchCompressed = "1"; }
-        if (scale.equals("blue")){
-            scaleCompressed = "0";
-        } else {
-            scaleCompressed= "1"; }*/
-        compressedData = "S!" + matchNumber + "_" + allianceCompressed + "|p(g" + ",s" + score + ",j" + foul + ",r(d" + "),t(" + "M" + teamNumberOne + "B" + teamOneDataScore.get(3) + "G" + teamOneDataScore.get(1) + "A" + teamOneDataScore.get(2) + "D" + teamOneDataScore.get(0) + "S" + teamOneDataScore.get(4) + "N[" + superNotesOne + "]," + "M" + teamNumberTwo + "B" + teamTwoDataScore.get(3) + "G" + teamTwoDataScore.get(1) + "A" + teamTwoDataScore.get(2) + "D" + teamTwoDataScore.get(0) + "S" + teamTwoDataScore.get(4) + "N[" + superNotesTwo + "]," + "M" + teamNumberThree + "B" + teamThreeDataScore.get(3) + "G" + teamThreeDataScore.get(1) + "A" + teamThreeDataScore.get(2) + "D" + teamThreeDataScore.get(0) + "S" + teamThreeDataScore.get(4) + "N[" + superNotesThree + "])";
+            allianceCompressed = "R";
+        }
+
+        compressedData = "S!Q"
+                + matchNumber
+                + "-"
+                + allianceCompressed
+                + "|a{b"
+                + leftNear
+                + ";c"
+                + leftMid
+                + ";d"
+                + leftFar
+                + ";e"
+                + rightNear
+                + ";f"
+                + rightMid
+                + ";g"
+                + rightFar
+                + "},h"
+                + generateNoShowList(noShowOne, noShowTwo, noShowThree) + ","
+                + getStringAlliance(alliance)
+                + score + ","
+                + getFoulAlliance(alliance)
+                + foul + ","
+                + getRocketRPAlliance(alliance)
+                + didRocketRP + ","
+                + getHabClimbAlliance(alliance)
+                + didHabClimb
+                + "_1{u"
+                + teamNumberOne
+                + ";v"
+                + teamOneDataScore.get(1)
+                + ";w"
+                + teamOneDataScore.get(0)
+                + ";y"
+                + teamOneDataScore.get(4)
+                + ";z\""
+                + superNotesOne
+                + "\";A"
+                + teamOneDataScore.get(2)
+                + ";B"
+                + teamOneDataScore.get(3)
+                + ";j"
+                + teamOneConflict
+                + "},2{u"
+                + teamNumberTwo
+                + ";v"
+                + teamTwoDataScore.get(1)
+                + ";w"
+                + teamTwoDataScore.get(0)
+                + ";y"
+                + teamTwoDataScore.get(4)
+                + ";z\""
+                + superNotesTwo
+                + "\";A"
+                + teamTwoDataScore.get(2)
+                + ";B"
+                + teamTwoDataScore.get(3)
+                + ";j"
+                + teamTwoConflict
+                + "},3{u"
+                + teamNumberThree
+                + ";v"
+                + teamThreeDataScore.get(1)
+                + ";w"
+                + teamThreeDataScore.get(0)
+                + ";y"
+                + teamThreeDataScore.get(4)
+                + ";z\""
+                + superNotesThree
+                + "\";A"
+                + teamThreeDataScore.get(2)
+                + ";B"
+                + teamThreeDataScore.get(3)
+                + ";j"
+                + teamThreeConflict
+                + "}";
 
         new Thread() {
+
             @Override
             public void run() {
                 try {
@@ -224,6 +321,127 @@ public class QrDisplay extends ActionBarActivity {
         }
     }
 
+    public void convertValues() {
+        if (leftNear.equals(Bay.yellowValue)) {
+            leftNear = "L";
+        } else if (leftNear.equals(Bay.orangeValue)) {
+            leftNear = "G";
+        }
+        if (leftMid.equals(Bay.yellowValue)) {
+            leftMid = "L";
+        } else if (leftMid.equals(Bay.orangeValue)) {
+            leftMid = "G";
+        }
+        if (leftFar.equals(Bay.yellowValue)) {
+            leftFar = "L";
+        } else if (leftFar.equals(Bay.orangeValue)) {
+            leftFar = "G";
+        }
+        if (rightNear.equals(Bay.yellowValue)) {
+            rightNear = "L";
+        } else if (rightNear.equals(Bay.orangeValue)) {
+            rightNear = "G";
+        }
+        if (rightMid.equals(Bay.yellowValue)) {
+            rightMid = "L";
+        } else if (rightMid.equals(Bay.orangeValue)) {
+            rightMid = "G";
+        }
+        if (rightFar.equals(Bay.yellowValue)) {
+            rightFar = "L";
+        } else if (rightFar.equals(Bay.orangeValue)) {
+            rightFar = "G";
+        }
+
+        if (noShowOne.equals("true")) {
+            noShowOne = teamNumberOne;
+        } else {
+            noShowOne = "";
+        }
+        if (noShowTwo.equals("true")) {
+            noShowTwo = teamNumberTwo;
+        } else {
+            noShowTwo = "";
+        }
+        if (noShowThree.equals("true")) {
+            noShowThree = teamNumberThree;
+        } else {
+            noShowThree = "";
+        }
+        if (didRocketRP.equals("true")) {
+            didRocketRP = "T";
+        } else {
+            didRocketRP = "F";
+        }
+        Log.e("didHabClimb",didHabClimb +"");
+        if (didHabClimb.equals("true")) {
+            didHabClimb = "T";
+        } else {
+            didHabClimb = "F";
+        }
+        if (teamOneConflict.equals("true")) {
+            teamOneConflict = "T";
+        } else {
+            teamOneConflict = "F";
+        }
+        if (teamTwoConflict.equals("true")) {
+            teamTwoConflict = "T";
+        } else {
+            teamTwoConflict = "F";
+        }
+        if (teamThreeConflict.equals("true")) {
+            teamThreeConflict = "T";
+        } else {
+            teamThreeConflict = "F";
+        }
 
 
+
+    }
+    public String getStringAlliance(String alliance) {
+        if (alliance.equals("Red Alliance")) {
+            return "k";
+        }
+        else if (alliance.equals("Blue Alliance")) {
+            return "m";
+        }
+        return "null";
+    }
+    public String getFoulAlliance(String alliance) {
+        if (alliance.equals("Red Alliance")) {
+            return "n";
+        } else if (alliance.equals("Blue Alliance")) {
+            return "p";
+        }
+        return "null";
+    }
+    public String getRocketRPAlliance(String alliance) {
+        if (alliance.equals("Red Alliance")) {
+            return "r";
+        } else if (alliance.equals("Blue Alliance")) {
+            return "q";
+        }
+        return "null";
+    }
+    public String getHabClimbAlliance(String alliance) {
+        if (alliance.equals("Red Alliance")) {
+            return "t";
+        } else if (alliance.equals("Blue Alliance")) {
+            return "s";
+        }
+        return "null";
+    }
+    public ArrayList<String> generateNoShowList(String noShowOne, String noShowTwo, String noShowThree) {
+        ArrayList<String> noShowList = new ArrayList<>();
+        if (!noShowOne.equals("")) {
+            noShowList.add(noShowOne);
+        }
+        if (!noShowTwo.equals("")) {
+            noShowList.add(noShowTwo);
+        }
+        if (!noShowThree.equals("")) {
+            noShowList.add(noShowThree);
+        }
+        return noShowList;
+    }
 }
