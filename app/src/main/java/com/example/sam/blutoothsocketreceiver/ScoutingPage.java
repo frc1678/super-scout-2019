@@ -18,10 +18,13 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
+import android.widget.SeekBar;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -70,18 +73,9 @@ public class ScoutingPage extends ActionBarActivity {
     Boolean teamNumberOneBooleanTippy, teamNumberOneBooleanAlignment, teamNumberOneBooleanGrip, teamNumberOneBooleanInterference;
     Boolean teamNumberTwoBooleanTippy, teamNumberTwoBooleanAlignment, teamNumberTwoBooleanGrip, teamNumberTwoBooleanInterference;
     Boolean teamNumberThreeBooleanTippy, teamNumberThreeBooleanAlignment, teamNumberThreeBooleanGrip, teamNumberThreeBooleanInterference;
-    Integer levitateNum = 0;
     SuperScoutingPanel panelOne;
     SuperScoutingPanel panelTwo;
     SuperScoutingPanel panelThree;
-    RadioButton f0;
-    RadioButton f1;
-    RadioButton f2;
-    RadioButton f3;
-    RadioButton b0;
-    RadioButton b1;
-    RadioButton b2;
-    RadioButton b3;
     String leftNear;
     String leftMid;
     String leftFar;
@@ -108,7 +102,6 @@ public class ScoutingPage extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
         setContentView(R.layout.super_scouting);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         getPanels();
@@ -119,10 +112,17 @@ public class ScoutingPage extends ActionBarActivity {
         setPanels();
         initializeTeamTextViews();
         context = this;
-
         teamOneNotes = "";
         teamTwoNotes = "";
         teamThreeNotes = "";
+
+        Button defenseButtonOne = (Button) findViewById(R.id.defenseRobotOneButton);
+        defenseButtonOne.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                inflateDefenseDialogOne();
+            }
+        });
 
     }
 
@@ -165,13 +165,13 @@ public class ScoutingPage extends ActionBarActivity {
             int valTwo = panelTwo.getData().get(dataName);
             int valThree = panelThree.getData().get(dataName);
 
-            if(dataName.equals("Counter Defense")) {
-                if ((valOne != 0 && valTwo != 0 && valOne != 1 && valTwo != 1 && valOne == valTwo) || (valOne != 0 && valThree != 0 && valOne != 1 && valThree != 1 && valOne == valThree) || (valTwo != 0 && valThree != 0 && valTwo != 1 && valThree != 1 && valTwo == valThree)){
+            if (dataName.equals("Counter Defense")) {
+                if ((valOne != 0 && valTwo != 0 && valOne != 1 && valTwo != 1 && valOne == valTwo) || (valOne != 0 && valThree != 0 && valOne != 1 && valThree != 1 && valOne == valThree) || (valTwo != 0 && valThree != 0 && valTwo != 1 && valThree != 1 && valTwo == valThree)) {
                     canProceed = false;
                     return canProceed;
                 }
             } else {
-                if ((valOne != 0 && valTwo != 0 && valOne == valTwo) || (valOne != 0 && valThree != 0 && valOne == valThree) || (valTwo != 0 && valThree != 0 && valTwo == valThree)){
+                if ((valOne != 0 && valTwo != 0 && valOne == valTwo) || (valOne != 0 && valThree != 0 && valOne == valThree) || (valTwo != 0 && valThree != 0 && valTwo == valThree)) {
                     canProceed = false;
                     return canProceed;
                 }
@@ -179,7 +179,6 @@ public class ScoutingPage extends ActionBarActivity {
         }
         return canProceed;
     }
-
 
     //The next Button, to see if boolean r valid
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
@@ -196,11 +195,6 @@ public class ScoutingPage extends ActionBarActivity {
         if (id == R.id.finalNext) {
             if (canProceed()) {
 
-                levitateNum = 0;
-
-               /* if(levitate.isChecked()) {
-                    levitateNum = 3;
-                }*/
                 listDataValues();
                 sendExtras();
             } else {
@@ -214,13 +208,35 @@ public class ScoutingPage extends ActionBarActivity {
 
         }
 
-
         return super.onOptionsItemSelected(item);
     }
 
+    public void defenseClicked() {
 
+    }
 
+    public void inflateDefenseDialogOne() {
 
+        final AlertDialog.Builder defenseBuilder = new AlertDialog.Builder(context);
+        defenseBuilder.setCancelable(false);
+        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        final View defenseView = inflater.inflate(R.layout.defense, null);
+        defenseBuilder.setView(defenseView);
+        defenseBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        defenseBuilder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        AlertDialog defenseAlert = defenseBuilder.create();
+        defenseAlert.show();
+    }
 
 
     public void inflateFinalDataMenu() {
@@ -279,7 +295,6 @@ public class ScoutingPage extends ActionBarActivity {
         }
     }
 
-
     public void getExtrasForScouting() {
 
         numberOfMatch = next.getExtras().getString("matchNumber");
@@ -306,7 +321,6 @@ public class ScoutingPage extends ActionBarActivity {
         teamTwoConflict = next.getExtras().getString("teamTwoConflict");
         teamThreeConflict = next.getExtras().getString("teamThreeConflict");
 
-
         noShowOnePanel = noShowOne;
         noShowTwoPanel = noShowTwo;
         noShowThreePanel = noShowThree;
@@ -315,7 +329,6 @@ public class ScoutingPage extends ActionBarActivity {
         teamTwo = teamNumberTwo;
         teamThree = teamNumberThree;
     }
-
 
     public void setPanels() {
 
@@ -400,9 +413,6 @@ public class ScoutingPage extends ActionBarActivity {
         panelTwo = (SuperScoutingPanel) getSupportFragmentManager().findFragmentById(R.id.panelTwo);
         panelThree = (SuperScoutingPanel) getSupportFragmentManager().findFragmentById(R.id.panelThree);
     }
-
-
-
 
     public void initializeTeamTextViews() {
         teamNumberOneTextview = (TextView) panelOne.getView().findViewById(R.id.teamNumberTextView);
@@ -502,3 +512,81 @@ public class ScoutingPage extends ActionBarActivity {
 }
 
 
+
+
+
+        /*Button defenseButton = (Button) findViewById(R.id.defenseRobotOneButton);
+        defenseButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                AlertDialog.Builder defenseOneBuilder = new AlertDialog.Builder(context);
+
+
+                SeekBar kDefense = (SeekBar) findViewById(R.id.knockingSlider);
+                CheckBox knockingCheck = (CheckBox) findViewById(R.id.knockingCheck);
+                SeekBar dDefense = (SeekBar) findViewById(R.id.dockingSlider);
+                CheckBox dockingCheck = (CheckBox) findViewById(R.id.dockingCheck);
+                SeekBar pDefense = (SeekBar) findViewById(R.id.pathblockingSlider);
+                CheckBox pathblockingCheck = (CheckBox) findViewById(R.id.pathblockingCheck);
+
+                SeekBar.OnSeekBarChangeListener knockingListener = new SeekBar.OnSeekBarChangeListener() {
+                    @Override
+                    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                    }
+                    @Override
+                    public void onStartTrackingTouch(SeekBar seekBar) {
+                    }
+                    @Override
+                    public void onStopTrackingTouch(SeekBar seekBar) {
+                    }
+                };
+
+                kDefense.setOnSeekBarChangeListener(knockingListener);
+
+                SeekBar.OnSeekBarChangeListener dockingListener = new SeekBar.OnSeekBarChangeListener() {
+                    @Override
+                    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                    }
+                    @Override
+                    public void onStartTrackingTouch(SeekBar seekBar) {
+                    }
+                    @Override
+                    public void onStopTrackingTouch(SeekBar seekBar) {
+                    }
+                };
+
+                dDefense.setOnSeekBarChangeListener(dockingListener);
+
+                SeekBar.OnSeekBarChangeListener pathblockingListener = new SeekBar.OnSeekBarChangeListener() {
+                    @Override
+                    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                    }
+                    @Override
+                    public void onStartTrackingTouch(SeekBar seekBar) {
+                    }
+                    @Override
+                    public void onStopTrackingTouch(SeekBar seekBar) {
+                    }
+                };
+                pDefense.setOnSeekBarChangeListener(pathblockingListener);
+
+                defenseOneBuilder.setTitle(teamNumberOne);
+                defenseOneBuilder.setCancelable(false)
+                        .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+                AlertDialog defenseDialog = defenseOneBuilder.create();
+
+                defenseDialog.show();
+            }
+        }
+        );*/

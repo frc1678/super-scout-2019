@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:id="@+id/defenseOne">
 
     <TextView
         android:id="@+id/teamNum"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="tempTeamName"
+        android:text=""
         android:layout_gravity="center_horizontal"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
@@ -17,19 +18,18 @@
     <CheckBox
         android:id="@+id/dockingCheck"
         android:theme="@style/TeoCheck"
-        android:layout_marginStart="5dp" android:paddingStart="5dp"
+        android:layout_marginStart="5dp"
+        android:paddingStart="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/KateGray"
         android:text="Did the robot dock?"/>
 
-    <Seekbar
+    <SeekBar
         android:id="@+id/dockingSlider"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
         android:max="3"
         android:progress="1"
         />
@@ -37,19 +37,18 @@
     <CheckBox
         android:id="@+id/knockingCheck"
         android:theme="@style/TeoCheck"
-        android:layout_marginStart="5dp" android:paddingStart="5dp"
+        android:layout_marginStart="5dp"
+        android:paddingStart="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/KateGray"
         android:text="Did the robot knock?"/>
 
-    <Seekbar
+    <SeekBar
         android:id="@+id/knockingSlider"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
         android:max="3"
         android:progress="1"
         />
@@ -57,19 +56,18 @@
     <CheckBox
         android:id="@+id/pathblockingCheck"
         android:theme="@style/TeoCheck"
-        android:layout_marginStart="5dp" android:paddingStart="5dp"
+        android:layout_marginStart="5dp"
+        android:paddingStart="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/KateGray"
         android:text="Did the robot pathblock?"/>
 
-    <Seekbar
+    <SeekBar
         android:id="@+id/pathblockingSlider"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
         android:max="3"
         android:progress="1"
         />
