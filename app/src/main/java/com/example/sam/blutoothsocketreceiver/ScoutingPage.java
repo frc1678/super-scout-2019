@@ -83,6 +83,14 @@ public class ScoutingPage extends ActionBarActivity {
     String rightMid;
     String rightFar;
 
+    Integer kVal;
+    Integer pVal;
+    Integer dVal;
+
+    String kValText;
+    String pValText;
+    String dValText;
+
     String noShowOne;
     String noShowTwo;
     String noShowThree;
@@ -116,7 +124,7 @@ public class ScoutingPage extends ActionBarActivity {
         teamTwoNotes = "";
         teamThreeNotes = "";
 
-        Button defenseButtonOne = (Button) findViewById(R.id.defenseRobotOneButton);
+        final Button defenseButtonOne = (Button) findViewById(R.id.defenseRobotOneButton);
         defenseButtonOne.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -124,6 +132,21 @@ public class ScoutingPage extends ActionBarActivity {
             }
         });
 
+       /* Button defenseButtonTwo = (Button) findViewById(R.id.defenseRobotTwoButton);
+        defenseButtonOne.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                inflateDefenseDialogTwo();
+            }
+        });
+
+        Button defenseButtonThree = (Button) findViewById(R.id.defenseRobotThreeButton);
+        defenseButtonOne.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                inflateDefenseDialogThree();
+            }
+        });*/
     }
 
     //Warns the user that going back will change data
@@ -211,17 +234,85 @@ public class ScoutingPage extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void defenseClicked() {
-
-    }
-
     public void inflateDefenseDialogOne() {
 
         final AlertDialog.Builder defenseBuilder = new AlertDialog.Builder(context);
-        defenseBuilder.setCancelable(false);
+        defenseBuilder.setView(R.layout.defense);
+        defenseBuilder.setCancelable(false)
+        .setTitle("Team " + teamNumberOne + " Defensive Actions");
         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         final View defenseView = inflater.inflate(R.layout.defense, null);
+
+        final SeekBar kDefense = (SeekBar) defenseView.findViewById(R.id.knockingSlider);
+        final SeekBar dDefense = (SeekBar) defenseView.findViewById(R.id.dockingSlider);
+        final SeekBar pDefense = (SeekBar) defenseView.findViewById(R.id.pathblockingSlider);
+        final CheckBox knockingCheck = (CheckBox) defenseView.findViewById(R.id.knockingCheck);
+        final CheckBox dockingCheck = (CheckBox) defenseView.findViewById(R.id.dockingCheck);
+        final CheckBox pathblockingCheck = (CheckBox) defenseView.findViewById(R.id.pathblockingCheck);
+        final TextView kBarValue = (TextView) defenseView.findViewById(R.id.kValue);
+        final TextView dBarValue = (TextView) defenseView.findViewById(R.id.dValue);
+        final TextView pBarValue = (TextView) defenseView.findViewById(R.id.pValue);
+
+        //Get previously inputted value of each SeekBar
+
+        if(dVal != null) {
+            dDefense.setProgress(dVal);
+            dBarValue.setText(dValText);
+        }
+        if(kVal != null) {
+            kDefense.setProgress(kVal);
+            kBarValue.setText(kValText);
+        }
+        if(pVal != null) {
+            pDefense.setProgress(pVal);
+            pBarValue.setText(pValText);
+        }
+
+        dDefense.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                dVal = progress;
+                }
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                }
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                dBarValue.setText("" + dVal);
+                }
+        });
+
+        kDefense.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                kVal = progress;
+                }
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                }
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                kBarValue.setText("" + kVal);
+                }
+        });
+
+        pDefense.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                pVal = progress;
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                pBarValue.setText("" + pVal);
+            }
+        });
+
         defenseBuilder.setView(defenseView);
+        //End of onSeekBarChangeListeners
         defenseBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -231,13 +322,21 @@ public class ScoutingPage extends ActionBarActivity {
         defenseBuilder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+               kVal = kDefense.getProgress();
+               dVal = dDefense.getProgress();
+               pVal = pDefense.getProgress();
+
+               kValText = kVal.toString();
+               dValText = dVal.toString();
+               pValText = pVal.toString();
+
                 dialog.cancel();
             }
         });
+
         AlertDialog defenseAlert = defenseBuilder.create();
         defenseAlert.show();
     }
-
 
     public void inflateFinalDataMenu() {
         final AlertDialog.Builder endDataBuilder = new AlertDialog.Builder(context);
@@ -510,83 +609,3 @@ public class ScoutingPage extends ActionBarActivity {
 
 
 }
-
-
-
-
-
-        /*Button defenseButton = (Button) findViewById(R.id.defenseRobotOneButton);
-        defenseButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                AlertDialog.Builder defenseOneBuilder = new AlertDialog.Builder(context);
-
-
-                SeekBar kDefense = (SeekBar) findViewById(R.id.knockingSlider);
-                CheckBox knockingCheck = (CheckBox) findViewById(R.id.knockingCheck);
-                SeekBar dDefense = (SeekBar) findViewById(R.id.dockingSlider);
-                CheckBox dockingCheck = (CheckBox) findViewById(R.id.dockingCheck);
-                SeekBar pDefense = (SeekBar) findViewById(R.id.pathblockingSlider);
-                CheckBox pathblockingCheck = (CheckBox) findViewById(R.id.pathblockingCheck);
-
-                SeekBar.OnSeekBarChangeListener knockingListener = new SeekBar.OnSeekBarChangeListener() {
-                    @Override
-                    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                    }
-                    @Override
-                    public void onStartTrackingTouch(SeekBar seekBar) {
-                    }
-                    @Override
-                    public void onStopTrackingTouch(SeekBar seekBar) {
-                    }
-                };
-
-                kDefense.setOnSeekBarChangeListener(knockingListener);
-
-                SeekBar.OnSeekBarChangeListener dockingListener = new SeekBar.OnSeekBarChangeListener() {
-                    @Override
-                    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                    }
-                    @Override
-                    public void onStartTrackingTouch(SeekBar seekBar) {
-                    }
-                    @Override
-                    public void onStopTrackingTouch(SeekBar seekBar) {
-                    }
-                };
-
-                dDefense.setOnSeekBarChangeListener(dockingListener);
-
-                SeekBar.OnSeekBarChangeListener pathblockingListener = new SeekBar.OnSeekBarChangeListener() {
-                    @Override
-                    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                    }
-                    @Override
-                    public void onStartTrackingTouch(SeekBar seekBar) {
-                    }
-                    @Override
-                    public void onStopTrackingTouch(SeekBar seekBar) {
-                    }
-                };
-                pDefense.setOnSeekBarChangeListener(pathblockingListener);
-
-                defenseOneBuilder.setTitle(teamNumberOne);
-                defenseOneBuilder.setCancelable(false)
-                        .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-
-                })
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                });
-                AlertDialog defenseDialog = defenseOneBuilder.create();
-
-                defenseDialog.show();
-            }
-        }
-        );*/
