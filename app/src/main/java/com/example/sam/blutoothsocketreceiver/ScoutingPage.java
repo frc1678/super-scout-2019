@@ -254,19 +254,40 @@ public class ScoutingPage extends ActionBarActivity {
         final TextView pBarValue = (TextView) defenseView.findViewById(R.id.pValue);
 
         //Get previously inputted value of each SeekBar
+        try {
+            if (dVal != null) {
+                dDefense.setProgress(dVal);
+                dBarValue.setText(dValText);
+            } else if (dVal == 0) {
+                dDefense.setProgress(0);
+                dBarValue.setText(0);
+            }
+            if (kVal != null) {
+                kDefense.setProgress(kVal);
+                kBarValue.setText(kValText);
+            } else if (kVal == 0) {
+                kDefense.setProgress(0);
+                kBarValue.setText(0);
+            }
+            if (pVal != null) {
+                pDefense.setProgress(pVal);
+                pBarValue.setText(pValText);
+            } else if (pVal == 0) {
+                pDefense.setProgress(0);
+                pBarValue.setText(0);
+            }
+        }
+        catch (NullPointerException npe) {
+            dVal = 0;
+            kVal = 0;
+            pVal = 0;
+        }
+        catch (NumberFormatException nfe) {
+            dVal = 0;
+            kVal = 0;
+            pVal = 0;
+        }
 
-        if(dVal != null) {
-            dDefense.setProgress(dVal);
-            dBarValue.setText(dValText);
-        }
-        if(kVal != null) {
-            kDefense.setProgress(kVal);
-            kBarValue.setText(kValText);
-        }
-        if(pVal != null) {
-            pDefense.setProgress(pVal);
-            pBarValue.setText(pValText);
-        }
 
         dDefense.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
