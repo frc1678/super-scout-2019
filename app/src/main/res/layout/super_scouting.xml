@@ -52,8 +52,7 @@
             android:textStyle="bold"
             android:text="Defense"
             android:background="@color/White"
-            android:layout_height="wrap_content"
-            android:onClick="defenseDialogOne"/>
+            android:layout_height="wrap_content" />
 
         <Button
             android:id="@+id/defenseRobotTwoButton"
@@ -63,8 +62,7 @@
             android:textStyle="bold"
             android:text="Defense"
             android:background="@color/White"
-            android:layout_height="wrap_content"
-            android:onClick="defenseDialogTwo"/>
+            android:layout_height="wrap_content" />
 
         <Button
             android:id="@+id/defenseRobotThreeButton"
@@ -74,8 +72,7 @@
             android:textStyle="bold"
             android:text="Defense"
             android:background="@color/White"
-            android:layout_height="wrap_content"
-            android:onClick="defenseDialogThree"/>
+            android:layout_height="wrap_content" />
 
 
     </LinearLayout>

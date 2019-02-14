@@ -2,12 +2,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-  <item
-      android:id="@+id/finalSuperNotes"
-      android:title="Final Notes"
-      app:showAsAction = "always"/>
-  <item
-      android:id="@+id/Submit"
-      android:title="Submit"
-      app:showAsAction = "always"/>
+    <item
+        android:id="@+id/finalSuperNotes"
+        android:title="Final Notes"
+        app:showAsAction = "always"/>
+    <item
+        android:id="@+id/Submit"
+        android:title="Submit"
+        app:showAsAction = "always"/>
 </menu>

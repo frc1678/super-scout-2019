@@ -30,8 +30,7 @@
         android:hint="Team One Note"
         android:textSize="20sp"
         android:layout_alignParentLeft="true"
-        android:inputType="textMultiLine"
-        android:digits="abcdefghijklmnopqrstuvwxyz.,!?=1234567890"/>
+        android:inputType="textMultiLine" />
     </ScrollView>
     <TextView
         android:id="@+id/teamTwoNoteTextView"
@@ -53,8 +52,7 @@
         android:hint="Team Two Note"
         android:textSize="20sp"
         android:layout_alignParentLeft="true"
-        android:inputType="textMultiLine"
-        android:digits="abcdefghijklmnopqrstuvwxyz.,!?=1234567890"/>
+        android:inputType="textMultiLine"/>
     </ScrollView>
     <TextView
         android:id="@+id/teamThreeNoteTextView"
@@ -75,8 +73,7 @@
         android:hint="Team Three Note"
         android:textSize="20sp"
         android:layout_alignParentLeft="true"
-        android:inputType="textMultiLine"
-        android:digits="abcdefghijklmnopqrstuvwxyz.,!?=1234567890"/>
+        android:inputType="textMultiLine"/>
     </ScrollView>
 
 </RelativeLayout>
