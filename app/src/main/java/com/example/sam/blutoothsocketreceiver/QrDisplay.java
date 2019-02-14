@@ -231,9 +231,9 @@ public class QrDisplay extends ActionBarActivity {
                 + ";v"
                 + teamOneDataScore.get(1)
                 + ";w"
-                + generateTeamOneDefenseValues(kValOne, dValOne, pValOne)
-                + ";x"
                 + teamOneDataScore.get(0)
+                + ";x"
+                + generateTeamOneDefenseValues(kValOne, dValOne, pValOne)
                 + ";y"
                 + teamOneDataScore.get(4)
                 + ";z\""
@@ -249,9 +249,9 @@ public class QrDisplay extends ActionBarActivity {
                 + ";v"
                 + teamTwoDataScore.get(1)
                 + ";w"
-                + generateTeamTwoDefenseValues(kValTwo, dValTwo, pValTwo)
-                + ";x"
                 + teamTwoDataScore.get(0)
+                + ";x"
+                + generateTeamTwoDefenseValues(kValTwo, dValTwo, pValTwo)
                 + ";y"
                 + teamTwoDataScore.get(4)
                 + ";z\""
@@ -267,9 +267,9 @@ public class QrDisplay extends ActionBarActivity {
                 + ";v"
                 + teamThreeDataScore.get(1)
                 + ";w"
-                + generateTeamThreeDefenseValues(kValThree, dValThree, pValThree)
-                + ";x"
                 + teamThreeDataScore.get(0)
+                + ";x"
+                + generateTeamThreeDefenseValues(kValThree, dValThree, pValThree)
                 + ";y"
                 + teamThreeDataScore.get(4)
                 + ";z\""
