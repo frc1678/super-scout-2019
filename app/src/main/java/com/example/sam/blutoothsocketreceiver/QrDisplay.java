@@ -23,6 +23,7 @@ import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 
+import org.jcodec.common.DictionaryCompressor;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -70,6 +71,16 @@ public class QrDisplay extends ActionBarActivity {
     String rightMid;
     String rightFar;
 
+    Integer kValOne;
+    Integer pValOne;
+    Integer dValOne;
+    Integer kValTwo;
+    Integer pValTwo;
+    Integer dValTwo;
+    Integer kValThree;
+    Integer pValThree;
+    Integer dValThree;
+
     String noShowOne;
     String noShowTwo;
     String noShowThree;
@@ -90,8 +101,8 @@ public class QrDisplay extends ActionBarActivity {
         context = this;
         intent = getIntent();
         getExtras();
-        Log.e("TeamOneDataScore",teamOneDataScore.toString());
-        Log.e("TeamOneDataName",teamOneDataName.toString());
+        Log.e("TeamOneDataScore", teamOneDataScore.toString());
+        Log.e("TeamOneDataName", teamOneDataName.toString());
         QRImage = (ImageView) findViewById(R.id.QRCode_Display);
         convertValues();
         createCompressedFormat();
@@ -99,7 +110,7 @@ public class QrDisplay extends ActionBarActivity {
         displayQR(compressedData);
     }
 
-    public void getExtras(){
+    public void getExtras() {
         matchNumber = intent.getExtras().getString("matchNumber");
         alliance = intent.getExtras().getString("alliance");
         teamNumberOne = intent.getExtras().getString("teamNumberOne");
@@ -127,6 +138,19 @@ public class QrDisplay extends ActionBarActivity {
         rightMid = intent.getStringExtra(Constants.rightMid);
         rightFar = intent.getStringExtra(Constants.rightFar);
 
+        //TODO: Currently, the values below display as 0
+        // in the QR generation. This needs to be fixed ASAP.
+
+        dValOne = intent.getExtras().getInt("teamOneDocking");
+        kValOne = intent.getExtras().getInt("teamOneKnocking");
+        pValOne = intent.getExtras().getInt("teamOnePathblocking");
+        dValTwo = intent.getExtras().getInt("teamTwoDocking");
+        kValTwo = intent.getExtras().getInt("teamTwoKnocking");
+        pValTwo = intent.getExtras().getInt("teamTwoPathblocking");
+        dValThree = intent.getExtras().getInt("teamThreeDocking");
+        kValThree = intent.getExtras().getInt("teamThreeKnocking");
+        pValThree = intent.getExtras().getInt("teamThreePathblocking");
+
         isMute = intent.getExtras().getBoolean("isMute");
 
         noShowOne = intent.getExtras().getString("noShowOne");
@@ -142,6 +166,7 @@ public class QrDisplay extends ActionBarActivity {
 
 
     }
+
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.qr, menu);
@@ -156,7 +181,7 @@ public class QrDisplay extends ActionBarActivity {
             Intent backToHome = new Intent(context, MainActivity.class);
             backToHome.putExtra("number", matchNumber);
             backToHome.putExtra("leftViewColor", intent.getExtras().getString("leftViewColor"));
-            if (allianceCompressed.equals("0")){
+            if (allianceCompressed.equals("0")) {
                 isRed = false;
             } else {
                 isRed = true;
@@ -167,6 +192,7 @@ public class QrDisplay extends ActionBarActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
     public void createCompressedFormat() {
         if (alliance.equals("Blue Alliance")) {
             allianceCompressed = "B";
@@ -205,6 +231,8 @@ public class QrDisplay extends ActionBarActivity {
                 + ";v"
                 + teamOneDataScore.get(1)
                 + ";w"
+                + generateTeamOneDefenseValues(kValOne, dValOne, pValOne)
+                + ";x"
                 + teamOneDataScore.get(0)
                 + ";y"
                 + teamOneDataScore.get(4)
@@ -221,6 +249,8 @@ public class QrDisplay extends ActionBarActivity {
                 + ";v"
                 + teamTwoDataScore.get(1)
                 + ";w"
+                + generateTeamTwoDefenseValues(kValTwo, dValTwo, pValTwo)
+                + ";x"
                 + teamTwoDataScore.get(0)
                 + ";y"
                 + teamTwoDataScore.get(4)
@@ -237,6 +267,8 @@ public class QrDisplay extends ActionBarActivity {
                 + ";v"
                 + teamThreeDataScore.get(1)
                 + ";w"
+                + generateTeamThreeDefenseValues(kValThree, dValThree, pValThree)
+                + ";x"
                 + teamThreeDataScore.get(0)
                 + ";y"
                 + teamThreeDataScore.get(4)
@@ -259,7 +291,7 @@ public class QrDisplay extends ActionBarActivity {
                     //make the directory of the file
                     dir.mkdir();
                     //can delete when doing the actual thing
-                    file = new PrintWriter(new FileOutputStream(new File(dir, ("Q" + matchNumber + "_"  + new SimpleDateFormat("MM-dd-yyyy-H:mm:ss").format(new Date())))));
+                    file = new PrintWriter(new FileOutputStream(new File(dir, ("Q" + matchNumber + "_" + new SimpleDateFormat("MM-dd-yyyy-H:mm:ss").format(new Date())))));
                 } catch (IOException IOE) {
                     return;
                 }
@@ -275,7 +307,7 @@ public class QrDisplay extends ActionBarActivity {
         }.start();
     }
 
-    public void displayQR(String qrCode){
+    public void displayQR(String qrCode) {
         try {
             //setting size of qr code
             WindowManager manager = (WindowManager) getSystemService(WINDOW_SERVICE);
@@ -287,14 +319,15 @@ public class QrDisplay extends ActionBarActivity {
             int smallestDimension = width < height ? width : height;
             //setting parameters for qr code
             String charset = "UTF-8"; // or "ISO-8859-1"
-            Map<EncodeHintType, ErrorCorrectionLevel> hintMap =new HashMap<EncodeHintType, ErrorCorrectionLevel>();
+            Map<EncodeHintType, ErrorCorrectionLevel> hintMap = new HashMap<EncodeHintType, ErrorCorrectionLevel>();
             hintMap.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H);
             createQRCode(qrCode, charset, hintMap, smallestDimension, smallestDimension);
         } catch (Exception ex) {
-            Log.e("QrGenerate",ex.getMessage());
+            Log.e("QrGenerate", ex.getMessage());
         }
     }
-    public void createQRCode(String qrCodeData, String charset, Map hintMap, int qrCodeheight, int qrCodewidth){
+
+    public void createQRCode(String qrCodeData, String charset, Map hintMap, int qrCodeheight, int qrCodewidth) {
 
         try {
             //generating qr code in bitmatrix type
@@ -316,8 +349,8 @@ public class QrDisplay extends ActionBarActivity {
             //setting bitmap to image view
             QRImage.setImageBitmap(null);
             QRImage.setImageBitmap(bitmap);
-        }catch (Exception er){
-            Log.e("QrGenerate",er.getMessage());
+        } catch (Exception er) {
+            Log.e("QrGenerate", er.getMessage());
         }
     }
 
@@ -373,7 +406,7 @@ public class QrDisplay extends ActionBarActivity {
         } else {
             didRocketRP = "F";
         }
-        Log.e("didHabClimb",didHabClimb +"");
+        Log.e("didHabClimb", didHabClimb + "");
         if (didHabClimb.equals("true")) {
             didHabClimb = "T";
         } else {
@@ -396,17 +429,17 @@ public class QrDisplay extends ActionBarActivity {
         }
 
 
-
     }
+
     public String getStringAlliance(String alliance) {
         if (alliance.equals("Red Alliance")) {
             return "k";
-        }
-        else if (alliance.equals("Blue Alliance")) {
+        } else if (alliance.equals("Blue Alliance")) {
             return "m";
         }
         return "null";
     }
+
     public String getFoulAlliance(String alliance) {
         if (alliance.equals("Red Alliance")) {
             return "n";
@@ -415,6 +448,7 @@ public class QrDisplay extends ActionBarActivity {
         }
         return "null";
     }
+
     public String getRocketRPAlliance(String alliance) {
         if (alliance.equals("Red Alliance")) {
             return "r";
@@ -423,6 +457,7 @@ public class QrDisplay extends ActionBarActivity {
         }
         return "null";
     }
+
     public String getHabClimbAlliance(String alliance) {
         if (alliance.equals("Red Alliance")) {
             return "t";
@@ -431,6 +466,7 @@ public class QrDisplay extends ActionBarActivity {
         }
         return "null";
     }
+
     public ArrayList<String> generateNoShowList(String noShowOne, String noShowTwo, String noShowThree) {
         ArrayList<String> noShowList = new ArrayList<>();
         if (!noShowOne.equals("")) {
@@ -443,5 +479,45 @@ public class QrDisplay extends ActionBarActivity {
             noShowList.add(noShowThree);
         }
         return noShowList;
+    }
+
+    public ArrayList<Integer> generateTeamOneDefenseValues(Integer kValOne, Integer dValOne, Integer pValOne) {
+        ArrayList<Integer> defenseOneValues = new ArrayList<>();
+        if (kValOne != null) {
+            defenseOneValues.add(kValOne);
+        }
+        if (dValOne != null) {
+            defenseOneValues.add(dValOne);
+        }
+        if (pValOne != null) {
+            defenseOneValues.add(pValOne);
+        }
+        return defenseOneValues;
+    }
+    public ArrayList<Integer> generateTeamTwoDefenseValues(Integer kValTwo, Integer dValTwo, Integer pValTwo) {
+        ArrayList<Integer> defenseTwoValues = new ArrayList<>();
+        if (kValTwo != null) {
+            defenseTwoValues.add(kValTwo);
+        }
+        if (dValTwo != null) {
+            defenseTwoValues.add(dValTwo);
+        }
+        if (pValTwo != null) {
+            defenseTwoValues.add(pValTwo);
+        }
+        return defenseTwoValues;
+    }
+    public ArrayList<Integer> generateTeamThreeDefenseValues(Integer kValThree, Integer dValThree, Integer pValThree) {
+        ArrayList<Integer> defenseThreeValues = new ArrayList<>();
+        if (kValThree != null) {
+            defenseThreeValues.add(kValThree);
+        }
+        if (dValThree != null) {
+            defenseThreeValues.add(dValThree);
+        }
+        if (pValThree != null) {
+            defenseThreeValues.add(pValThree);
+        }
+        return defenseThreeValues;
     }
 }

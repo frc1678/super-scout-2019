@@ -28,6 +28,7 @@ import android.widget.Toast;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import org.jcodec.common.DictionaryCompressor;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -86,7 +87,6 @@ public class ScoutingPage extends ActionBarActivity {
     Integer pValThree;
     Integer dValThree;
 
-
     String kValTextOne;
     String pValTextOne;
     String dValTextOne;
@@ -96,7 +96,6 @@ public class ScoutingPage extends ActionBarActivity {
     String kValTextThree;
     String pValTextThree;
     String dValTextThree;
-
 
     String noShowOne;
     String noShowTwo;
@@ -177,7 +176,6 @@ public class ScoutingPage extends ActionBarActivity {
                 .show();
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -217,7 +215,6 @@ public class ScoutingPage extends ActionBarActivity {
 
         int id = item.getItemId();
 
-
         if (id == R.id.endDataShortcut) {
             inflateFinalDataMenu();
         }
@@ -232,7 +229,6 @@ public class ScoutingPage extends ActionBarActivity {
                 final String NextString = "Active teams cannot have the same ranking values!";
 
                 Toast.makeText(getApplicationContext(), NextString, Toast.LENGTH_LONG).show();
-
 
             }
 
@@ -261,27 +257,30 @@ public class ScoutingPage extends ActionBarActivity {
         final TextView pBarValue = (TextView) defenseView.findViewById(R.id.pValue);
 
         //Get previously inputted value of each SeekBar
+        if (pValOne != null) {
+            pDefense.setProgress(pValOne);
+            pBarValue.setText(pValTextOne);
+        }
+        if (kValOne != null) {
+            kDefense.setProgress(kValOne);
+            kBarValue.setText(kValTextOne);
+        }
+        if (dValOne != null) {
+            dDefense.setProgress(dValOne);
+            dBarValue.setText(dValTextOne);
+        }
         try {
-            if (dValOne != null) {
-                dDefense.setProgress(dValOne);
-                dBarValue.setText(dValTextOne);
-            } else if (dValOne == 0) {
+            if (dValOne == 0) {
                 dDefense.setProgress(0);
-                dBarValue.setText(0);
+                dBarValue.setText("0");
             }
-            if (kValOne != null) {
-                kDefense.setProgress(kValOne);
-                kBarValue.setText(kValTextOne);
-            } else if (kValOne == 0) {
+            if (kValOne == 0) {
                 kDefense.setProgress(0);
-                kBarValue.setText(0);
+                kBarValue.setText("0");
             }
-            if (pValOne != null) {
-                pDefense.setProgress(pValOne);
-                pBarValue.setText(pValTextOne);
-            } else if (pValOne == 0) {
+            if (pValOne == 0) {
                 pDefense.setProgress(0);
-                pBarValue.setText(0);
+                pBarValue.setText("0");
             }
         }
         catch (NullPointerException npe) {
@@ -294,7 +293,6 @@ public class ScoutingPage extends ActionBarActivity {
             kValOne = 0;
             pValOne = 0;
         }
-
 
         dDefense.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -363,7 +361,7 @@ public class ScoutingPage extends ActionBarActivity {
                dValTextOne = dValOne.toString();
                pValTextOne = pValOne.toString();
 
-                dialog.cancel();
+               dialog.cancel();
             }
         });
 
@@ -767,12 +765,12 @@ public class ScoutingPage extends ActionBarActivity {
         intent.putExtra("teamOneDocking", dValOne);
         intent.putExtra("teamOneKnocking", kValOne);
         intent.putExtra("teamOnePathblocking", pValOne);
-        /*intent.putExtra("teamTwoDocking", dValTwo);
+        intent.putExtra("teamTwoDocking", dValTwo);
         intent.putExtra("teamTwoKnocking", kValTwo);
-        intent.putExtra("teamTwoPathblocking", pValThree);
+        intent.putExtra("teamTwoPathblocking", pValTwo);
         intent.putExtra("teamThreeDocking", dValThree);
         intent.putExtra("teamThreeKnocking", kValThree);
-        intent.putExtra("teamThreePathblocking", pValThree);*/
+        intent.putExtra("teamThreePathblocking", pValThree);
         intent.putExtra("mute", isMute);
         intent.putExtra("noShowOne",noShowOne);
         intent.putExtra("noShowTwo",noShowTwo);
