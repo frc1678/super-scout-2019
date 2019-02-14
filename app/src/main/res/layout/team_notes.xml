@@ -46,6 +46,5 @@
         android:textColor="@color/Black"
         android:textColorHint="@color/KateGray"
         android:gravity="center"
-        android:hint="Additional Notes?"
-        android:digits="abcdefghijklmnopqrstuvwxyz.,!?=1234567890"/>
+        android:hint="Additional Notes?" />
 </LinearLayout>
