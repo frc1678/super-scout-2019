@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/defenseOne">
+
+    <CheckBox
+        android:id="@+id/dockingCheck"
+        android:theme="@style/TeoCheck"
+        android:layout_marginStart="5dp"
+        android:paddingStart="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/KateGray"
+        android:text="Did the robot dock?"/>
+
+    <SeekBar
+        android:id="@+id/dockingSlider"
+        android:progressDrawable="@drawable/progress_control"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:max="3"
+        android:progress="0"
+        android:minHeight="3dp"
+        android:maxHeight="3dp"
+        android:thumbTint="@color/LightGrey"
+        />
+
+    <TextView
+        android:id="@+id/dValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/dockingSlider"
+        android:layout_marginStart="40dp"
+        android:layout_marginBottom="15dp"
+        android:textStyle="bold"
+        android:text="0"
+        />
+
+    <CheckBox
+        android:id="@+id/knockingCheck"
+        android:theme="@style/TeoCheck"
+        android:layout_marginStart="5dp"
+        android:paddingStart="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/KateGray"
+        android:text="Did the robot knock?"/>
+
+    <SeekBar
+        android:id="@+id/knockingSlider"
+        android:progressDrawable="@drawable/progress_control"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:max="3"
+        android:progress="0"
+        android:minHeight="3dp"
+        android:maxHeight="3dp"
+        android:thumbTint="@color/LightGrey"
+        />
+
+    <TextView
+        android:id="@+id/kValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/knockingSlider"
+        android:layout_marginStart="40dp"
+        android:layout_marginBottom="15dp"
+        android:textStyle="bold"
+        android:text="0"
+        />
+
+    <CheckBox
+        android:id="@+id/pathblockingCheck"
+        android:theme="@style/TeoCheck"
+        android:layout_marginStart="5dp"
+        android:paddingStart="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/KateGray"
+        android:text="Did the robot pathblock?"/>
+
+    <SeekBar
+        android:id="@+id/pathblockingSlider"
+        android:progressDrawable="@drawable/progress_control"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:max="3"
+        android:progress="0"
+        android:minHeight="3dp"
+        android:maxHeight="3dp"
+        android:thumbTint="@color/LightGrey"
+        />
+
+    <TextView
+        android:id="@+id/pValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/pathblockingSlider"
+        android:layout_marginStart="40dp"
+        android:layout_marginBottom="15dp"
+        android:textStyle="bold"
+        android:text="0"
+        />
+
+</LinearLayout>
