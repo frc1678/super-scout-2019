@@ -9,9 +9,11 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -77,15 +79,15 @@ public class ScoutingPage extends ActionBarActivity {
     String rightMid;
     String rightFar;
 
-    Integer kValOne;
-    Integer pValOne;
-    Integer dValOne;
-    Integer kValTwo;
-    Integer pValTwo;
-    Integer dValTwo;
-    Integer kValThree;
-    Integer pValThree;
-    Integer dValThree;
+    Integer kValOne = 0;
+    Integer pValOne = 0;
+    Integer dValOne = 0;
+    Integer kValTwo = 0;
+    Integer pValTwo = 0;
+    Integer dValTwo = 0;
+    Integer kValThree = 0;
+    Integer pValThree = 0;
+    Integer dValThree = 0;
 
     String kValTextOne;
     String pValTextOne;
@@ -112,6 +114,13 @@ public class ScoutingPage extends ActionBarActivity {
     String teamTwoConflict;
     String teamThreeConflict;
 
+    Boolean dProgressActive = false;
+    Boolean kProgressActive = false;
+    Boolean pProgressActive = false;
+
+    Drawable seekBarActiveThumb;
+    Drawable seekBarInactiveThumb;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -129,6 +138,9 @@ public class ScoutingPage extends ActionBarActivity {
         teamOneNotes = "";
         teamTwoNotes = "";
         teamThreeNotes = "";
+
+        seekBarActiveThumb = getResources().getDrawable( R.drawable.seekbar_thumb);
+        seekBarInactiveThumb = getResources().getDrawable( R.drawable.seekbar_thumb_inactive);
 
         final Button defenseButtonOne = (Button) findViewById(R.id.defenseRobotOneButton);
         defenseButtonOne.setOnClickListener(new View.OnClickListener() {
@@ -256,6 +268,12 @@ public class ScoutingPage extends ActionBarActivity {
         final TextView dBarValue = (TextView) defenseView.findViewById(R.id.dValue);
         final TextView pBarValue = (TextView) defenseView.findViewById(R.id.pValue);
 
+       /* if (knockingCheck.isChecked()) {
+            kDefense.setThumb(seekBarActiveThumb);
+        } else {
+            kDefense.setThumb(seekBarInactiveThumb);
+        }*/ //todo implement for next regional w/ making seekbar inactive until checkbox pressed
+
         //Get previously inputted value of each SeekBar
         if (pValOne != null) {
             pDefense.setProgress(pValOne);
@@ -355,9 +373,9 @@ public class ScoutingPage extends ActionBarActivity {
             public void onClick(DialogInterface dialog, int which) {
                kValOne = kDefense.getProgress();
                dValOne = dDefense.getProgress();
-               pValOne = pDefense.getProgress();
+                pValOne = pDefense.getProgress();
 
-               kValTextOne = kValOne.toString();
+                kValTextOne = kValOne.toString();
                dValTextOne = dValOne.toString();
                pValTextOne = pValOne.toString();
 
@@ -762,15 +780,15 @@ public class ScoutingPage extends ActionBarActivity {
         intent.putExtra("dataBaseUrl", dataBaseUrl);
         intent.putExtra("allianceScore", allianceScoreData);
         intent.putExtra("allianceFoul", allianceFoulData);
-        intent.putExtra("teamOneDocking", dValOne);
-        intent.putExtra("teamOneKnocking", kValOne);
-        intent.putExtra("teamOnePathblocking", pValOne);
-        intent.putExtra("teamTwoDocking", dValTwo);
-        intent.putExtra("teamTwoKnocking", kValTwo);
-        intent.putExtra("teamTwoPathblocking", pValTwo);
-        intent.putExtra("teamThreeDocking", dValThree);
-        intent.putExtra("teamThreeKnocking", kValThree);
-        intent.putExtra("teamThreePathblocking", pValThree);
+        intent.putExtra("teamOneDocking", String.valueOf(dValOne));
+        intent.putExtra("teamOneKnocking", String.valueOf(kValOne));
+        intent.putExtra("teamOnePathblocking", String.valueOf(pValOne));
+        intent.putExtra("teamTwoDocking", String.valueOf(dValTwo));
+        intent.putExtra("teamTwoKnocking", String.valueOf(kValTwo));
+        intent.putExtra("teamTwoPathblocking", String.valueOf(pValTwo));
+        intent.putExtra("teamThreeDocking", String.valueOf(dValThree));
+        intent.putExtra("teamThreeKnocking", String.valueOf(kValThree));
+        intent.putExtra("teamThreePathblocking", String.valueOf(pValThree));
         intent.putExtra("mute", isMute);
         intent.putExtra("noShowOne",noShowOne);
         intent.putExtra("noShowTwo",noShowTwo);

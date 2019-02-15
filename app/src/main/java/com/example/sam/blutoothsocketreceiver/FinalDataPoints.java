@@ -95,6 +95,16 @@ public class FinalDataPoints extends ActionBarActivity {
     String teamOneConflict;
     String teamTwoConflict;
     String teamThreeConflict;
+    
+    String teamOneDocking;
+    String teamOneKnocking;
+    String teamOnePathblocking;
+    String teamTwoDocking;
+    String teamTwoKnocking;
+    String teamTwoPathblocking;
+    String teamThreeDocking;
+    String teamThreeKnocking;
+    String teamThreePathblocking;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -215,6 +225,17 @@ public class FinalDataPoints extends ActionBarActivity {
             QrDisplay.putExtra(Constants.rightMid,rightMid);
             QrDisplay.putExtra(Constants.rightFar, rightFar);
 
+            QrDisplay.putExtra("teamOneDocking", changeDefenseValues(teamOneDocking));
+            QrDisplay.putExtra("teamOneKnocking", changeDefenseValues(teamOneKnocking));
+            QrDisplay.putExtra("teamOnePathblocking", changeDefenseValues(teamOnePathblocking));
+            QrDisplay.putExtra("teamTwoDocking", changeDefenseValues(teamTwoDocking));
+            QrDisplay.putExtra("teamTwoKnocking", changeDefenseValues(teamTwoKnocking));
+            QrDisplay.putExtra("teamTwoPathblocking", changeDefenseValues(teamTwoPathblocking));
+            QrDisplay.putExtra("teamThreeDocking", changeDefenseValues(teamThreeDocking));
+            QrDisplay.putExtra("teamThreeKnocking", changeDefenseValues(teamThreeKnocking));
+            QrDisplay.putExtra("teamThreePathblocking", changeDefenseValues(teamThreePathblocking));
+            Log.e("testt",changeDefenseValues(teamTwoDocking)+"");
+
             QrDisplay.putExtra("noShowOne",noShowOne);
             QrDisplay.putExtra("noShowTwo",noShowTwo);
             QrDisplay.putExtra("noShowThree",noShowThree);
@@ -236,8 +257,6 @@ public class FinalDataPoints extends ActionBarActivity {
 
             QrDisplay.putExtra("didHabClimb", String.valueOf(didHabClimb));
             QrDisplay.putExtra("didRocketRP", String.valueOf(didRocketRP));
-            Log.e("didHabCLimmmn",didHabClimb + "");
-            Log.e("didRockeetttt",didRocketRP + "");
             
             startActivity(QrDisplay);
         }
@@ -316,6 +335,16 @@ public class FinalDataPoints extends ActionBarActivity {
         rightMid = intent.getExtras().getString(Constants.rightMid);
         rightFar = intent.getExtras().getString(Constants.rightFar);
 
+        teamOneDocking = intent.getExtras().getString("teamOneDocking");
+        teamTwoDocking = intent.getExtras().getString("teamTwoDocking");
+        teamThreeDocking = intent.getExtras().getString("teamThreeDocking");
+        teamOneKnocking = intent.getExtras().getString("teamOneKnocking");
+        teamTwoKnocking = intent.getExtras().getString("teamTwoKnocking");
+        teamThreeKnocking = intent.getExtras().getString("teamThreeKnocking");
+        teamOnePathblocking = intent.getExtras().getString("teamOnePathblocking");
+        teamTwoPathblocking = intent.getExtras().getString("teamTwoPathblocking");
+        teamThreePathblocking = intent.getExtras().getString("teamThreePathblocking");
+
         noShowOne = intent.getExtras().getString("noShowOne");
         noShowTwo = intent.getExtras().getString("noShowTwo");
         noShowThree = intent.getExtras().getString("noShowThree");
@@ -393,6 +422,17 @@ public class FinalDataPoints extends ActionBarActivity {
         }
         if (teamNumberThreeBooleanInterference.equals("true")) {
             teamThreeNotes = teamThreeNotes + " The robot easily interferes with other robots.";
+        }
+    }
+
+    public String changeDefenseValues(String value) {
+        Log.e("valuee",String.valueOf(value)+"");
+        if (value.equals("null")) {
+            Log.e("VValuee","reached");
+            return "0";
+        } else {
+            Log.e("VValuee","notreached");
+            return value;
         }
     }
             

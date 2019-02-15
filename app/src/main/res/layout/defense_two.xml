@@ -16,11 +16,15 @@
 
     <SeekBar
         android:id="@+id/dockingSlider"
+        android:progressDrawable="@drawable/progress_control"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:max="3"
         android:progress="0"
+        android:minHeight="3dp"
+        android:maxHeight="3dp"
+        android:thumbTint="@color/LightGrey"
         />
 
     <TextView
@@ -46,11 +50,15 @@
 
     <SeekBar
         android:id="@+id/knockingSlider"
+        android:progressDrawable="@drawable/progress_control"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:max="3"
         android:progress="0"
+        android:minHeight="3dp"
+        android:maxHeight="3dp"
+        android:thumbTint="@color/LightGrey"
         />
 
     <TextView
@@ -76,11 +84,15 @@
 
     <SeekBar
         android:id="@+id/pathblockingSlider"
+        android:progressDrawable="@drawable/progress_control"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:max="3"
         android:progress="0"
+        android:minHeight="3dp"
+        android:maxHeight="3dp"
+        android:thumbTint="@color/LightGrey"
         />
 
     <TextView

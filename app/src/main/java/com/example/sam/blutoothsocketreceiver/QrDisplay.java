@@ -101,8 +101,6 @@ public class QrDisplay extends ActionBarActivity {
         context = this;
         intent = getIntent();
         getExtras();
-        Log.e("TeamOneDataScore", teamOneDataScore.toString());
-        Log.e("TeamOneDataName", teamOneDataName.toString());
         QRImage = (ImageView) findViewById(R.id.QRCode_Display);
         convertValues();
         createCompressedFormat();
@@ -141,15 +139,15 @@ public class QrDisplay extends ActionBarActivity {
         //TODO: Currently, the values below display as 0
         // in the QR generation. This needs to be fixed ASAP.
 
-        dValOne = intent.getExtras().getInt("teamOneDocking");
-        kValOne = intent.getExtras().getInt("teamOneKnocking");
-        pValOne = intent.getExtras().getInt("teamOnePathblocking");
-        dValTwo = intent.getExtras().getInt("teamTwoDocking");
-        kValTwo = intent.getExtras().getInt("teamTwoKnocking");
-        pValTwo = intent.getExtras().getInt("teamTwoPathblocking");
-        dValThree = intent.getExtras().getInt("teamThreeDocking");
-        kValThree = intent.getExtras().getInt("teamThreeKnocking");
-        pValThree = intent.getExtras().getInt("teamThreePathblocking");
+        dValOne = Integer.valueOf(intent.getExtras().getString("teamOneDocking"));
+        kValOne = Integer.valueOf(intent.getExtras().getString("teamOneKnocking"));
+        pValOne = Integer.valueOf(intent.getExtras().getString("teamOnePathblocking"));
+        dValTwo = Integer.valueOf(intent.getExtras().getString("teamTwoDocking"));
+        kValTwo = Integer.valueOf(intent.getExtras().getString("teamTwoKnocking"));
+        pValTwo = Integer.valueOf(intent.getExtras().getString("teamTwoPathblocking"));
+        dValThree = Integer.valueOf(intent.getExtras().getString("teamThreeDocking"));
+        kValThree = Integer.valueOf(intent.getExtras().getString("teamThreeKnocking"));
+        pValThree = Integer.valueOf(intent.getExtras().getString("teamThreePathblocking"));
 
         isMute = intent.getExtras().getBoolean("isMute");
 
@@ -233,7 +231,7 @@ public class QrDisplay extends ActionBarActivity {
                 + ";w"
                 + teamOneDataScore.get(0)
                 + ";x"
-                + generateTeamOneDefenseValues(kValOne, dValOne, pValOne)
+                + generateTeamOneDefenseValues(dValOne, kValOne, pValOne)
                 + ";y"
                 + teamOneDataScore.get(4)
                 + ";z\""
@@ -251,7 +249,7 @@ public class QrDisplay extends ActionBarActivity {
                 + ";w"
                 + teamTwoDataScore.get(0)
                 + ";x"
-                + generateTeamTwoDefenseValues(kValTwo, dValTwo, pValTwo)
+                + generateTeamTwoDefenseValues(dValTwo, kValTwo, pValTwo)
                 + ";y"
                 + teamTwoDataScore.get(4)
                 + ";z\""
@@ -269,7 +267,7 @@ public class QrDisplay extends ActionBarActivity {
                 + ";w"
                 + teamThreeDataScore.get(0)
                 + ";x"
-                + generateTeamThreeDefenseValues(kValThree, dValThree, pValThree)
+                + generateTeamThreeDefenseValues(dValThree, kValThree, pValThree)
                 + ";y"
                 + teamThreeDataScore.get(4)
                 + ";z\""
