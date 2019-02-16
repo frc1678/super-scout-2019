@@ -13,7 +13,6 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -30,7 +29,6 @@ import android.widget.Toast;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import org.jcodec.common.DictionaryCompressor;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -267,11 +265,11 @@ public class ScoutingPage extends ActionBarActivity {
     public void inflateDefenseDialog(final Integer teamPosition) {
 
         final AlertDialog.Builder defenseBuilder = new AlertDialog.Builder(context);
-        defenseBuilder.setView(R.layout.defense_one);
+        defenseBuilder.setView(R.layout.defense);
         defenseBuilder.setCancelable(false)
         .setTitle("Team " + teamsList.get(teamPosition - 1) + " Defensive Actions");
         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        final View defenseView = inflater.inflate(R.layout.defense_one, null);
+        final View defenseView = inflater.inflate(R.layout.defense, null);
 
         final SeekBar kDefense = (SeekBar) defenseView.findViewById(R.id.knockingSlider);
         final SeekBar dDefense = (SeekBar) defenseView.findViewById(R.id.dockingSlider);
