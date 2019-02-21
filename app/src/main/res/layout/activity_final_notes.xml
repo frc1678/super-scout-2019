@@ -29,7 +29,8 @@
         android:layout_alignParentLeft="true"
         android:textSize="17sp"
         android:padding="10sp"
-        android:id="@+id/teamOneSuperNotesEditText" />
+        android:id="@+id/teamOneSuperNotesEditText"
+        android:imeOptions="actionDone|flagNoExtractUi"/>
 
     <TextView
         android:layout_width="match_parent"
@@ -50,7 +51,8 @@
         android:layout_alignParentLeft="true"
         android:textSize="17sp"
         android:padding="10sp"
-        android:id="@+id/teamTwoSuperNotesEditText" />
+        android:id="@+id/teamTwoSuperNotesEditText"
+        android:imeOptions="actionDone|flagNoExtractUi"/>
 
     <TextView
         android:layout_width="match_parent"
@@ -71,6 +73,7 @@
         android:layout_alignParentLeft="true"
         android:textSize="17sp"
         android:padding="10sp"
-        android:id="@+id/teamThreeSuperNotesEditText" />
+        android:id="@+id/teamThreeSuperNotesEditText"
+        android:imeOptions="actionDone|flagNoExtractUi"/>
 
 </RelativeLayout>
