@@ -83,7 +83,9 @@ public class MainActivity extends ActionBarActivity {
     EditText teamNumberOne;
     EditText teamNumberTwo;
     EditText teamNumberThree;
+    String teamOne, teamTwo, teamThree;
     EditText searchBar;
+    Boolean overrideOnBackPressed;
     TextView alliance;
     ListView listView;
     Boolean isRed = false;
@@ -110,7 +112,7 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         context = this;
-        isOverriden = false;
+        isOverriden = false; overrideOnBackPressed = false;
 
         Constants.teamOneNoteHolder = "";
         Constants.teamTwoNoteHolder = "";
@@ -123,12 +125,20 @@ public class MainActivity extends ActionBarActivity {
         mute = (ToggleButton) findViewById(R.id.mute);
         alliance = (TextView) findViewById(R.id.allianceName);
         dataBase = FirebaseDatabase.getInstance().getReference();
-        //If got intent from the last activity
-        checkPreviousMatchNumAndAlliance();
+        //If there was an intent to MainActivity (qr code -> mainact), get the alliance and new match num
+        //else, get the previous team numbers which clear on override onbackpressed
+        getLeftViewColor();
+        if (getIntent().getExtras()!=null) {
+            checkPreviousMatchNumAndAlliance();
+        } else {
+            getOverrideTeamsSP();
+            isOverriden = true;
+            overrideOnBackPressed = true;
+        }
+
         updateUI();
-        Log.e("LEFT VIEW COLOR ",leftViewColor);
         if (leftViewColor == null) {
-            numberOfMatch.setText("SET FIELD LAYOUT");
+            numberOfMatch.setText("0");
             numberOfMatch.setTextColor(Color.RED);
             numberOfMatch.setTextSize(28);
         } else {
@@ -140,7 +150,6 @@ public class MainActivity extends ActionBarActivity {
         listView = (ListView) findViewById(R.id.view_files_received);
         listView.setAdapter(adapter);
         updateListView();
-
 
         LocalBroadcastManager.getInstance(getApplicationContext()).registerReceiver(new BroadcastReceiver() {
             @Override
@@ -156,7 +165,11 @@ public class MainActivity extends ActionBarActivity {
         //Change team numbers as the user changes the match number
         changeTeamsByMatchName();
         commitSharedPreferences();
+        clearTeamSP();
 
+        if (overrideOnBackPressed) {
+            setTeamNumbers(teamOne, teamTwo, teamThree);
+        }
         listenForResendClick();
         //listLongClick();
     }
@@ -207,10 +220,6 @@ public class MainActivity extends ActionBarActivity {
             updateUI();
         }
         if (id == R.id.scout) {
-            if (!FirebaseLists.matchesList.getKeys().contains(matchNumber.toString()) && !isOverriden){
-                Toast.makeText(context, "This Match Does Not Exist!", Toast.LENGTH_LONG).show();
-                disenableEditTextEditing();
-            }else{
                 if (numberOfMatch.getText().toString().equals("")) {
                     Toast.makeText(context, "Input match name!", Toast.LENGTH_SHORT).show();
                 } else if (teamNumberOne.getText().toString().equals("")) {
@@ -219,11 +228,10 @@ public class MainActivity extends ActionBarActivity {
                     Toast.makeText(context, "Input team two number!", Toast.LENGTH_SHORT).show();
                 } else if (teamNumberThree.getText().toString().equals("")) {
                     Toast.makeText(context, "Input team three number!", Toast.LENGTH_SHORT).show();
-                } //else if(teamNumberOne.getText().toString().equals("Not Available")){
-//                    Toast.makeText(context, "This Match Does Not Exist!", Toast.LENGTH_SHORT).show();
-//                }
+                }
                 else {
                     commitSharedPreferences();
+                    commitOverrideTeamsSP();
                     Intent intent = new Intent(context, FieldSetupPage.class);
                     intent.putExtra("matchNumber", numberOfMatch.getText().toString());
                     intent.putExtra("teamNumberOne", teamNumberOne.getText().toString());
@@ -234,12 +242,11 @@ public class MainActivity extends ActionBarActivity {
                     intent.putExtra("mute", isMute);
                     intent.putExtra("allianceColor", isRed);
                     intent.putExtra("leftViewColor", leftViewColor);
-                    intent.putExtra("teamNumberOneNoShow",String.valueOf(teamNumberOneNoShow));
-                    intent.putExtra("teamNumberTwoNoShow",String.valueOf(teamNumberTwoNoShow));
-                    intent.putExtra("teamNumberThreeNoShow",String.valueOf(teamNumberThreeNoShow));
+                    intent.putExtra("teamNumberOneNoShow", String.valueOf(teamNumberOneNoShow));
+                    intent.putExtra("teamNumberTwoNoShow", String.valueOf(teamNumberTwoNoShow));
+                    intent.putExtra("teamNumberThreeNoShow", String.valueOf(teamNumberThreeNoShow));
                     startActivity(intent);
                 }
-            }
 
         } else if (id == R.id.action_override) {
             if (item.getTitle().toString().equals("Override Match and Team Number")) {
@@ -470,6 +477,21 @@ public class MainActivity extends ActionBarActivity {
         editor.putBoolean("allianceColor", isRed);
         editor.commit();
     }
+    public void commitOverrideTeamsSP() {
+        SharedPreferences.Editor editor = getSharedPreferences("override_teams", MODE_PRIVATE).edit();
+        editor.putString("teamOne", String.valueOf(teamNumberOne.getText()));
+        editor.putString("teamTwo", String.valueOf(teamNumberTwo.getText()));
+        editor.putString("teamThree",String.valueOf(teamNumberThree.getText()));
+        editor.putInt("matchNumber", Integer.valueOf(numberOfMatch.getText().toString()));
+        editor.commit();
+    }
+    public void getOverrideTeamsSP() {
+        SharedPreferences prefs = getSharedPreferences("override_teams", MODE_PRIVATE);
+        teamOne = prefs.getString("teamOne", "");
+        teamTwo = prefs.getString("teamTwo", "");
+        teamThree = prefs.getString("teamThree", "");
+        matchNumber = prefs.getInt("matchNumber",0);
+    }
 
     //changes the team numbers while the user changes the match number
     public void changeTeamsByMatchName() {
@@ -507,6 +529,12 @@ public class MainActivity extends ActionBarActivity {
         teamNumberTwo.setFocusable(false);
         teamNumberThree.setFocusable(false);
         isOverriden = false;
+    }
+
+    public void setTeamNumbers(String teamOne, String teamTwo, String teamThree) {
+        teamNumberOne.setText(teamOne);
+        teamNumberTwo.setText(teamTwo);
+        teamNumberThree.setText(teamThree);
     }
     //reads the data of the clicked file
     public String readFile(String name) {
@@ -552,12 +580,6 @@ public class MainActivity extends ActionBarActivity {
 
     public void checkPreviousMatchNumAndAlliance(){
         Intent backToHome = getIntent();
-        if (backToHome.hasExtra("leftViewColor")){
-            leftViewColor = backToHome.getExtras().getString("leftViewColor");
-            firstClick = false;
-        } else {
-            leftViewColor = "blue";
-        }
         if (backToHome.hasExtra("number")) {
             matchNumber = Integer.parseInt(backToHome.getExtras().getString("number")) + 1;
         } else {
@@ -568,12 +590,29 @@ public class MainActivity extends ActionBarActivity {
             isRed = getIntent().getBooleanExtra("shouldBeRed", false);
         } else {
             SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
+            Log.e("isRedd",isRed.toString() + "" );
             isRed = prefs.getBoolean("allianceColor", false);
+	        Log.e("isReddd",isRed.toString() + "" );
         }
         if (!backToHome.hasExtra("mute")) {
             mute.setChecked(false);
         } else if (backToHome.hasExtra("mute")) {
             mute.setChecked(true);
+        }
+    }
+
+    public void clearTeamSP() {
+        SharedPreferences override_teams = context.getSharedPreferences("override_teams", Context.MODE_PRIVATE);
+        override_teams.edit().clear().commit();
+    }
+
+    public void getLeftViewColor() {
+        Intent backToHome = getIntent();
+        if (backToHome.hasExtra("leftViewColor")){
+            leftViewColor = backToHome.getExtras().getString("leftViewColor");
+            firstClick = false;
+        } else {
+            leftViewColor = "blue";
         }
     }
 
