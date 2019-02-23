@@ -76,9 +76,9 @@ import org.json.JSONObject;
 public class MainActivity extends ActionBarActivity {
     protected SuperScoutApplication app;
     Activity context;
-    Boolean teamNumberOneNoShow;
-    Boolean teamNumberTwoNoShow;
-    Boolean teamNumberThreeNoShow;
+    Boolean teamNumberOneNoShow = false;
+    Boolean teamNumberTwoNoShow = false;
+    Boolean teamNumberThreeNoShow = false;
     EditText numberOfMatch;
     EditText teamNumberOne;
     EditText teamNumberTwo;
@@ -302,6 +302,22 @@ public class MainActivity extends ActionBarActivity {
             noShowTeamTwo.setText(teamNumberTwo.getText().toString());
             noShowTeamThree.setText(teamNumberThree.getText().toString());
 
+            if (teamNumberOneNoShow) {
+                noShowTeamOne.setBackgroundColor(ContextCompat.getColor(this, R.color.TeamNumberRed));
+            } else {
+                noShowTeamOne.setBackgroundColor(ContextCompat.getColor(this, R.color.LightGrey));
+            }
+            if (teamNumberTwoNoShow) {
+                noShowTeamTwo.setBackgroundColor(ContextCompat.getColor(this, R.color.TeamNumberRed));
+            } else {
+                noShowTeamTwo.setBackgroundColor(ContextCompat.getColor(this, R.color.LightGrey));
+            }
+            if (teamNumberThreeNoShow) {
+                noShowTeamThree.setBackgroundColor(ContextCompat.getColor(this, R.color.TeamNumberRed));
+            } else {
+                noShowTeamThree.setBackgroundColor(ContextCompat.getColor(this, R.color.LightGrey));
+            }
+
             noShowTeamOne.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -482,6 +498,9 @@ public class MainActivity extends ActionBarActivity {
         editor.putString("teamOne", String.valueOf(teamNumberOne.getText()));
         editor.putString("teamTwo", String.valueOf(teamNumberTwo.getText()));
         editor.putString("teamThree",String.valueOf(teamNumberThree.getText()));
+        editor.putString("teamOneNoShow", String.valueOf(teamNumberOneNoShow));
+        editor.putString("teamTwoNoShow", String.valueOf(teamNumberTwoNoShow));
+        editor.putString("teamThreeNoShow",String.valueOf(teamNumberThreeNoShow));
         editor.putInt("matchNumber", Integer.valueOf(numberOfMatch.getText().toString()));
         editor.commit();
     }
@@ -490,6 +509,9 @@ public class MainActivity extends ActionBarActivity {
         teamOne = prefs.getString("teamOne", "");
         teamTwo = prefs.getString("teamTwo", "");
         teamThree = prefs.getString("teamThree", "");
+        teamNumberOneNoShow = convertToBool(prefs.getString("teamOneNoShow","false"));
+        teamNumberTwoNoShow = convertToBool(prefs.getString("teamTwoNoShow","false"));
+        teamNumberThreeNoShow = convertToBool(prefs.getString("teamThreeNoShow","false"));
         matchNumber = prefs.getInt("matchNumber",0);
     }
 
@@ -739,6 +761,14 @@ public class MainActivity extends ActionBarActivity {
                 }
             }
         });
+    }
+
+    public Boolean convertToBool(String bool) {
+        if (bool.equals("true")) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }
