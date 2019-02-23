@@ -215,7 +215,7 @@ public class QrDisplay extends ActionBarActivity {
                 + ";g"
                 + rightFar
                 + "},h"
-                + generateNoShowList(noShowOne, noShowTwo, noShowThree) + ","
+                + generateNoShowList(noShowOne, noShowTwo, noShowThree).toString().replace(", ", ";") + ","
                 + getStringAlliance(alliance)
                 + score + ","
                 + getFoulAlliance(alliance)
