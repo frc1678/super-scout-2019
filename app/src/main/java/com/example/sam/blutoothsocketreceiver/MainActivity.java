@@ -15,6 +15,7 @@ import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
 import android.media.MediaPlayer;
+import android.os.Environment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.ActionBarActivity;
@@ -63,6 +64,8 @@ import com.example.sam.blutoothsocketreceiver.firebase_classes.Match;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonIOException;
 import com.google.gson.reflect.TypeToken;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
@@ -91,6 +94,7 @@ public class MainActivity extends ActionBarActivity {
     Integer matchNumber = 0;
     DatabaseReference dataBase;
     Boolean leftSideBoolean = true, rightSideBoolean = true, firstClick = true;
+    public static int mMatchNum;
     //TODO: Why are these global?
     //String previousScore, previousFoul, previousAllianceSimple;
     //Boolean facedTheBoss = false, didAutoQuest = false;
@@ -433,35 +437,34 @@ public class MainActivity extends ActionBarActivity {
 
         adapter.notifyDataSetChanged();
     }
+
     //updates the team numbers in the front screen according to the match number and the alliance;
     private void updateUI() {
-        try {
-            if (FirebaseLists.matchesList.getKeys().contains(matchNumber.toString())) {
-                Match match = FirebaseLists.matchesList.getFirebaseObjectByKey(matchNumber.toString());
 
-                List<Integer> teamsOnAlliance = new ArrayList<>();
-                teamsOnAlliance.addAll((isRed) ? match.redAllianceTeamNumbers : match.blueAllianceTeamNumbers);
-
-                teamNumberOne.setText(teamsOnAlliance.get(0).toString());
-                teamNumberTwo.setText(teamsOnAlliance.get(1).toString());
-                teamNumberThree.setText(teamsOnAlliance.get(2).toString());
-                teamNumberOne.setHint("Enter a team number");
-                teamNumberTwo.setHint("Enter a team number");
-                teamNumberThree.setHint("Enter a team number");
-            } else {
-                teamNumberOne.setHint("Not Available");
-                teamNumberTwo.setHint("Not Available");
-                teamNumberThree.setHint("Not Available");
-                teamNumberOne.setText("");
-                teamNumberTwo.setText("");
-                teamNumberThree.setText("");
-            }
-        }catch(NullPointerException NPE){
-            toasts("Teams not available", true);
+        String sortMatches = "matches";
+        String sortMatchNumber = String.valueOf(mMatchNum);
+        if(teamNumberOne.equals("") || teamNumberTwo.equals("") || teamNumberThree.equals("")) {
+            Toast.makeText(getBaseContext(), "There are missing teams!", Toast.LENGTH_LONG).show();
         }
+        else {
+            String filePath = Environment.getExternalStorageState().toString() +  "/bluetooth";
+            String fileName = "assignments.txt";
 
-        alliance.setTextColor((isRed) ? Color.RED : Color.BLUE);
-        alliance.setText((isRed) ? "Red Alliance" : "Blue Alliance");
+            File f = new File(filePath, fileName);
+
+            if(f.exists()) {
+                try {
+                    JSONObject teamAssignment = new JSONObject(TeamAssignment.retrieveSDCardFile("assignments.txt"));
+                    teamAssignment = teamAssignment.getJSONObject(sortMatches);
+
+
+
+                }
+                catch (JSONException JE) {
+                    JE.printStackTrace();
+                }
+            }
+        }
     }
 
     public void commitSharedPreferences() {
