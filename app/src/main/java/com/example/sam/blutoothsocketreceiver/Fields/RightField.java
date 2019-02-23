@@ -39,6 +39,7 @@ public class RightField extends AppCompatActivity {
     String numberOfMatch;
     Intent previous;
     boolean isRed;
+    String scrollableConflictBar;
     String alliance;
     String leftViewColor;
 
@@ -74,6 +75,7 @@ public class RightField extends AppCompatActivity {
     public void getAlliance() {
         if (bundle != null) {
             alliance = getIntent().getStringExtra("allianceColor");
+	        scrollableConflictBar = getIntent().getStringExtra("scrollableConflictBar");
         }
     }
     public void getLeftViewColor() {
@@ -224,6 +226,7 @@ public class RightField extends AppCompatActivity {
                 next.putExtra("teamNumberTwo",teamNumberTwo);
                 next.putExtra("teamNumberThree", teamNumberThree);
                 next.putExtra("matchNumber",numberOfMatch);
+                next.putExtra("scrollableConflictBar",scrollableConflictBar);
                 startActivity(next);
             }
         }

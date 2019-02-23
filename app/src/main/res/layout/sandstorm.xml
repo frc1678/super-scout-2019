@@ -23,22 +23,34 @@
                 android:layout_height="match_parent" />
 
         </LinearLayout>
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="20dp"
             android:background="@color/KateGray"
             android:layout_height="match_parent">
 
-            <TextView
+            <ListView
                 android:id="@+id/conflictBarLeft"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textColor="@color/Rausch"
+                android:gravity="center"
+                android:textSize="20dp"
+                android:divider="@color/KateGray"
+                android:textStyle="bold"
+                android:layout_gravity="center"
+                />
+            <TextView
+                android:visibility="invisible"
+                android:id="@+id/conflictBarLeftTV"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:textColor="@color/Rausch"
                 android:gravity="center"
                 android:textSize="20dp"
                 android:textStyle="bold"
-                android:text="CONFL I CT CONFL I CT CONFL I CT"/>
+                android:text="CONFL I CT 	CONFL I CT 	CONFL I CT"/>
 
-        </LinearLayout>
+        </RelativeLayout>
         <LinearLayout
             android:layout_width="0dp"
             android:layout_weight="1"
@@ -55,22 +67,34 @@
                 />
 
         </LinearLayout>
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="20dp"
             android:background="@color/KateGray"
             android:layout_height="match_parent">
 
-            <TextView
+            <ListView
                 android:id="@+id/conflictBarRight"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textColor="@color/Rausch"
+                android:gravity="center"
+                android:textSize="20dp"
+                android:divider="@color/KateGray"
+                android:textStyle="bold"
+                android:layout_gravity="center"
+                />
+            <TextView
+                android:visibility="invisible"
+                android:id="@+id/conflictBarRightTV"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:textColor="@color/Rausch"
                 android:gravity="center"
                 android:textSize="20dp"
                 android:textStyle="bold"
-                android:text="CONFL I CT CONFL I CT CONFL I CT"/>
+                android:text="CONFL I CT	CONFL I CT	CONFL I CT"/>
 
-        </LinearLayout>
+        </RelativeLayout>
         <LinearLayout
             android:layout_width="0dp"
             android:layout_weight="1"

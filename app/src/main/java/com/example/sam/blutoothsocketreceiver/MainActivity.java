@@ -76,6 +76,7 @@ import org.json.JSONObject;
 public class MainActivity extends ActionBarActivity {
     protected SuperScoutApplication app;
     Activity context;
+    Boolean scrollableConflictBar = false;
     Boolean teamNumberOneNoShow;
     Boolean teamNumberTwoNoShow;
     Boolean teamNumberThreeNoShow;
@@ -166,6 +167,7 @@ public class MainActivity extends ActionBarActivity {
         changeTeamsByMatchName();
         commitSharedPreferences();
         clearTeamSP();
+        createAllianceClickListener();
 
         if (overrideOnBackPressed) {
             setTeamNumbers(teamOne, teamTwo, teamThree);
@@ -207,6 +209,7 @@ public class MainActivity extends ActionBarActivity {
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
@@ -245,6 +248,8 @@ public class MainActivity extends ActionBarActivity {
                     intent.putExtra("teamNumberOneNoShow", String.valueOf(teamNumberOneNoShow));
                     intent.putExtra("teamNumberTwoNoShow", String.valueOf(teamNumberTwoNoShow));
                     intent.putExtra("teamNumberThreeNoShow", String.valueOf(teamNumberThreeNoShow));
+                    Log.e("scroll1",scrollableConflictBar.toString());
+                    intent.putExtra("scrollableConflictBar", String.valueOf(scrollableConflictBar));
                     startActivity(intent);
                 }
 
@@ -483,6 +488,7 @@ public class MainActivity extends ActionBarActivity {
         editor.putString("teamTwo", String.valueOf(teamNumberTwo.getText()));
         editor.putString("teamThree",String.valueOf(teamNumberThree.getText()));
         editor.putInt("matchNumber", Integer.valueOf(numberOfMatch.getText().toString()));
+        editor.putString("scrollableConflictBar", String.valueOf(scrollableConflictBar));
         editor.commit();
     }
     public void getOverrideTeamsSP() {
@@ -491,6 +497,7 @@ public class MainActivity extends ActionBarActivity {
         teamTwo = prefs.getString("teamTwo", "");
         teamThree = prefs.getString("teamThree", "");
         matchNumber = prefs.getInt("matchNumber",0);
+        scrollableConflictBar = convertToBool(prefs.getString("scrollableConflictBar","false"));
     }
 
     //changes the team numbers while the user changes the match number
@@ -736,6 +743,28 @@ public class MainActivity extends ActionBarActivity {
                 } else if (String.valueOf(leftSideColor).equals(String.valueOf(FieldLayout.Red))) {
                     rightSide.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.TeamNumberRed));
                     leftSide.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.Bloo));
+                }
+            }
+        });
+    }
+
+    public Boolean convertToBool(String bool) {
+        if (bool.equals("true")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    public void createAllianceClickListener() {
+        alliance.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!scrollableConflictBar) {
+                    scrollableConflictBar = true;
+                    toasts("You have enabled the Scrolling Conflict Bar!", false);
+                } else {
+                    scrollableConflictBar = false;
+                    toasts("You have disabled the Scrolling Conflict Bar!", false);
                 }
             }
         });
