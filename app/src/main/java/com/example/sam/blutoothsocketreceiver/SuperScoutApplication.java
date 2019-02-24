@@ -75,7 +75,7 @@ public class SuperScoutApplication extends Application implements Application.Ac
                         }
                     });
         }
-            FirebaseLists.matchesList = new FirebaseList<>(url + "Matches/", new FirebaseList.FirebaseUpdatedCallback() {
+      /*      FirebaseLists.matchesList = new FirebaseList<>(url + "Matches/", new FirebaseList.FirebaseUpdatedCallback() {
                 @Override
                 public void execute() {
                     LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(new Intent("matches_updated"));
@@ -90,7 +90,8 @@ public class SuperScoutApplication extends Application implements Application.Ac
         new Instabug.Builder(this, "f56c6f16e2c9965920019f8eb52e7b6e")
                 .setInvocationEvent(InstabugInvocationEvent.FLOATING_BUTTON)
                 .build();
-        }
+        }*/
+    }
     public void onActivityCreated(Activity activity, Bundle savedInstanceState){currentActivity = activity;}
 
     public void onActivityDestroyed(Activity activity){currentActivity = null;}

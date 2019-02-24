@@ -80,9 +80,6 @@ public class MainActivity extends ActionBarActivity {
     Boolean teamNumberTwoNoShow = false;
     Boolean teamNumberThreeNoShow = false;
     Boolean scrollableConflictBar = false;
-    Boolean teamNumberOneNoShow;
-    Boolean teamNumberTwoNoShow;
-    Boolean teamNumberThreeNoShow;
     EditText numberOfMatch;
     EditText teamNumberOne;
     EditText teamNumberTwo;
