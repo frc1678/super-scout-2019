@@ -75,7 +75,13 @@ public class SuperScoutApplication extends Application implements Application.Ac
                         }
                     });
         }
-            FirebaseLists.matchesList = new FirebaseList<>(url + "Matches/", new FirebaseList.FirebaseUpdatedCallback() {
+
+        //This is where the firebase matches list is being created, but because our 2019+ super scout doesn't read from firebase,
+	    //this code is commented out until (if) we switch back to firebase reading for super if assignments doesn't work.
+
+	    //If uncommented, you have to add extra match schema into firebase_classes as the app would crash because of missing schema for Matches
+
+      /*      FirebaseLists.matchesList = new FirebaseList<>(url + "Matches/", new FirebaseList.FirebaseUpdatedCallback() {
                 @Override
                 public void execute() {
                     LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(new Intent("matches_updated"));
@@ -90,7 +96,8 @@ public class SuperScoutApplication extends Application implements Application.Ac
         new Instabug.Builder(this, "f56c6f16e2c9965920019f8eb52e7b6e")
                 .setInvocationEvent(InstabugInvocationEvent.FLOATING_BUTTON)
                 .build();
-        }
+        }*/
+    }
     public void onActivityCreated(Activity activity, Bundle savedInstanceState){currentActivity = activity;}
 
     public void onActivityDestroyed(Activity activity){currentActivity = null;}
