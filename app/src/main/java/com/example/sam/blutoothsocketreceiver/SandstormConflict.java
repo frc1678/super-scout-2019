@@ -2,20 +2,27 @@ package com.example.sam.blutoothsocketreceiver;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ClipData;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -27,6 +34,8 @@ import com.example.sam.blutoothsocketreceiver.Fields.RightField;
 
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
+import java.util.List;
 
 public class SandstormConflict extends AppCompatActivity {
 
@@ -41,7 +50,9 @@ public class SandstormConflict extends AppCompatActivity {
     String rightMid;
     String rightFar;
 
-    String alliance;
+    String scrollableConflictBar;
+
+    public static String alliance;
     String teamNumberOne;
     String teamNumberTwo;
     String teamNumberThree;
@@ -61,8 +72,10 @@ public class SandstormConflict extends AppCompatActivity {
     String noShowTwo;
     String noShowThree;
 
-    TextView conflictBarRight;
-    TextView conflictBarLeft;
+    ListView conflictBarRight;
+    ListView conflictBarLeft;
+    TextView conflictBarRightTV;
+    TextView conflictBarLeftTV;
 
     String teamOneConflict;
     String teamTwoConflict;
@@ -148,10 +161,17 @@ public class SandstormConflict extends AppCompatActivity {
             noShowTwo = getIntent().getStringExtra("noShowTwo");
             noShowThree = getIntent().getStringExtra("noShowThree");
 
+            scrollableConflictBar = getIntent().getStringExtra("scrollableConflictBar");
+
         }
     }
     public void initXML() {
 
+        String conflict = "       conflict";
+        ArrayList<String> conflictLetters = new ArrayList<>();
+            for (int p = 0; p < conflict.length(); p++) {
+                conflictLetters.add(String.valueOf(conflict.charAt(p)));
+            }
         teamOneButton = (Button) findViewById(R.id.teamNumberOneButton);
         teamTwoButton = (Button) findViewById(R.id.teamNumberTwoButton);
         teamThreeButton = (Button) findViewById(R.id.teamNumberThreeButton);
@@ -164,17 +184,30 @@ public class SandstormConflict extends AppCompatActivity {
         teamTwoButtonColor = ((ColorDrawable)teamTwoButton.getBackground()).getColor();
         teamThreeButtonColor = ((ColorDrawable)teamThreeButton.getBackground()).getColor();
 
-        conflictBarLeft = (TextView) findViewById(R.id.conflictBarLeft);
-        conflictBarRight = (TextView) findViewById(R.id.conflictBarRight);
+        conflictBarLeft = (ListView) findViewById(R.id.conflictBarLeft);
+        conflictBarRight = (ListView) findViewById(R.id.conflictBarRight);
 
-        if (alliance.equals("blue")) {
-            conflictBarLeft.setTextColor(ContextCompat.getColor(this, R.color.Bloo));
-            conflictBarRight.setTextColor(ContextCompat.getColor(this, R.color.Bloo));
+        conflictBarLeftTV = (TextView) findViewById(R.id.conflictBarLeftTV);
+        conflictBarRightTV = (TextView) findViewById(R.id.conflictBarRightTV);
+
+        ConflictBarAdapter adapter = new ConflictBarAdapter(getApplicationContext(), conflictLetters);
+        if (scrollableConflictBar.equals("true")) {
+            conflictBarLeft.setAdapter(adapter);
+            conflictBarRight.setAdapter(adapter);
+            activateConflictBars(conflictBarRight, conflictBarLeft);
+        } else {
+            conflictBarLeftTV.setVisibility(View.VISIBLE);
+            conflictBarRightTV.setVisibility(View.VISIBLE);
+            if (SandstormConflict.alliance.equals("blue")) {
+                conflictBarLeftTV.setTextColor(ContextCompat.getColor(this, R.color.Bloo));
+                conflictBarRightTV.setTextColor(ContextCompat.getColor(this, R.color.Bloo));
+            }
+            if (SandstormConflict.alliance.equals("red")) {
+                conflictBarRightTV.setTextColor(ContextCompat.getColor(this, R.color.Rausch));
+                conflictBarLeftTV.setTextColor(ContextCompat.getColor(this, R.color.Rausch));
+            }
         }
-        if (alliance.equals("red")) {
-            conflictBarRight.setTextColor(ContextCompat.getColor(this, R.color.Rausch));
-            conflictBarLeft.setTextColor(ContextCompat.getColor(this, R.color.Rausch));
-        }
+
     }
     public void makeAffected(Button button) {
         button.setBackgroundColor(ContextCompat.getColor(SandstormConflict.this, R.color.EmilyPurple));
@@ -258,5 +291,98 @@ public class SandstormConflict extends AppCompatActivity {
             teamThreeConflict = "false";
         }
     }
+    public void activateConflictBars(final ListView right, final ListView left) {
+        final long totalScrollTime = Long.MAX_VALUE;
+
+        final int scrollPeriod = 50;
+
+        final int heightToScroll = 1;
+
+        right.post(new Runnable() {
+            @Override
+            public void run() {
+                new CountDownTimer(totalScrollTime, scrollPeriod ) {
+                    public void onTick(long millisUntilFinished) {
+                        right.scrollBy(0, heightToScroll);
+                    }
+
+                    public void onFinish() {
+                        //you can add code for restarting timer here
+                        Toast.makeText(getApplicationContext(), "This is a message displayed in a Toast", Toast.LENGTH_SHORT).show();
+                    }
+                }.start();
+            }
+        });
+        left.post(new Runnable() {
+            @Override
+            public void run() {
+                new CountDownTimer(totalScrollTime, scrollPeriod ) {
+                    public void onTick(long millisUntilFinished) {
+                        left.scrollBy(0, heightToScroll);
+                    }
+
+                    public void onFinish() {
+                        //you can add code for restarting timer here
+                    }
+                }.start();
+            }
+        });
+    }
+
+}
+
+class ConflictBarAdapter extends BaseAdapter {
+
+    private Context mContext;
+    private ArrayList<String> conflictLetters;
+
+    public ConflictBarAdapter(Context context, ArrayList<String> conflictLetterList) {
+        mContext = context;
+        conflictLetters = conflictLetterList;
+    }
+    @Override
+    public int getCount() {
+        return conflictLetters.size();
+        //returns total of items in the list
+    }
+
+    @Override
+    public Object getItem(int position) {
+        return conflictLetters.get(position);
+        //returns list item at the specified position
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        if (convertView == null) {
+            convertView = LayoutInflater.from(mContext).
+                    inflate(R.layout.conflict_cell, parent, false);
+        }
+
+        //makes current letter be the team value of the cell
+        String currentLetter = (String) getItem(position);
+
+        //inits xml per according xml element
+        TextView letter = (TextView)
+                convertView.findViewById(R.id.conflictLetter);
+
+        if (SandstormConflict.alliance.equals("blue")) {
+            letter.setTextColor(ContextCompat.getColor(mContext, R.color.Bloo));
+        }
+        if (SandstormConflict.alliance.equals("red")) {
+            letter.setTextColor(ContextCompat.getColor(mContext, R.color.Rausch));
+        }
+
+        //sets text of the letter to the current letter
+        letter.setText(currentLetter);
+
+        return convertView;
+    }
+
 
 }
