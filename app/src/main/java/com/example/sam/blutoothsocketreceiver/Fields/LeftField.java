@@ -130,49 +130,49 @@ public class LeftField extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (leftNearBoolean) {
-                    leftNear.setBackgroundColor(ContextCompat.getColor(LeftField.this, R.color.Oroonge));leftNearBoolean = false;
+                    leftNear.setBackgroundColor(ContextCompat.getColor(LeftField.this, R.color.Hootch));leftNearBoolean = false;
                 } else if (!leftNearBoolean) {
-                    leftNear.setBackgroundColor(ContextCompat.getColor(LeftField.this, R.color.Hootch));leftNearBoolean = true;
+                    leftNear.setBackgroundColor(ContextCompat.getColor(LeftField.this, R.color.Oroonge));leftNearBoolean = true;
                 }}});
         leftMid.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (leftMidBoolean) {
-                    leftMid.setBackgroundColor(ContextCompat.getColor(LeftField.this, R.color.Oroonge));leftMidBoolean = false;
+                    leftMid.setBackgroundColor(ContextCompat.getColor(LeftField.this, R.color.Hootch));leftMidBoolean = false;
                 } else if (!leftMidBoolean) {
-                    leftMid.setBackgroundColor(ContextCompat.getColor(LeftField.this, R.color.Hootch));leftMidBoolean = true;
+                    leftMid.setBackgroundColor(ContextCompat.getColor(LeftField.this, R.color.Oroonge));leftMidBoolean = true;
                 }}});
         leftFar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (leftFarBoolean) {
-                    leftFar.setBackgroundColor(ContextCompat.getColor(LeftField.this, R.color.Oroonge));leftFarBoolean = false;
+                    leftFar.setBackgroundColor(ContextCompat.getColor(LeftField.this, R.color.Hootch));leftFarBoolean = false;
                 } else if (!leftFarBoolean) {
-                    leftFar.setBackgroundColor(ContextCompat.getColor(LeftField.this, R.color.Hootch));leftFarBoolean = true;
+                    leftFar.setBackgroundColor(ContextCompat.getColor(LeftField.this, R.color.Oroonge));leftFarBoolean = true;
                 }}});
         rightNear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (rightNearBoolean) {
-                    rightNear.setBackgroundColor(ContextCompat.getColor(LeftField.this, R.color.Oroonge));rightNearBoolean = false;
+                    rightNear.setBackgroundColor(ContextCompat.getColor(LeftField.this, R.color.Hootch));rightNearBoolean = false;
                 } else if (!rightNearBoolean) {
-                    rightNear.setBackgroundColor(ContextCompat.getColor(LeftField.this, R.color.Hootch));rightNearBoolean = true;
+                    rightNear.setBackgroundColor(ContextCompat.getColor(LeftField.this, R.color.Oroonge));rightNearBoolean = true;
                 }}});
         rightMid.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (rightMidBoolean) {
-                    rightMid.setBackgroundColor(ContextCompat.getColor(LeftField.this, R.color.Oroonge));rightMidBoolean = false;
+                    rightMid.setBackgroundColor(ContextCompat.getColor(LeftField.this, R.color.Hootch));rightMidBoolean = false;
                 } else if (!rightMidBoolean) {
-                    rightMid.setBackgroundColor(ContextCompat.getColor(LeftField.this, R.color.Hootch));rightMidBoolean = true;
+                    rightMid.setBackgroundColor(ContextCompat.getColor(LeftField.this, R.color.Oroonge));rightMidBoolean = true;
                 }}});
         rightFar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (rightFarBoolean) {
-                    rightFar.setBackgroundColor(ContextCompat.getColor(LeftField.this, R.color.Oroonge));rightFarBoolean = false;
+                    rightFar.setBackgroundColor(ContextCompat.getColor(LeftField.this, R.color.Hootch));rightFarBoolean = false;
                 } else if (!rightFarBoolean) {
-                    rightFar.setBackgroundColor(ContextCompat.getColor(LeftField.this, R.color.Hootch));rightFarBoolean = true;
+                    rightFar.setBackgroundColor(ContextCompat.getColor(LeftField.this, R.color.Oroonge));rightFarBoolean = true;
                 }}});
     }
     //Warns the user that going back will change data
