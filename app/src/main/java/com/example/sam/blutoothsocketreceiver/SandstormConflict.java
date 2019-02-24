@@ -176,14 +176,12 @@ public class SandstormConflict extends AppCompatActivity {
             conflictBarLeft.setTextColor(ContextCompat.getColor(this, R.color.Rausch));
         }
     }
-/*    public void hideRadioButtonLayout() {
-        radiobuttonLayout.setVisibility(View.GONE);
-    }
-    public void revealRadioButtonLayout() {
-        radiobuttonLayout.setVisibility(View.VISIBLE);
-    }*/
     public void makeAffected(Button button) {
-        button.setBackgroundColor(ContextCompat.getColor(SandstormConflict.this, R.color.JustinOrange));
+        button.setBackgroundColor(ContextCompat.getColor(SandstormConflict.this, R.color.EmilyPurple));
+        Log.e("bacc",String.valueOf(button.getBackground()));
+        Integer buttonColor = ((ColorDrawable)button.getBackground()).getColor();
+        Log.e("bacc",String.valueOf(buttonColor));
+
     }
     public void makeNeutral(Button button) {
         button.setBackgroundColor(ContextCompat.getColor(SandstormConflict.this, R.color.LightGrey));
