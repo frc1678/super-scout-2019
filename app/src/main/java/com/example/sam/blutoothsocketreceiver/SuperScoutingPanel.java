@@ -37,10 +37,9 @@ public class SuperScoutingPanel extends Fragment {
     }
 
 
-    public void setAllianceColor(boolean allianceColor, String teamNumberNoShow) {
+    public void setAllianceColor(String allianceColor, String teamNumberNoShow) {
         TextView teamNumberTextView = (TextView) getView().findViewById(R.id.teamNumberTextView);
-        this.isRed = allianceColor;
-        if (isRed) {
+        if (allianceColor.equals("red")) {
             teamNumberTextView.setTextColor(ContextCompat.getColor(getContext(), R.color.TeamNumberRed));
         } else {
             teamNumberTextView.setTextColor(ContextCompat.getColor(getContext(), R.color.TeamNumberBlue));
