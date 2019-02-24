@@ -508,6 +508,7 @@ public class MainActivity extends ActionBarActivity {
         editor.putString("teamThreeNoShow",String.valueOf(teamNumberThreeNoShow));
         editor.putInt("matchNumber", Integer.valueOf(numberOfMatch.getText().toString()));
         editor.putString("scrollableConflictBar", String.valueOf(scrollableConflictBar));
+        editor.putString("isRed",String.valueOf(isRed));
         editor.commit();
     }
     public void getOverrideTeamsSP() {
@@ -520,6 +521,7 @@ public class MainActivity extends ActionBarActivity {
         teamNumberThreeNoShow = convertToBool(prefs.getString("teamThreeNoShow","false"));
         matchNumber = prefs.getInt("matchNumber",0);
         scrollableConflictBar = convertToBool(prefs.getString("scrollableConflictBar","false"));
+        isRed = convertToBool(prefs.getString("isRed","false"));
     }
 
     //changes the team numbers while the user changes the match number
