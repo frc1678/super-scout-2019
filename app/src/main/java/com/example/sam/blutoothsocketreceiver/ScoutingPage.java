@@ -13,6 +13,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -527,11 +528,11 @@ public class ScoutingPage extends ActionBarActivity {
 
     public void setPanels() {
 
-        panelOne.setAllianceColor(isRed, noShowOnePanel);
+        panelOne.setAllianceColor(alliance, noShowOnePanel);
         panelOne.setTeamNumber(teamNumberOne, noShowOnePanel);
-        panelTwo.setAllianceColor(isRed, noShowTwoPanel);
+        panelTwo.setAllianceColor(alliance, noShowTwoPanel);
         panelTwo.setTeamNumber(teamNumberTwo, noShowTwoPanel);
-        panelThree.setAllianceColor(isRed, noShowThreePanel);
+        panelThree.setAllianceColor(alliance, noShowThreePanel);
         panelThree.setTeamNumber(teamNumberThree, noShowThreePanel);
     }
     // TODO: Fix the above error.
