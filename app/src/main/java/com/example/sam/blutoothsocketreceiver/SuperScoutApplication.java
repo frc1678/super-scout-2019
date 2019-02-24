@@ -75,6 +75,12 @@ public class SuperScoutApplication extends Application implements Application.Ac
                         }
                     });
         }
+
+        //This is where the firebase matches list is being created, but because our 2019+ super scout doesn't read from firebase,
+	    //this code is commented out until (if) we switch back to firebase reading for super if assignments doesn't work.
+
+	    //If uncommented, you have to add extra match schema into firebase_classes as the app would crash because of missing schema for Matches
+
       /*      FirebaseLists.matchesList = new FirebaseList<>(url + "Matches/", new FirebaseList.FirebaseUpdatedCallback() {
                 @Override
                 public void execute() {
