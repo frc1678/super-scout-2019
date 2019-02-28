@@ -15,6 +15,7 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.content.SharedPreferences;
 
 import com.example.sam.blutoothsocketreceiver.Fields.Bay;
 import com.google.zxing.BarcodeFormat;
@@ -92,6 +93,8 @@ public class QrDisplay extends ActionBarActivity {
     String teamTwoConflict;
     String teamThreeConflict;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -107,6 +110,8 @@ public class QrDisplay extends ActionBarActivity {
         Log.e("COMPRESSED", compressedData);
         displayQR(compressedData);
     }
+
+    public String SHARED_PREF = "super_scout_sp";
 
     public void getExtras() {
         matchNumber = intent.getExtras().getString("matchNumber");

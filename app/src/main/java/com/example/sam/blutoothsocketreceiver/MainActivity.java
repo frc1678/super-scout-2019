@@ -2,7 +2,6 @@ package com.example.sam.blutoothsocketreceiver;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -36,37 +35,23 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.RadioButton;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-import com.example.sam.blutoothsocketreceiver.Fields.Bay;
 import com.example.sam.blutoothsocketreceiver.Fields.FieldLayout;
-import com.example.sam.blutoothsocketreceiver.Fields.LeftField;
-import com.example.sam.blutoothsocketreceiver.firebase_classes.Match;
+import com.example.sam.blutoothsocketreceiver.Utilities.TeamAssignment;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonIOException;
-import com.google.gson.reflect.TypeToken;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
 import com.google.zxing.MultiFormatWriter;
@@ -94,7 +79,10 @@ public class MainActivity extends ActionBarActivity {
     Integer matchNumber = 0;
     DatabaseReference dataBase;
     Boolean leftSideBoolean = true, rightSideBoolean = true, firstClick = true;
-    public static int mMatchNum;
+    Integer mMatchNum;
+    Integer mTeamList;
+    Integer mTeamNum;
+    String mAllianceColor;
     //TODO: Why are these global?
     //String previousScore, previousFoul, previousAllianceSimple;
     //Boolean facedTheBoss = false, didAutoQuest = false;
@@ -439,30 +427,35 @@ public class MainActivity extends ActionBarActivity {
     }
 
     //updates the team numbers in the front screen according to the match number and the alliance;
-    private void updateUI() {
+    public void updateUI() {
+        if (matchNumber > 0) {
+            String sortL1Key = "matches";
+            Log.e("match",String.valueOf(sortL1Key));
+            String sortL2Key = String.valueOf(mMatchNum);
+            Log.e("match number", String.valueOf(sortL2Key));
+            String sortL3Key = String.valueOf(mTeamList);
+            String sortL4Key = String.valueOf(mTeamNum);
+            String sortL5Key = String.valueOf(mAllianceColor);
 
-        String sortMatches = "matches";
-        String sortMatchNumber = String.valueOf(mMatchNum);
-        if(teamNumberOne.equals("") || teamNumberTwo.equals("") || teamNumberThree.equals("")) {
-            Toast.makeText(getBaseContext(), "There are missing teams!", Toast.LENGTH_LONG).show();
-        }
-        else {
-            String filePath = Environment.getExternalStorageState().toString() +  "/bluetooth";
-            String fileName = "assignments.txt";
+            try {
+                JSONObject backupData = new JSONObject(TeamAssignment.retrieveSDCardFile("assignments.txt"));
+                backupData = backupData.getJSONObject(sortL1Key).getJSONObject(sortL2Key).getJSONObject(sortL3Key);
 
-            File f = new File(filePath, fileName);
+                mAllianceColor = backupData.getJSONObject(sortL3Key).getString(sortL5Key);
+                mTeamNum = backupData.getJSONObject(sortL3Key).getInt(sortL4Key);
 
-            if(f.exists()) {
-                try {
-                    JSONObject teamAssignment = new JSONObject(TeamAssignment.retrieveSDCardFile("assignments.txt"));
-                    teamAssignment = teamAssignment.getJSONObject(sortMatches);
+                for(int i = 1; sortL3Key.length() < i; i++){
+                    if(SuperScoutApplication.isRed) {
+                        
+                    }
+                    else if (!SuperScoutApplication.isRed) {
 
+                    }
+                    }
 
-
-                }
-                catch (JSONException JE) {
-                    JE.printStackTrace();
-                }
+            }
+            catch(JSONException JE) {
+                JE.printStackTrace();
             }
         }
     }
@@ -706,3 +699,71 @@ public class MainActivity extends ActionBarActivity {
     }
 
 }
+
+/*         //looks for "matches" in assignments.txt
+        String sortMatches = "matches";
+        //sorts the matches in order from the first to nth match
+        String sortMatchNumber = String.valueOf(mMatchNum);
+        //sorts the value of the six teams in order from one to six
+        String sortTeamValues = String.valueOf(mTeamValue);
+        //get the string of the alliance, either "red" or "blue"
+        String sortAlliance =  String.valueOf(mAllianceColor);
+
+        if(teamNumberOne.equals("") || teamNumberTwo.equals("") || teamNumberThree.equals("")) {
+            Toast.makeText(getBaseContext(), "There are missing teams!", Toast.LENGTH_LONG).show();
+        }
+        else {
+            String filePath = Environment.getExternalStorageState().toString() + "/bluetooth";
+            String fileName = "assignments.txt";
+
+            File f = new File(filePath, fileName);
+
+            try {
+                JSONObject backupData = new JSONObject(TeamAssignment.retrieveSDCardFile("assignments.txt"));
+                //sort through to the alliance
+                backupData = backupData.getJSONObject(sortMatches).getJSONObject(sortMatchNumber).getJSONObject(sortAlliance);
+
+                Log.e("backUpData", String.valueOf(backupData));
+                //set mAllianceColor so that it gets the key "alliance"
+                mAllianceColor = backupData.getJSONObject(sortAlliance).getString("alliance");
+                //set mTeamNum so that it gets the key "number"
+                mTeamNum = backupData.getJSONObject(sortAlliance).getInt("number");
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            //if the file exists...
+            if (f.exists()) {
+                try {
+                    //run through the team values...
+                    for (int i = 0; i < sortTeamValues.length(); i++) {
+                        //if the value of "alliance" is "red"...
+                        if(isRed) {
+                            //set the team numbers to the three red teams...
+                            teamNumberOne.setText("");
+                            teamNumberTwo.setText("");
+                            teamNumberThree.setText("");
+
+                        } //and if the value of "alliance" is "blue"...
+                        else if(!isRed){
+                            //set the team numbers to the three blue teams...
+                            teamNumberOne.setText("");
+                            teamNumberTwo.setText("");
+                            teamNumberThree.setText("");
+
+                        }
+                        else {
+                            teamNumberOne.setText("");
+                            teamNumberTwo.setText("");
+                            teamNumberThree.setText("");
+                            teamNumberOne.setHint("Enter a team number");
+                            teamNumberTwo.setHint("Enter a team number");
+                            teamNumberThree.setHint("Enter a team number");
+                        }
+                    }
+
+                } catch (JSONException JE) {
+                    JE.printStackTrace();
+                }
+            }
+        } */
