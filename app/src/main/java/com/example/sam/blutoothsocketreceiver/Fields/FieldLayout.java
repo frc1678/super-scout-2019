@@ -17,9 +17,10 @@ public class FieldLayout {
     //red -2594978
     //orange -277703
     //gray -2894893
+    //violet -3111945
 
     public static String causedColor = "-2594978";
-    public static String affectedColor = "-277703";
+    public static String affectedColor = "-3111945";
     public static String neutralColor = "-2894893";
 
 

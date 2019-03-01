@@ -2,6 +2,7 @@ package com.example.sam.blutoothsocketreceiver.Fields;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -14,6 +15,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -39,6 +41,7 @@ public class LeftField extends AppCompatActivity {
     String numberOfMatch;
     Intent previous;
     boolean isRed;
+    String scrollableConflictBar;
     String alliance;
     String leftViewColor;
 
@@ -58,10 +61,13 @@ public class LeftField extends AppCompatActivity {
     String noShowOne;
     String noShowTwo;
     String noShowThree;
+    
+    Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        context = this;
         setContentView(R.layout.left_field); setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE); previous = getIntent(); bundle = previous.getExtras();
         getMatchNumber(); getTeamNumbers(); getAlliance(); getLeftViewColor(); getXML();
         prepareField(); startFieldListener();
@@ -74,6 +80,7 @@ public class LeftField extends AppCompatActivity {
     public void getAlliance() {
         if (bundle != null) {
             alliance = getIntent().getStringExtra("allianceColor");
+            scrollableConflictBar = getIntent().getStringExtra("scrollableConflictBar");
         }
     }
     public void getLeftViewColor() {
@@ -130,49 +137,49 @@ public class LeftField extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (leftNearBoolean) {
-                    leftNear.setBackgroundColor(ContextCompat.getColor(LeftField.this, R.color.Oroonge));leftNearBoolean = false;
+                    leftNear.setBackgroundColor(ContextCompat.getColor(LeftField.this, R.color.Hootch));leftNearBoolean = false;
                 } else if (!leftNearBoolean) {
-                    leftNear.setBackgroundColor(ContextCompat.getColor(LeftField.this, R.color.Hootch));leftNearBoolean = true;
+                    leftNear.setBackgroundColor(ContextCompat.getColor(LeftField.this, R.color.Oroonge));leftNearBoolean = true;
                 }}});
         leftMid.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (leftMidBoolean) {
-                    leftMid.setBackgroundColor(ContextCompat.getColor(LeftField.this, R.color.Oroonge));leftMidBoolean = false;
+                    leftMid.setBackgroundColor(ContextCompat.getColor(LeftField.this, R.color.Hootch));leftMidBoolean = false;
                 } else if (!leftMidBoolean) {
-                    leftMid.setBackgroundColor(ContextCompat.getColor(LeftField.this, R.color.Hootch));leftMidBoolean = true;
+                    leftMid.setBackgroundColor(ContextCompat.getColor(LeftField.this, R.color.Oroonge));leftMidBoolean = true;
                 }}});
         leftFar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (leftFarBoolean) {
-                    leftFar.setBackgroundColor(ContextCompat.getColor(LeftField.this, R.color.Oroonge));leftFarBoolean = false;
+                    leftFar.setBackgroundColor(ContextCompat.getColor(LeftField.this, R.color.Hootch));leftFarBoolean = false;
                 } else if (!leftFarBoolean) {
-                    leftFar.setBackgroundColor(ContextCompat.getColor(LeftField.this, R.color.Hootch));leftFarBoolean = true;
+                    leftFar.setBackgroundColor(ContextCompat.getColor(LeftField.this, R.color.Oroonge));leftFarBoolean = true;
                 }}});
         rightNear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (rightNearBoolean) {
-                    rightNear.setBackgroundColor(ContextCompat.getColor(LeftField.this, R.color.Oroonge));rightNearBoolean = false;
+                    rightNear.setBackgroundColor(ContextCompat.getColor(LeftField.this, R.color.Hootch));rightNearBoolean = false;
                 } else if (!rightNearBoolean) {
-                    rightNear.setBackgroundColor(ContextCompat.getColor(LeftField.this, R.color.Hootch));rightNearBoolean = true;
+                    rightNear.setBackgroundColor(ContextCompat.getColor(LeftField.this, R.color.Oroonge));rightNearBoolean = true;
                 }}});
         rightMid.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (rightMidBoolean) {
-                    rightMid.setBackgroundColor(ContextCompat.getColor(LeftField.this, R.color.Oroonge));rightMidBoolean = false;
+                    rightMid.setBackgroundColor(ContextCompat.getColor(LeftField.this, R.color.Hootch));rightMidBoolean = false;
                 } else if (!rightMidBoolean) {
-                    rightMid.setBackgroundColor(ContextCompat.getColor(LeftField.this, R.color.Hootch));rightMidBoolean = true;
+                    rightMid.setBackgroundColor(ContextCompat.getColor(LeftField.this, R.color.Oroonge));rightMidBoolean = true;
                 }}});
         rightFar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (rightFarBoolean) {
-                    rightFar.setBackgroundColor(ContextCompat.getColor(LeftField.this, R.color.Oroonge));rightFarBoolean = false;
+                    rightFar.setBackgroundColor(ContextCompat.getColor(LeftField.this, R.color.Hootch));rightFarBoolean = false;
                 } else if (!rightFarBoolean) {
-                    rightFar.setBackgroundColor(ContextCompat.getColor(LeftField.this, R.color.Hootch));rightFarBoolean = true;
+                    rightFar.setBackgroundColor(ContextCompat.getColor(LeftField.this, R.color.Oroonge));rightFarBoolean = true;
                 }}});
     }
     //Warns the user that going back will change data
@@ -224,8 +231,98 @@ public class LeftField extends AppCompatActivity {
                 next.putExtra("teamNumberTwo",teamNumberTwo);
                 next.putExtra("teamNumberThree", teamNumberThree);
                 next.putExtra("matchNumber",numberOfMatch);
+                next.putExtra("scrollableConflictBar",scrollableConflictBar);
                 startActivity(next);
             }
+        } else if (id == R.id.noShow) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            final View noShowLayout = LayoutInflater.from(context).inflate(R.layout.noshowteams, null);
+            final Button noShowTeamOne = (Button) noShowLayout.findViewById(R.id.noShowTeamOne);
+            final Button noShowTeamTwo = (Button) noShowLayout.findViewById(R.id.noShowTeamTwo);
+            final Button noShowTeamThree = (Button) noShowLayout.findViewById(R.id.noShowTeamThree);
+
+            noShowTeamOne.setText(teamNumberOne);
+            noShowTeamTwo.setText(teamNumberTwo);
+            noShowTeamThree.setText(teamNumberThree);
+            
+            if (noShowOne.equals("true")) {
+                noShowTeamOne.setBackgroundColor(ContextCompat.getColor(LeftField.this, R.color.TeamNumberRed));
+            } else {
+                noShowTeamOne.setBackgroundColor(ContextCompat.getColor(LeftField.this, R.color.LightGrey));
+            }
+            if (noShowTwo.equals("true")) {
+                noShowTeamTwo.setBackgroundColor(ContextCompat.getColor(LeftField.this, R.color.TeamNumberRed));
+            } else {
+                noShowTeamTwo.setBackgroundColor(ContextCompat.getColor(LeftField.this, R.color.LightGrey));
+            }
+            if (noShowThree.equals("true")) {
+                noShowTeamThree.setBackgroundColor(ContextCompat.getColor(LeftField.this, R.color.TeamNumberRed));
+            } else {
+                noShowTeamThree.setBackgroundColor(ContextCompat.getColor(LeftField.this, R.color.LightGrey));
+            }
+
+            noShowTeamOne.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Integer buttonColor = ((ColorDrawable) noShowTeamOne.getBackground()).getColor();
+                    if (String.valueOf(buttonColor).equals(FieldLayout.neutralColor)) {
+                        noShowTeamOne.setBackgroundColor(ContextCompat.getColor(LeftField.this, R.color.TeamNumberRed));
+                    } else {
+                        noShowTeamOne.setBackgroundColor(ContextCompat.getColor(LeftField.this, R.color.LightGrey));
+                    }
+
+                }
+            });
+            noShowTeamTwo.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Integer buttonColor = ((ColorDrawable) noShowTeamTwo.getBackground()).getColor();
+                    if (String.valueOf(buttonColor).equals(FieldLayout.neutralColor)) {
+                        noShowTeamTwo.setBackgroundColor(ContextCompat.getColor(LeftField.this, R.color.TeamNumberRed));
+                    } else {
+                        noShowTeamTwo.setBackgroundColor(ContextCompat.getColor(LeftField.this, R.color.LightGrey));
+                    }
+
+                }
+            });
+            noShowTeamThree.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Integer buttonColor = ((ColorDrawable) noShowTeamThree.getBackground()).getColor();
+                    if (String.valueOf(buttonColor).equals(FieldLayout.neutralColor)) {
+                        noShowTeamThree.setBackgroundColor(ContextCompat.getColor(LeftField.this, R.color.TeamNumberRed));
+                    } else {
+                        noShowTeamThree.setBackgroundColor(ContextCompat.getColor(LeftField.this, R.color.LightGrey));
+                    }
+
+                }
+            });
+            builder.setView(noShowLayout); builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Integer teamOneColor = ((ColorDrawable) noShowTeamOne.getBackground()).getColor();
+                    Integer teamTwoColor = ((ColorDrawable) noShowTeamTwo.getBackground()).getColor();
+                    Integer teamThreeColor = ((ColorDrawable) noShowTeamThree.getBackground()).getColor();
+
+                    if (String.valueOf(teamOneColor).equals(String.valueOf(FieldLayout.causedColor))) {
+                        noShowOne = "true";
+                    } else {
+                        noShowTwo = "false";
+                    }
+                    if (String.valueOf(teamTwoColor).equals(String.valueOf(FieldLayout.causedColor))) {
+                        noShowTwo = "true";
+                    } else {
+                        noShowTwo = "false";
+                    }
+                    if (String.valueOf(teamThreeColor).equals(String.valueOf(FieldLayout.causedColor))) {
+                        noShowThree = "true";
+                    } else {
+                        noShowThree = "false";
+                    } 
+
+                }
+            }).show();
+
         }
         return super.onOptionsItemSelected(item);
     }
