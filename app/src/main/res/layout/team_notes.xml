@@ -49,5 +49,4 @@
         android:hint="Additional Notes?"
         android:digits="abcdefghijklmnopqrstuvwxyz.,!?=1234567890 "
         android:imeOptions="actionDone|flagNoExtractUi"/>
-
 </LinearLayout>
