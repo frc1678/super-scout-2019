@@ -31,7 +31,7 @@
         android:textSize="20sp"
         android:layout_alignParentLeft="true"
         android:inputType="textMultiLine"
-        android:digits="abcdefghijklmnopqrstuvwxyz.,!?=1234567890"
+        android:digits="abcdefghijklmnopqrstuvwxyz.,!?=1234567890 "
         android:imeOptions="actionDone|flagNoExtractUi"/>
     </ScrollView>
     <TextView
@@ -55,7 +55,7 @@
         android:textSize="20sp"
         android:layout_alignParentLeft="true"
         android:inputType="textMultiLine"
-        android:digits="abcdefghijklmnopqrstuvwxyz.,!?=1234567890"
+        android:digits="abcdefghijklmnopqrstuvwxyz.,!?=1234567890 "
         android:imeOptions="actionDone|flagNoExtractUi"/>
     </ScrollView>
     <TextView
@@ -78,7 +78,7 @@
         android:textSize="20sp"
         android:layout_alignParentLeft="true"
         android:inputType="textMultiLine"
-        android:digits="abcdefghijklmnopqrstuvwxyz.,!?=1234567890"
+        android:digits="abcdefghijklmnopqrstuvwxyz.,!?=1234567890 "
         android:imeOptions="actionDone|flagNoExtractUi"/>
     </ScrollView>
 
