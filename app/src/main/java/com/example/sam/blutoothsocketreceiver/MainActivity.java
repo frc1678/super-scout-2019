@@ -442,18 +442,30 @@ public class MainActivity extends ActionBarActivity {
                 JSONObject backupData = new JSONObject(TeamAssignment.retrieveSDCardFile("assignments.txt"));
                 backupData = backupData.getJSONObject(matchesKey).getJSONObject(matchNumberKey);
 
-                JSONArray teamListKey = new JSONArray(backupData.getJSONArray(""));
-
-
-
-                for(int i = 0; i < teamListKey.length(); i++) {
-                    JSONObject row = teamListKey.getJSONObject(i);
-                    
+                //start
+                if(isRed) {
+                    teamNumberOne.setText(String.valueOf(backupData.getJSONObject("1").getInt("number")));
+                    teamNumberTwo.setText(String.valueOf(backupData.getJSONObject("2").getInt("number")));
+                    teamNumberThree.setText(String.valueOf(backupData.getJSONObject("3").getInt("number")));
+                } else if(!isRed) {
+                    teamNumberOne.setText(String.valueOf(backupData.getJSONObject("4").getInt("number")));
+                    teamNumberTwo.setText(String.valueOf(backupData.getJSONObject("5").getInt("number")));
+                    teamNumberThree.setText(String.valueOf(backupData.getJSONObject("6").getInt("number")));
                 }
+                //end
+
+//                JSONArray teamListKey = new JSONArray(backupData.getJSONArray(""));
+//
+//                for(int i = 0; i < teamListKey.length(); i++) {
+//                    JSONObject row = teamListKey.getJSONObject(i);
+//                }
             }
             catch(JSONException JE) {
                 JE.printStackTrace();
             }
+
+            alliance.setTextColor((isRed) ? Color.RED : Color.BLUE);
+            alliance.setText((isRed) ? "Red Alliance" : "Blue Alliance");
         }
     }
 
