@@ -13,7 +13,7 @@ import java.util.List;
 
 /**
  * Created by colinunger on 1/24/16.
- */
+ *//*
 public class FirebaseList<T> {
     private List<String> keys = new ArrayList<>();
     private List<T> values = new ArrayList<>();
@@ -126,3 +126,4 @@ public class FirebaseList<T> {
         return values;
     }
 }
+*/

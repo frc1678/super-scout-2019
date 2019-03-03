@@ -43,21 +43,28 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.sql.Array;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 import com.example.sam.blutoothsocketreceiver.Fields.FieldLayout;
 import com.example.sam.blutoothsocketreceiver.Utilities.TeamAssignment;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.gson.JsonObject;
+import com.google.gson.annotations.JsonAdapter;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 
+import org.jcodec.common.DictionaryCompressor;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -79,10 +86,6 @@ public class MainActivity extends ActionBarActivity {
     Integer matchNumber = 0;
     DatabaseReference dataBase;
     Boolean leftSideBoolean = true, rightSideBoolean = true, firstClick = true;
-    Integer mMatchNum;
-    Integer mTeamList;
-    Integer mTeamNum;
-    String mAllianceColor;
     //TODO: Why are these global?
     //String previousScore, previousFoul, previousAllianceSimple;
     //Boolean facedTheBoss = false, didAutoQuest = false;
@@ -198,11 +201,11 @@ public class MainActivity extends ActionBarActivity {
             commitSharedPreferences();
             updateUI();
         }
-        if (id == R.id.scout) {
+        if (id == R.id.scout) {/*
             if (!FirebaseLists.matchesList.getKeys().contains(matchNumber.toString()) && !isOverriden){
                 Toast.makeText(context, "This Match Does Not Exist!", Toast.LENGTH_LONG).show();
                 disenableEditTextEditing();
-            }else{
+            }*/
                 if (numberOfMatch.getText().toString().equals("")) {
                     Toast.makeText(context, "Input match name!", Toast.LENGTH_SHORT).show();
                 } else if (teamNumberOne.getText().toString().equals("")) {
@@ -231,7 +234,6 @@ public class MainActivity extends ActionBarActivity {
                     intent.putExtra("teamNumberThreeNoShow",String.valueOf(teamNumberThreeNoShow));
                     startActivity(intent);
                 }
-            }
 
         } else if (id == R.id.action_override) {
             if (item.getTitle().toString().equals("Override Match and Team Number")) {
@@ -428,31 +430,26 @@ public class MainActivity extends ActionBarActivity {
 
     //updates the team numbers in the front screen according to the match number and the alliance;
     public void updateUI() {
-        if (matchNumber > 0) {
-            String sortL1Key = "matches";
-            Log.e("match",String.valueOf(sortL1Key));
-            String sortL2Key = String.valueOf(mMatchNum);
-            Log.e("match number", String.valueOf(sortL2Key));
-            String sortL3Key = String.valueOf(mTeamList);
-            String sortL4Key = String.valueOf(mTeamNum);
-            String sortL5Key = String.valueOf(mAllianceColor);
+        if (matchNumber >= 0) {
+            String matchesKey = "matches";
+            Log.e("match",String.valueOf(matchesKey));
+            String matchNumberKey = String.valueOf(matchNumber);
+            Log.e("match number", String.valueOf(matchNumberKey));
+
+
 
             try {
                 JSONObject backupData = new JSONObject(TeamAssignment.retrieveSDCardFile("assignments.txt"));
-                backupData = backupData.getJSONObject(sortL1Key).getJSONObject(sortL2Key).getJSONObject(sortL3Key);
+                backupData = backupData.getJSONObject(matchesKey).getJSONObject(matchNumberKey);
 
-                mAllianceColor = backupData.getJSONObject(sortL3Key).getString(sortL5Key);
-                mTeamNum = backupData.getJSONObject(sortL3Key).getInt(sortL4Key);
+                JSONArray teamListKey = new JSONArray(backupData.getJSONArray(""));
 
-                for(int i = 1; sortL3Key.length() < i; i++){
-                    if(SuperScoutApplication.isRed) {
-                        
-                    }
-                    else if (!SuperScoutApplication.isRed) {
 
-                    }
-                    }
 
+                for(int i = 0; i < teamListKey.length(); i++) {
+                    JSONObject row = teamListKey.getJSONObject(i);
+                    
+                }
             }
             catch(JSONException JE) {
                 JE.printStackTrace();
@@ -767,3 +764,13 @@ public class MainActivity extends ActionBarActivity {
                 }
             }
         } */
+
+
+                /*mAllianceColor = backupData.getJSONObject(sortL3Key).getString(sortL5Key);
+                mTeamNum = backupData.getJSONObject(sortL3Key).getInt(sortL4Key);
+
+                JSONArray teamList = backupData.getJSONArray(sortL3Key);
+                Log.e("gotTeamList", String.valueOf(teamList));
+                JSONArray teamNumbers = backupData.getJSONArray(sortL4Key);
+                Log.e("gotTeamNums", String.valueOf(teamNumbers));*/
+
