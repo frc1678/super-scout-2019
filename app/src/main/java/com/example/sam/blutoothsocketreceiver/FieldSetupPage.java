@@ -42,6 +42,7 @@ public class FieldSetupPage extends AppCompatActivity{
     String noShowTeamOne;
     String noShowTeamTwo;
     String noShowTeamThree;
+    String scrollableConflictBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,6 +108,8 @@ public class FieldSetupPage extends AppCompatActivity{
             noShowTeamTwo = previous.getExtras().getString("teamNumberTwoNoShow");
             noShowTeamThree = previous.getExtras().getString("teamNumberThreeNoShow");
 
+            scrollableConflictBar = previous.getExtras().getString("scrollableConflictBar");
+
         }
         public void getAllianceColor() {
             if (isRed) {
@@ -129,6 +132,7 @@ public class FieldSetupPage extends AppCompatActivity{
             intent.putExtra("noShowOne",noShowTeamOne);
             intent.putExtra("noShowTwo",noShowTeamTwo);
             intent.putExtra("noShowThree",noShowTeamThree);
+            intent.putExtra("scrollableConflictBar",scrollableConflictBar);
             FieldSetupPage.this.startActivity(intent);
         }
 
@@ -143,6 +147,7 @@ public class FieldSetupPage extends AppCompatActivity{
             intent.putExtra("noShowOne",noShowTeamOne);
             intent.putExtra("noShowTwo",noShowTeamTwo);
             intent.putExtra("noShowThree",noShowTeamThree);
+            intent.putExtra("scrollableConflictBar",scrollableConflictBar);
             FieldSetupPage.this.startActivity(intent);
         }
 

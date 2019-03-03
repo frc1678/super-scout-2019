@@ -25,6 +25,7 @@
         android:inputType="number"
         android:textSize="28sp"
         android:id="@+id/finalScoreEditText"
+        android:imeOptions="actionDone|flagNoExtractUi"
         />
 
     <EditText
@@ -35,6 +36,7 @@
         android:inputType="number"
         android:hint="Fouls"
         android:textSize="28sp"
+        android:imeOptions="actionDone|flagNoExtractUi"
         />
 
     <TextView
