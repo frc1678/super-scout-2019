@@ -2,7 +2,6 @@ package com.example.sam.blutoothsocketreceiver;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -15,6 +14,7 @@ import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
 import android.media.MediaPlayer;
+import android.os.Environment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.ActionBarActivity;
@@ -35,41 +35,36 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.RadioButton;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.sql.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
+import java.util.Iterator;
 import java.util.Map;
 
-import com.example.sam.blutoothsocketreceiver.Fields.Bay;
 import com.example.sam.blutoothsocketreceiver.Fields.FieldLayout;
-import com.example.sam.blutoothsocketreceiver.Fields.LeftField;
-import com.example.sam.blutoothsocketreceiver.firebase_classes.Match;
+import com.example.sam.blutoothsocketreceiver.Utilities.TeamAssignment;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
+import com.google.gson.JsonObject;
+import com.google.gson.annotations.JsonAdapter;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 
+import org.jcodec.common.DictionaryCompressor;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -461,35 +456,37 @@ public class MainActivity extends ActionBarActivity {
 
         adapter.notifyDataSetChanged();
     }
+
     //updates the team numbers in the front screen according to the match number and the alliance;
-    private void updateUI() {
-        try {
-            if (FirebaseLists.matchesList.getKeys().contains(matchNumber.toString())) {
-                Match match = FirebaseLists.matchesList.getFirebaseObjectByKey(matchNumber.toString());
+    public void updateUI() {
+        if (matchNumber >= 0) {
+            String matchesKey = "matches";
+            Log.e("match",String.valueOf(matchesKey));
+            String matchNumberKey = String.valueOf(matchNumber);
+            Log.e("match number", String.valueOf(matchNumberKey));
 
-                List<Integer> teamsOnAlliance = new ArrayList<>();
-                teamsOnAlliance.addAll((isRed) ? match.redAllianceTeamNumbers : match.blueAllianceTeamNumbers);
+            try {
+                JSONObject backupData = new JSONObject(TeamAssignment.retrieveSDCardFile("assignments.txt"));
+                backupData = backupData.getJSONObject(matchesKey).getJSONObject(matchNumberKey);
 
-                teamNumberOne.setText(teamsOnAlliance.get(0).toString());
-                teamNumberTwo.setText(teamsOnAlliance.get(1).toString());
-                teamNumberThree.setText(teamsOnAlliance.get(2).toString());
-                teamNumberOne.setHint("Enter a team number");
-                teamNumberTwo.setHint("Enter a team number");
-                teamNumberThree.setHint("Enter a team number");
-            } else {
-                teamNumberOne.setHint("Not Available");
-                teamNumberTwo.setHint("Not Available");
-                teamNumberThree.setHint("Not Available");
-                teamNumberOne.setText("");
-                teamNumberTwo.setText("");
-                teamNumberThree.setText("");
+                //start
+                if(isRed) {
+                    teamNumberOne.setText(String.valueOf(backupData.getJSONObject("1").getInt("number")));
+                    teamNumberTwo.setText(String.valueOf(backupData.getJSONObject("2").getInt("number")));
+                    teamNumberThree.setText(String.valueOf(backupData.getJSONObject("3").getInt("number")));
+                } else if(!isRed) {
+                    teamNumberOne.setText(String.valueOf(backupData.getJSONObject("4").getInt("number")));
+                    teamNumberTwo.setText(String.valueOf(backupData.getJSONObject("5").getInt("number")));
+                    teamNumberThree.setText(String.valueOf(backupData.getJSONObject("6").getInt("number")));
+                }
             }
-        }catch(NullPointerException NPE){
-            toasts("Teams not available", true);
-        }
+            catch(JSONException JE) {
+                JE.printStackTrace();
+            }
 
-        alliance.setTextColor((isRed) ? Color.RED : Color.BLUE);
-        alliance.setText((isRed) ? "Red Alliance" : "Blue Alliance");
+            alliance.setTextColor((isRed) ? Color.RED : Color.BLUE);
+            alliance.setText((isRed) ? "Red Alliance" : "Blue Alliance");
+        }
     }
 
     public void commitSharedPreferences() {
