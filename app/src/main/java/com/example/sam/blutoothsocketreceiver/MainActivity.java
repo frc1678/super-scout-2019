@@ -465,8 +465,6 @@ public class MainActivity extends ActionBarActivity {
             String matchNumberKey = String.valueOf(matchNumber);
             Log.e("match number", String.valueOf(matchNumberKey));
 
-
-
             try {
                 JSONObject backupData = new JSONObject(TeamAssignment.retrieveSDCardFile("assignments.txt"));
                 backupData = backupData.getJSONObject(matchesKey).getJSONObject(matchNumberKey);
@@ -481,13 +479,6 @@ public class MainActivity extends ActionBarActivity {
                     teamNumberTwo.setText(String.valueOf(backupData.getJSONObject("5").getInt("number")));
                     teamNumberThree.setText(String.valueOf(backupData.getJSONObject("6").getInt("number")));
                 }
-                //end
-
-//                JSONArray teamListKey = new JSONArray(backupData.getJSONArray(""));
-//
-//                for(int i = 0; i < teamListKey.length(); i++) {
-//                    JSONObject row = teamListKey.getJSONObject(i);
-//                }
             }
             catch(JSONException JE) {
                 JE.printStackTrace();
