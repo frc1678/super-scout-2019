@@ -233,8 +233,8 @@ public class RightField extends AppCompatActivity {
 		        startActivity(next);
 	        }
         } else if (id == R.id.noShow) {
-	        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-	        final View noShowLayout = LayoutInflater.from(context).inflate(R.layout.noshowteams, null);
+	        AlertDialog.Builder builder = new AlertDialog.Builder(RightField.this);
+	        final View noShowLayout = LayoutInflater.from(RightField.this).inflate(R.layout.noshowteams, null);
 	        final Button noShowTeamOne = (Button) noShowLayout.findViewById(R.id.noShowTeamOne);
 	        final Button noShowTeamTwo = (Button) noShowLayout.findViewById(R.id.noShowTeamTwo);
 	        final Button noShowTeamThree = (Button) noShowLayout.findViewById(R.id.noShowTeamThree);
@@ -320,7 +320,8 @@ public class RightField extends AppCompatActivity {
 			        }
 
 		        }
-	        }).show();
+	        });
+	        builder.show();
 
         }
 	        return super.onOptionsItemSelected(item);
