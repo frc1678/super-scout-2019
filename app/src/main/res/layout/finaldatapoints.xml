@@ -19,9 +19,9 @@
         />
 
     <EditText
-        android:layout_width="200dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="Score"
+        android:hint="Final Alliance Score"
         android:inputType="number"
         android:textSize="28sp"
         android:id="@+id/finalScoreEditText"
@@ -29,58 +29,49 @@
         />
 
     <EditText
-
-        android:layout_width="200dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/finalFoulEditText"
         android:inputType="number"
-        android:hint="Fouls"
+        android:hint="Foul Points Gained"
         android:textSize="28sp"
         android:imeOptions="actionDone|flagNoExtractUi"
         />
 
     <TextView
-        android:layout_marginTop="10dp"
+        android:id="@+id/didRocketRPTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/didHabClimb_tv"
-        android:clickable="false"
-        android:text="Did Hab Climb"
+        android:text="Rocket RP"
         android:textSize="25sp"
         android:gravity="center"
-        android:layout_centerHorizontal="true"
+        android:clickable="false"
         android:layout_below="@+id/finalFoulEditText"
         />
-
     <Switch
+        android:id="@+id/didRocketRP"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/didHabClimb"
-        android:layout_below="@+id/didHabClimb_tv"
         android:gravity="center"
-        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/didRocketRPTextView"
         />
-
     <TextView
+        android:id="@+id/didHabClimbTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/didAutoQuest"
-        android:clickable="false"
-        android:text="Did Rocket RP"
-        android:layout_below="@+id/didHabClimb"
+        android:text="Hab Climb"
         android:textSize="25sp"
         android:gravity="center"
-        android:layout_centerHorizontal="true"
+        android:clickable="false"
+        android:layout_below="@+id/didRocketRP"
         />
     <Switch
+        android:id="@+id/didHabClimb"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/didRocketRP"
-        android:layout_below="@+id/didAutoQuest"
         android:gravity="center"
-        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/didHabClimbTextView"
         />
-
 
 </LinearLayout>
 
