@@ -236,7 +236,7 @@ public class QrDisplay extends ActionBarActivity {
                 + ";w"
                 + teamOneDataScore.get(0)
                 + ";x"
-                + generateTeamOneDefenseValues(dValOne, kValOne, pValOne)
+                + generateTeamDefenseMap(dValOne, kValOne, pValOne).toString().replace(", ", ";")
                 + ";y"
                 + teamOneDataScore.get(4)
                 + ";z\""
@@ -254,7 +254,7 @@ public class QrDisplay extends ActionBarActivity {
                 + ";w"
                 + teamTwoDataScore.get(0)
                 + ";x"
-                + generateTeamTwoDefenseValues(dValTwo, kValTwo, pValTwo)
+                + generateTeamDefenseMap(dValTwo, kValTwo, pValTwo).toString().replace(", ", ";")
                 + ";y"
                 + teamTwoDataScore.get(4)
                 + ";z\""
@@ -272,7 +272,7 @@ public class QrDisplay extends ActionBarActivity {
                 + ";w"
                 + teamThreeDataScore.get(0)
                 + ";x"
-                + generateTeamThreeDefenseValues(dValThree, kValThree, pValThree)
+                + generateTeamDefenseMap(dValThree, kValThree, pValThree).toString().replace(", ", ";")
                 + ";y"
                 + teamThreeDataScore.get(4)
                 + ";z\""
@@ -484,43 +484,19 @@ public class QrDisplay extends ActionBarActivity {
         return noShowList;
     }
 
-    public ArrayList<Integer> generateTeamOneDefenseValues(Integer kValOne, Integer dValOne, Integer pValOne) {
-        ArrayList<Integer> defenseOneValues = new ArrayList<>();
-        if (kValOne != null) {
-            defenseOneValues.add(kValOne);
+    public String generateTeamDefenseMap(Integer knockingValue, Integer dockingValue, Integer pathblockingValue) {
+        String knocking = "";
+        String docking = "";
+        String pathblocking= "";
+        if (knockingValue != null) {
+            knocking = String.valueOf(knockingValue);
         }
-        if (dValOne != null) {
-            defenseOneValues.add(dValOne);
+        if (dockingValue != null) {
+            docking = String.valueOf(dockingValue);
         }
-        if (pValOne != null) {
-            defenseOneValues.add(pValOne);
+        if (pathblockingValue != null) {
+            pathblocking = String.valueOf(pathblockingValue);
         }
-        return defenseOneValues;
-    }
-    public ArrayList<Integer> generateTeamTwoDefenseValues(Integer kValTwo, Integer dValTwo, Integer pValTwo) {
-        ArrayList<Integer> defenseTwoValues = new ArrayList<>();
-        if (kValTwo != null) {
-            defenseTwoValues.add(kValTwo);
-        }
-        if (dValTwo != null) {
-            defenseTwoValues.add(dValTwo);
-        }
-        if (pValTwo != null) {
-            defenseTwoValues.add(pValTwo);
-        }
-        return defenseTwoValues;
-    }
-    public ArrayList<Integer> generateTeamThreeDefenseValues(Integer kValThree, Integer dValThree, Integer pValThree) {
-        ArrayList<Integer> defenseThreeValues = new ArrayList<>();
-        if (kValThree != null) {
-            defenseThreeValues.add(kValThree);
-        }
-        if (dValThree != null) {
-            defenseThreeValues.add(dValThree);
-        }
-        if (pValThree != null) {
-            defenseThreeValues.add(pValThree);
-        }
-        return defenseThreeValues;
+        return "{C"+knocking+"D"+docking+"E"+pathblocking+"}";
     }
 }
