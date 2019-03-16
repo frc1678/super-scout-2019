@@ -484,9 +484,9 @@ public class ScoutingPage extends ActionBarActivity {
         });
         AlertDialog endDataDialog = endDataBuilder.create();
         endDataDialog.show();
-        if (isRed) {
+        if (alliance.equals("red")) {
             ((TextView) endDataDialog.findViewById(R.id.finalScoreTextView)).setTextColor(Color.RED);
-        } else {
+        } else if (alliance.equals("blue")) {
             ((TextView) endDataDialog.findViewById(R.id.finalScoreTextView)).setTextColor(Color.BLUE);
         }
     }
