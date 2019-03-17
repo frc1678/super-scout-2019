@@ -18,11 +18,12 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.SeekBar;
+import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -78,29 +79,18 @@ public class ScoutingPage extends ActionBarActivity {
     String rightMid;
     String rightFar;
 
-    Integer kValOne = 0;
-    Integer pValOne = 0;
-    Integer dValOne = 0;
-    Integer kValTwo = 0;
-    Integer pValTwo = 0;
-    Integer dValTwo = 0;
-    Integer kValThree = 0;
-    Integer pValThree = 0;
-    Integer dValThree = 0;
-
-    String kValTextOne;
-    String pValTextOne;
-    String dValTextOne;
-    String kValTextTwo;
-    String pValTextTwo;
-    String dValTextTwo;
-    String kValTextThree;
-    String pValTextThree;
-    String dValTextThree;
-
     String noShowOne;
     String noShowTwo;
     String noShowThree;
+
+    String spinnerTextOne = "";
+    String spinnerTextTwo = "";
+    String spinnerTextThree = "";
+
+    Integer spinnerValueOne = 0;
+    Integer spinnerValueTwo = 0;
+    Integer spinnerValueThree = 0;
+
 
     static String noShowOnePanel;
     static String noShowTwoPanel;
@@ -113,13 +103,9 @@ public class ScoutingPage extends ActionBarActivity {
     String teamTwoConflict;
     String teamThreeConflict;
 
-    Boolean dProgressActive = false;
-    Boolean kProgressActive = false;
-    Boolean pProgressActive = false;
-
     Drawable seekBarActiveThumb;
     Drawable seekBarInactiveThumb;
-    
+
     ArrayList<String> teamsList = new ArrayList<>();
 
     @Override
@@ -136,38 +122,93 @@ public class ScoutingPage extends ActionBarActivity {
         setPanels();
         initializeTeamTextViews();
         initTeamsList();
+        defenseSpinners();
         context = this;
         teamOneNotes = "";
         teamTwoNotes = "";
         teamThreeNotes = "";
 
-        seekBarActiveThumb = getResources().getDrawable( R.drawable.seekbar_thumb);
-        seekBarInactiveThumb = getResources().getDrawable( R.drawable.seekbar_thumb_inactive);
+        seekBarActiveThumb = getResources().getDrawable(R.drawable.seekbar_thumb);
+        seekBarInactiveThumb = getResources().getDrawable(R.drawable.seekbar_thumb_inactive);
 
-        final Button defenseButtonOne = (Button) findViewById(R.id.defenseRobotOneButton);
-        defenseButtonOne.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                inflateDefenseDialog(1);
-            }
-        });
-
-        Button defenseButtonTwo = (Button) findViewById(R.id.defenseRobotTwoButton);
-        defenseButtonTwo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                inflateDefenseDialog(2);
-            }
-        });
-
-        Button defenseButtonThree = (Button) findViewById(R.id.defenseRobotThreeButton);
-        defenseButtonThree.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                inflateDefenseDialog(3);
-            }
-        });
     }
+
+    public void defenseSpinners() {
+
+        final Spinner defenseSpinnerOne = (Spinner) findViewById(R.id.defenseSpinnerOne);
+
+        ArrayAdapter<String> defenseAdapterOne = new ArrayAdapter<String>(ScoutingPage.this,
+                android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.defenseValues));
+        defenseAdapterOne.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        defenseSpinnerOne.setAdapter(defenseAdapterOne);
+
+        defenseSpinnerOne.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+    public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+
+        spinnerTextOne = convDefToNum(parent.getItemAtPosition(pos).toString());
+
+
+    }
+    public void onNothingSelected(AdapterView<?> parent) {
+
+    }
+        });
+
+        Spinner defenseSpinnerTwo = (Spinner) findViewById(R.id.defenseSpinnerTwo);
+
+        ArrayAdapter<String> defenseAdapterTwo = new ArrayAdapter<String>(ScoutingPage.this,
+                android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.defenseValues));
+        defenseAdapterTwo.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        defenseSpinnerTwo.setAdapter(defenseAdapterTwo);
+
+        defenseSpinnerTwo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+
+                spinnerTextTwo = convDefToNum(parent.getItemAtPosition(pos).toString());
+            }
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
+
+        Spinner defenseSpinnerThree = (Spinner) findViewById(R.id.defenseSpinnerThree);
+
+        ArrayAdapter<String> defenseAdapterThree = new ArrayAdapter<String>(ScoutingPage.this,
+                android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.defenseValues));
+        defenseAdapterThree.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        defenseSpinnerThree.setAdapter(defenseAdapterThree);
+
+        defenseSpinnerThree.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+
+                spinnerTextThree = convDefToNum(parent.getItemAtPosition(pos).toString());
+
+            }
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
+    }
+
+    public String convDefToNum(String typeDef) {
+        if (typeDef.equals("No Defense")) {
+            return "0";
+        }
+        if (typeDef.equals("Ineffective Defense")) {
+            return "1";
+        }
+        if (typeDef.equals("Effective Defense")) {
+            return "2";
+        }
+        if (typeDef.equals("Shut Down Alliance")) {
+            return "3";
+        }
+        return "0";
+    }
+
 
     //Warns the user that going back will change data
     @Override
@@ -261,178 +302,6 @@ public class ScoutingPage extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-// DEFENSE FOR TEAM N
-    public void inflateDefenseDialog(final Integer teamPosition) {
-
-        final AlertDialog.Builder defenseBuilder = new AlertDialog.Builder(context);
-        defenseBuilder.setView(R.layout.defense);
-        defenseBuilder.setCancelable(false)
-        .setTitle("Team " + teamsList.get(teamPosition - 1) + " Defensive Actions");
-        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        final View defenseView = inflater.inflate(R.layout.defense, null);
-
-        final SeekBar kDefense = (SeekBar) defenseView.findViewById(R.id.knockingSlider);
-        final SeekBar dDefense = (SeekBar) defenseView.findViewById(R.id.dockingSlider);
-        final SeekBar pDefense = (SeekBar) defenseView.findViewById(R.id.pathblockingSlider);
-        final CheckBox knockingCheck = (CheckBox) defenseView.findViewById(R.id.knockingCheck);
-        final CheckBox dockingCheck = (CheckBox) defenseView.findViewById(R.id.dockingCheck);
-        final CheckBox pathblockingCheck = (CheckBox) defenseView.findViewById(R.id.pathblockingCheck);
-        final TextView kBarValue = (TextView) defenseView.findViewById(R.id.kValue);
-        final TextView dBarValue = (TextView) defenseView.findViewById(R.id.dValue);
-        final TextView pBarValue = (TextView) defenseView.findViewById(R.id.pValue);
-
-        //Get previously inputted value of each SeekBar
-        if (teamPosition == 1) {
-            if (pValOne != null) {
-                pDefense.setProgress(pValOne); pBarValue.setText(String.valueOf(pValOne));
-            } else {
-                pDefense.setProgress(0); pBarValue.setText(0);
-            }
-            if (kValOne != null) {
-                kDefense.setProgress(kValOne); kBarValue.setText(String.valueOf(kValOne));
-            } else {
-                kDefense.setProgress(0); kBarValue.setText(0);
-            }
-            if (dValOne != null) {
-                dDefense.setProgress(dValOne); dBarValue.setText(String.valueOf(dValOne));
-            } else {
-                dDefense.setProgress(0); dBarValue.setText(0);
-            }
-        } else 
-            if (teamPosition == 2) {
-                if (pValTwo != null) {
-                    pDefense.setProgress(pValTwo); pBarValue.setText(String.valueOf(pValTwo));
-                } else {
-                    pDefense.setProgress(0); pBarValue.setText(0);
-                }
-                if (kValTwo != null) {
-                    kDefense.setProgress(kValTwo); kBarValue.setText(String.valueOf(kValTwo));
-                } else {
-                    kDefense.setProgress(0); kBarValue.setText(0);
-                }
-                if (dValTwo != null) {
-                    dDefense.setProgress(dValTwo); dBarValue.setText(String.valueOf(dValTwo));
-                } else {
-                    dDefense.setProgress(0); dBarValue.setText(0);
-                }
-            } else 
-                if (teamPosition == 3) {
-                    if (pValThree != null) {
-                        pDefense.setProgress(pValThree); pBarValue.setText(String.valueOf(pValThree));
-                    } else {
-                        pDefense.setProgress(0); pBarValue.setText(0);
-                    }
-                    if (kValThree != null) {
-                        kDefense.setProgress(kValThree); kBarValue.setText(String.valueOf(kValThree));
-                    } else {
-                        kDefense.setProgress(0); kBarValue.setText(0);
-                    }
-                    if (dValThree != null) {
-                        dDefense.setProgress(dValThree); dBarValue.setText(String.valueOf(dValThree));
-                    } else {
-                        dDefense.setProgress(0); dBarValue.setText(0);
-                    }
-                }
-     
-        dDefense.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                if (teamPosition == 1) {
-                    dValTextOne = String.valueOf(progress);
-                    dBarValue.setText("" + dValTextOne);
-                } else if (teamPosition == 2) {
-                    dValTextOne = String.valueOf(progress);
-                    dBarValue.setText("" + dValTextOne);
-                } else if (teamPosition == 3) {
-                    dValTextOne = String.valueOf(progress);
-                    dBarValue.setText("" + dValTextOne);
-                }
-            }
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-                }
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-                }
-        });
-
-        kDefense.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                if (teamPosition == 1) {
-                    kValTextOne = String.valueOf(progress);
-                    kBarValue.setText("" + kValTextOne);
-                } else if (teamPosition == 2) {
-                    kValTextOne = String.valueOf(progress);
-                    kBarValue.setText("" + kValTextOne);
-                } else if (teamPosition == 3) {
-                    kValTextOne = String.valueOf(progress);
-                    kBarValue.setText("" + kValTextOne);
-                }
-            }
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-                }
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-
-            }
-        });
-
-        pDefense.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                if (teamPosition == 1) {
-                    pValTextOne = String.valueOf(progress);
-                    pBarValue.setText("" + pValTextOne);
-                } else if (teamPosition == 2) {
-                    pValTextOne = String.valueOf(progress);
-                    pBarValue.setText("" + pValTextOne);
-                } else if (teamPosition == 3) {
-                    pValTextOne = String.valueOf(progress);
-                    pBarValue.setText("" + pValTextOne);
-                }
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-            }
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-            }
-        });
-
-        defenseBuilder.setView(defenseView);
-        //End of onSeekBarChangeListeners
-        defenseBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
-        defenseBuilder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                if (teamPosition == 1) {
-                    kValOne = kDefense.getProgress();
-                    dValOne = dDefense.getProgress();
-                    pValOne = pDefense.getProgress();
-                } else if (teamPosition == 2) {
-                    kValTwo = kDefense.getProgress();
-                    dValTwo = dDefense.getProgress();
-                    pValTwo = pDefense.getProgress();
-                } else if (teamPosition == 3) {
-                    kValThree = kDefense.getProgress();
-                    dValThree = dDefense.getProgress();
-                    pValThree = pDefense.getProgress();
-                }
-                dialog.cancel();
-            }
-        });
-
-        AlertDialog defenseAlert = defenseBuilder.create();
-        defenseAlert.show();
     }
 
     public void inflateFinalDataMenu() {
@@ -538,6 +407,9 @@ public class ScoutingPage extends ActionBarActivity {
     // TODO: Fix the above error.
     public void sendExtras() {
         Intent intent = new Intent(this, FinalDataPoints.class);
+        intent.putExtra("teamOneDefense",spinnerTextOne);
+        intent.putExtra("teamTwoDefense",spinnerTextTwo);
+        intent.putExtra("teamThreeDefense",spinnerTextThree);
         intent.putExtra("teamOneNotes", teamOneNotes);
         intent.putExtra("teamTwoNotes", teamTwoNotes);
         intent.putExtra("teamThreeNotes", teamThreeNotes);
@@ -567,15 +439,9 @@ public class ScoutingPage extends ActionBarActivity {
         intent.putExtra("dataBaseUrl", dataBaseUrl);
         intent.putExtra("allianceScore", allianceScoreData);
         intent.putExtra("allianceFoul", allianceFoulData);
-        intent.putExtra("teamOneDocking", String.valueOf(dValOne));
-        intent.putExtra("teamOneKnocking", String.valueOf(kValOne));
-        intent.putExtra("teamOnePathblocking", String.valueOf(pValOne));
-        intent.putExtra("teamTwoDocking", String.valueOf(dValTwo));
-        intent.putExtra("teamTwoKnocking", String.valueOf(kValTwo));
-        intent.putExtra("teamTwoPathblocking", String.valueOf(pValTwo));
-        intent.putExtra("teamThreeDocking", String.valueOf(dValThree));
-        intent.putExtra("teamThreeKnocking", String.valueOf(kValThree));
-        intent.putExtra("teamThreePathblocking", String.valueOf(pValThree));
+        intent.putExtra("teamOneDefense", spinnerTextOne);
+        intent.putExtra("teamTwoDefense", spinnerTextTwo);
+        intent.putExtra("teamThreeDefense", spinnerTextThree);
         intent.putExtra("mute", isMute);
         intent.putExtra("noShowOne",noShowOne);
         intent.putExtra("noShowTwo",noShowTwo);

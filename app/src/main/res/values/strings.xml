@@ -6,4 +6,12 @@
 
     <string name="action_settings">Settings</string>
     <string name="title_activity_view__files">View_Files</string>
+
+    <string-array name="defenseValues">
+        <item>No Defense </item>
+        <item>Ineffective Defense </item>
+        <item>Effective Defense </item>
+        <item>Shut Down Alliance </item>
+    </string-array>
+
 </resources>

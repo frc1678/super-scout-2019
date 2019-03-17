@@ -44,39 +44,35 @@
         android:paddingTop="10dp"
         android:layout_gravity="center_horizontal">
 
-        <Button
-            android:id="@+id/defenseRobotOneButton"
+        <Spinner
             android:layout_width="0dp"
-            android:layout_weight="1"
-            android:textColor="@color/KateGray"
-            android:textStyle="bold"
-            android:text="Defense"
-            android:background="@color/White"
             android:layout_height="wrap_content"
-            android:onClick="defenseDialogOne"/>
+            android:id="@+id/defenseSpinnerOne"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_weight="1"
+            android:textAlignment="center">
+        </Spinner>
 
-        <Button
-            android:id="@+id/defenseRobotTwoButton"
+        <Spinner
             android:layout_width="0dp"
-            android:layout_weight="1"
-            android:textColor="@color/KateGray"
-            android:textStyle="bold"
-            android:text="Defense"
-            android:background="@color/White"
             android:layout_height="wrap_content"
-            android:onClick="defenseDialogTwo"/>
+            android:id="@+id/defenseSpinnerTwo"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_weight="1"
+            android:textAlignment="center">
+        </Spinner>
 
-        <Button
-            android:id="@+id/defenseRobotThreeButton"
+        <Spinner
             android:layout_width="0dp"
-            android:layout_weight="1"
-            android:textColor="@color/KateGray"
-            android:textStyle="bold"
-            android:text="Defense"
-            android:background="@color/White"
             android:layout_height="wrap_content"
-            android:onClick="defenseDialogThree"/>
-
+            android:id="@+id/defenseSpinnerThree"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_weight="1"
+            android:textAlignment="center">
+        </Spinner>
 
     </LinearLayout>
 
