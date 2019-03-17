@@ -18,12 +18,11 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -80,15 +79,18 @@ public class ScoutingPage extends ActionBarActivity {
     String rightMid;
     String rightFar;
 
-    Integer dValueOne = 0;
-    Integer dValueTwo = 0;
-    Integer dValueThree = 0;
-
-    String dValTextOne;
-
     String noShowOne;
     String noShowTwo;
     String noShowThree;
+
+    String spinnerTextOne = "";
+    String spinnerTextTwo = "";
+    String spinnerTextThree = "";
+
+    Integer spinnerValueOne = 0;
+    Integer spinnerValueTwo = 0;
+    Integer spinnerValueThree = 0;
+
 
     static String noShowOnePanel;
     static String noShowTwoPanel;
@@ -101,13 +103,9 @@ public class ScoutingPage extends ActionBarActivity {
     String teamTwoConflict;
     String teamThreeConflict;
 
-    Boolean dProgressActive = false;
-    Boolean kProgressActive = false;
-    Boolean pProgressActive = false;
-
     Drawable seekBarActiveThumb;
     Drawable seekBarInactiveThumb;
-    
+
     ArrayList<String> teamsList = new ArrayList<>();
 
     @Override
@@ -124,35 +122,93 @@ public class ScoutingPage extends ActionBarActivity {
         setPanels();
         initializeTeamTextViews();
         initTeamsList();
+        defenseSpinners();
         context = this;
         teamOneNotes = "";
         teamTwoNotes = "";
         teamThreeNotes = "";
 
-        seekBarActiveThumb = getResources().getDrawable( R.drawable.seekbar_thumb);
-        seekBarInactiveThumb = getResources().getDrawable( R.drawable.seekbar_thumb_inactive);
+        seekBarActiveThumb = getResources().getDrawable(R.drawable.seekbar_thumb);
+        seekBarInactiveThumb = getResources().getDrawable(R.drawable.seekbar_thumb_inactive);
+
+    }
+
+    public void defenseSpinners() {
 
         final Spinner defenseSpinnerOne = (Spinner) findViewById(R.id.defenseSpinnerOne);
 
-        ArrayAdapter<String> defenseAdapterOne = new ArrayAdapter<String>(context,
+        ArrayAdapter<String> defenseAdapterOne = new ArrayAdapter<String>(ScoutingPage.this,
                 android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.defenseValues));
         defenseAdapterOne.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         defenseSpinnerOne.setAdapter(defenseAdapterOne);
 
-        final Spinner defenseSpinnerTwo = (Spinner) findViewById(R.id.defenseSpinnerTwo);
+        defenseSpinnerOne.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
-        ArrayAdapter<String> defenseAdapterTwo = new ArrayAdapter<String>(context,
+    public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+
+        spinnerTextOne = convDefToNum(parent.getItemAtPosition(pos).toString());
+
+
+    }
+    public void onNothingSelected(AdapterView<?> parent) {
+
+    }
+        });
+
+        Spinner defenseSpinnerTwo = (Spinner) findViewById(R.id.defenseSpinnerTwo);
+
+        ArrayAdapter<String> defenseAdapterTwo = new ArrayAdapter<String>(ScoutingPage.this,
                 android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.defenseValues));
         defenseAdapterTwo.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         defenseSpinnerTwo.setAdapter(defenseAdapterTwo);
 
-        final Spinner defenseSpinnerThree = (Spinner) findViewById(R.id.defenseSpinnerThree);
+        defenseSpinnerTwo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
-        ArrayAdapter<String> defenseAdapterThree = new ArrayAdapter<String>(context,
+            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+
+                spinnerTextTwo = convDefToNum(parent.getItemAtPosition(pos).toString());
+            }
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
+
+        Spinner defenseSpinnerThree = (Spinner) findViewById(R.id.defenseSpinnerThree);
+
+        ArrayAdapter<String> defenseAdapterThree = new ArrayAdapter<String>(ScoutingPage.this,
                 android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.defenseValues));
         defenseAdapterThree.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         defenseSpinnerThree.setAdapter(defenseAdapterThree);
+
+        defenseSpinnerThree.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+
+                spinnerTextThree = convDefToNum(parent.getItemAtPosition(pos).toString());
+
+            }
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
     }
+
+    public String convDefToNum(String typeDef) {
+        if (typeDef.equals("No Defense")) {
+            return "0";
+        }
+        if (typeDef.equals("Ineffective Defense")) {
+            return "1";
+        }
+        if (typeDef.equals("Effective Defense")) {
+            return "2";
+        }
+        if (typeDef.equals("Shut Down Alliance")) {
+            return "3";
+        }
+        return "0";
+    }
+
 
     //Warns the user that going back will change data
     @Override
@@ -247,59 +303,6 @@ public class ScoutingPage extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
-// DEFENSE FOR TEAM N
-    /*public void inflateDefenseDialog(final Integer teamPosition) {
-
-        final AlertDialog.Builder defenseBuilder = new AlertDialog.Builder(context);
-
-        defenseBuilder.setCancelable(false)
-        .setTitle("Team " + teamsList.get(teamPosition - 1) + " Defensive Actions");
-        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        final View defenseView = inflater.inflate(R.layout.defense, null);
-
-        defenseBuilder.setView(R.layout.defense);
-
-
-
-        //Get previously inputted value of each SeekBar
-        /*if (teamPosition == 1) {
-            if (dValueOne != null) {
-            } else {
-            }
-        } else
-            if (teamPosition == 2) {
-                if (dValueTwo != null) {
-                } else {
-                }
-            } else
-                if (teamPosition == 3) {
-                    if (dValueThree != null) {
-                    } else {
-                    }
-                }
-
-        defenseBuilder.setView(defenseView);
-        //End of onSeekBarChangeListeners
-        defenseBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
-        defenseBuilder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-           /*     if (teamPosition == 1) {
-                } else if (teamPosition == 2) {
-                } else if (teamPosition == 3) {
-                }
-                dialog.cancel();
-            }
-        });
-
-        AlertDialog defenseAlert = defenseBuilder.create();
-        defenseAlert.show();
-    }*/
 
     public void inflateFinalDataMenu() {
         final AlertDialog.Builder endDataBuilder = new AlertDialog.Builder(context);
@@ -404,6 +407,9 @@ public class ScoutingPage extends ActionBarActivity {
     // TODO: Fix the above error.
     public void sendExtras() {
         Intent intent = new Intent(this, FinalDataPoints.class);
+        intent.putExtra("teamOneDefense",spinnerTextOne);
+        intent.putExtra("teamTwoDefense",spinnerTextTwo);
+        intent.putExtra("teamThreeDefense",spinnerTextThree);
         intent.putExtra("teamOneNotes", teamOneNotes);
         intent.putExtra("teamTwoNotes", teamTwoNotes);
         intent.putExtra("teamThreeNotes", teamThreeNotes);
@@ -433,9 +439,9 @@ public class ScoutingPage extends ActionBarActivity {
         intent.putExtra("dataBaseUrl", dataBaseUrl);
         intent.putExtra("allianceScore", allianceScoreData);
         intent.putExtra("allianceFoul", allianceFoulData);
-        //intent.putExtra("teamOneDefense", String.valueOf(defenseValueOne));
-        //intent.putExtra("teamTwoDefense", String.valueOf(defenseValueTwo));
-        //intent.putExtra("teamThreeDefense", String.valueOf(defenseValueThree));
+        intent.putExtra("teamOneDefense", spinnerTextOne);
+        intent.putExtra("teamTwoDefense", spinnerTextTwo);
+        intent.putExtra("teamThreeDefense", spinnerTextThree);
         intent.putExtra("mute", isMute);
         intent.putExtra("noShowOne",noShowOne);
         intent.putExtra("noShowTwo",noShowTwo);

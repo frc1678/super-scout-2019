@@ -72,15 +72,9 @@ public class QrDisplay extends ActionBarActivity {
     String rightMid;
     String rightFar;
 
-    Integer kValOne;
-    Integer pValOne;
-    Integer dValOne;
-    Integer kValTwo;
-    Integer pValTwo;
-    Integer dValTwo;
-    Integer kValThree;
-    Integer pValThree;
-    Integer dValThree;
+    String teamOneDefense;
+    String teamTwoDefense;
+    String teamThreeDefense;
 
     String noShowOne;
     String noShowTwo;
@@ -141,18 +135,9 @@ public class QrDisplay extends ActionBarActivity {
         rightMid = intent.getStringExtra(Constants.rightMid);
         rightFar = intent.getStringExtra(Constants.rightFar);
 
-        //TODO: Currently, the values below display as 0
-        // in the QR generation. This needs to be fixed ASAP.
-
-        dValOne = Integer.valueOf(intent.getExtras().getString("teamOneDocking"));
-        kValOne = Integer.valueOf(intent.getExtras().getString("teamOneKnocking"));
-        pValOne = Integer.valueOf(intent.getExtras().getString("teamOnePathblocking"));
-        dValTwo = Integer.valueOf(intent.getExtras().getString("teamTwoDocking"));
-        kValTwo = Integer.valueOf(intent.getExtras().getString("teamTwoKnocking"));
-        pValTwo = Integer.valueOf(intent.getExtras().getString("teamTwoPathblocking"));
-        dValThree = Integer.valueOf(intent.getExtras().getString("teamThreeDocking"));
-        kValThree = Integer.valueOf(intent.getExtras().getString("teamThreeKnocking"));
-        pValThree = Integer.valueOf(intent.getExtras().getString("teamThreePathblocking"));
+        teamOneDefense = intent.getExtras().getString("teamOneDefense");
+        teamTwoDefense = intent.getExtras().getString("teamTwoDefense");
+        teamThreeDefense = intent.getExtras().getString("teamThreeDefense");
 
         isMute = intent.getExtras().getBoolean("isMute");
 
@@ -236,7 +221,7 @@ public class QrDisplay extends ActionBarActivity {
                 + ";w"
                 + teamOneDataScore.get(0)
                 + ";x"
-                + generateTeamDefenseMap(dValOne, kValOne, pValOne).toString().replace(", ", ";")
+                + teamOneDefense
                 + ";y"
                 + teamOneDataScore.get(4)
                 + ";z\""
@@ -254,7 +239,7 @@ public class QrDisplay extends ActionBarActivity {
                 + ";w"
                 + teamTwoDataScore.get(0)
                 + ";x"
-                + generateTeamDefenseMap(dValTwo, kValTwo, pValTwo).toString().replace(", ", ";")
+                + teamTwoDefense
                 + ";y"
                 + teamTwoDataScore.get(4)
                 + ";z\""
@@ -272,7 +257,7 @@ public class QrDisplay extends ActionBarActivity {
                 + ";w"
                 + teamThreeDataScore.get(0)
                 + ";x"
-                + generateTeamDefenseMap(dValThree, kValThree, pValThree).toString().replace(", ", ";")
+                + teamThreeDefense
                 + ";y"
                 + teamThreeDataScore.get(4)
                 + ";z\""
@@ -484,19 +469,4 @@ public class QrDisplay extends ActionBarActivity {
         return noShowList;
     }
 
-    public String generateTeamDefenseMap(Integer knockingValue, Integer dockingValue, Integer pathblockingValue) {
-        String knocking = "";
-        String docking = "";
-        String pathblocking= "";
-        if (knockingValue != null) {
-            knocking = String.valueOf(knockingValue);
-        }
-        if (dockingValue != null) {
-            docking = String.valueOf(dockingValue);
-        }
-        if (pathblockingValue != null) {
-            pathblocking = String.valueOf(pathblockingValue);
-        }
-        return "{C"+knocking+"D"+docking+"E"+pathblocking+"}";
-    }
 }
