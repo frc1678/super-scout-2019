@@ -44,39 +44,35 @@
         android:paddingTop="10dp"
         android:layout_gravity="center_horizontal">
 
-        <Button
-            android:id="@+id/defenseRobotOneButton"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:textColor="@color/KateGray"
-            android:textStyle="bold"
-            android:text="Defense"
-            android:background="@color/White"
+        <Spinner
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="defenseDialogOne"/>
-
-        <Button
-            android:id="@+id/defenseRobotTwoButton"
-            android:layout_width="0dp"
+            android:id="@+id/defenseSpinnerOne"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
             android:layout_weight="1"
-            android:textColor="@color/KateGray"
-            android:textStyle="bold"
-            android:text="Defense"
-            android:background="@color/White"
-            android:layout_height="wrap_content"
-            android:onClick="defenseDialogTwo"/>
+            android:textAlignment="center">
+        </Spinner>
 
-        <Button
-            android:id="@+id/defenseRobotThreeButton"
-            android:layout_width="0dp"
+        <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/defenseSpinnerTwo"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
             android:layout_weight="1"
-            android:textColor="@color/KateGray"
-            android:textStyle="bold"
-            android:text="Defense"
-            android:background="@color/White"
-            android:layout_height="wrap_content"
-            android:onClick="defenseDialogThree"/>
+            android:textAlignment="center">
+        </Spinner>
 
+        <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/defenseSpinnerThree"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_weight="1"
+            android:textAlignment="center">
+        </Spinner>
 
     </LinearLayout>
 
