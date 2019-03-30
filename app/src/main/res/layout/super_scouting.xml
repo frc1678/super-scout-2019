@@ -37,7 +37,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/counterDefenseLayout"
+        android:id="@+id/defenseLayout"
         android:orientation="horizontal"
         android:divider="@color/KateGray"
         android:showDividers="middle"
@@ -45,47 +45,6 @@
         android:paddingTop="50dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="30dp">
-
-        <Spinner
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/CDSpinnerOne"
-            android:layout_centerHorizontal="true"
-            android:layout_weight="1"
-            android:textAlignment="center">
-        </Spinner>
-
-        <Spinner
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/CDSpinnerTwo"
-            android:layout_centerHorizontal="true"
-            android:layout_weight="1"
-            android:textAlignment="center">
-        </Spinner>
-
-        <Spinner
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/CDSpinnerThree"
-            android:layout_centerHorizontal="true"
-            android:layout_weight="1"
-            android:textAlignment="center">
-        </Spinner>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/defenseLayout"
-        android:layout_below="@+id/counterDefenseLayout"
-        android:orientation="horizontal"
-        android:divider="@color/KateGray"
-        android:showDividers="middle"
-        android:dividerPadding="2dp"
-        android:paddingTop="10dp"
-        android:layout_gravity="center_horizontal">
 
         <Spinner
             android:layout_width="0dp"
@@ -109,6 +68,48 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:id="@+id/defenseSpinnerThree"
+            android:layout_centerHorizontal="true"
+            android:layout_weight="1"
+            android:textAlignment="center">
+        </Spinner>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/counterDefenseLayout"
+        android:layout_below="@+id/counterDefenseLayout"
+        android:orientation="horizontal"
+        android:divider="@color/KateGray"
+        android:showDividers="middle"
+        android:dividerPadding="2dp"
+        android:paddingTop="10dp"
+        android:layout_gravity="center_horizontal"
+        >
+
+        <Spinner
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/CDSpinnerOne"
+            android:layout_centerHorizontal="true"
+            android:layout_weight="1"
+            android:textAlignment="center">
+        </Spinner>
+
+        <Spinner
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/CDSpinnerTwo"
+            android:layout_centerHorizontal="true"
+            android:layout_weight="1"
+            android:textAlignment="center">
+        </Spinner>
+
+        <Spinner
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/CDSpinnerThree"
             android:layout_centerHorizontal="true"
             android:layout_weight="1"
             android:textAlignment="center">
