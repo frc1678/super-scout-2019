@@ -76,6 +76,10 @@ public class QrDisplay extends ActionBarActivity {
     String teamTwoDefense;
     String teamThreeDefense;
 
+    String teamOneCounterDefense;
+    String teamTwoCounterDefense;
+    String teamThreeCounterDefense;
+
     String noShowOne;
     String noShowTwo;
     String noShowThree;
@@ -138,6 +142,10 @@ public class QrDisplay extends ActionBarActivity {
         teamOneDefense = intent.getExtras().getString("teamOneDefense");
         teamTwoDefense = intent.getExtras().getString("teamTwoDefense");
         teamThreeDefense = intent.getExtras().getString("teamThreeDefense");
+
+        teamOneCounterDefense = intent.getExtras().getString("teamOneCounterDefense");
+        teamTwoCounterDefense = intent.getExtras().getString("teamTwoCounterDefense");
+        teamThreeCounterDefense = intent.getExtras().getString("teamThreeCounterDefense");
 
         isMute = intent.getExtras().getBoolean("isMute");
 
@@ -223,13 +231,10 @@ public class QrDisplay extends ActionBarActivity {
                 + ";x"
                 + teamOneDefense
                 + ";y"
-                + teamOneDataScore.get(4)
+                + teamOneCounterDefense
                 + ";z\""
                 + superNotesOne
-                + "\";A"
-                + teamOneDataScore.get(2)
-                + ";B"
-                + teamOneDataScore.get(3)
+                + "\""
                 + ";j"
                 + teamOneConflict
                 + "},2{u"
@@ -241,13 +246,10 @@ public class QrDisplay extends ActionBarActivity {
                 + ";x"
                 + teamTwoDefense
                 + ";y"
-                + teamTwoDataScore.get(4)
+                + teamTwoCounterDefense
                 + ";z\""
                 + superNotesTwo
-                + "\";A"
-                + teamTwoDataScore.get(2)
-                + ";B"
-                + teamTwoDataScore.get(3)
+                + "\""
                 + ";j"
                 + teamTwoConflict
                 + "},3{u"
@@ -259,13 +261,10 @@ public class QrDisplay extends ActionBarActivity {
                 + ";x"
                 + teamThreeDefense
                 + ";y"
-                + teamThreeDataScore.get(4)
+                + teamThreeCounterDefense
                 + ";z\""
                 + superNotesThree
-                + "\";A"
-                + teamThreeDataScore.get(2)
-                + ";B"
-                + teamThreeDataScore.get(3)
+                + "\""
                 + ";j"
                 + teamThreeConflict
                 + "}";

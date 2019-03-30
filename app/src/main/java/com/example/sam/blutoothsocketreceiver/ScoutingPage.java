@@ -13,7 +13,6 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -83,13 +82,13 @@ public class ScoutingPage extends ActionBarActivity {
     String noShowTwo;
     String noShowThree;
 
-    String spinnerTextOne = "";
-    String spinnerTextTwo = "";
-    String spinnerTextThree = "";
+    String defenseTextOne = "";
+    String defenseTextTwo = "";
+    String defenseTextThree = "";
 
-    Integer spinnerValueOne = 0;
-    Integer spinnerValueTwo = 0;
-    Integer spinnerValueThree = 0;
+    String CDTextOne = "";
+    String CDTextTwo = "";
+    String CDTextThree = "";
 
 
     static String noShowOnePanel;
@@ -146,7 +145,7 @@ public class ScoutingPage extends ActionBarActivity {
 
     public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
 
-        spinnerTextOne = convDefToNum(parent.getItemAtPosition(pos).toString());
+        defenseTextOne = convDefToNum(parent.getItemAtPosition(pos).toString());
 
 
     }
@@ -166,7 +165,7 @@ public class ScoutingPage extends ActionBarActivity {
 
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
 
-                spinnerTextTwo = convDefToNum(parent.getItemAtPosition(pos).toString());
+                defenseTextTwo = convDefToNum(parent.getItemAtPosition(pos).toString());
             }
             public void onNothingSelected(AdapterView<?> parent) {
             }
@@ -184,7 +183,61 @@ public class ScoutingPage extends ActionBarActivity {
 
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
 
-                spinnerTextThree = convDefToNum(parent.getItemAtPosition(pos).toString());
+                defenseTextThree = convDefToNum(parent.getItemAtPosition(pos).toString());
+
+            }
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
+        Spinner CDSpinnerOne = (Spinner) findViewById(R.id.CDSpinnerOne);
+
+        ArrayAdapter<String> CDAdapterOne = new ArrayAdapter<String>(ScoutingPage.this,
+                android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.defenseValues));
+        CDAdapterOne.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        CDSpinnerOne.setAdapter(CDAdapterOne);
+
+        CDSpinnerOne.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+
+                CDTextOne = convDefToNum(parent.getItemAtPosition(pos).toString());
+
+            }
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
+        Spinner CDSpinnerTwo = (Spinner) findViewById(R.id.CDSpinnerTwo);
+
+        ArrayAdapter<String> CDAdapterTwo = new ArrayAdapter<String>(ScoutingPage.this,
+                android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.defenseValues));
+        CDAdapterTwo.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        CDSpinnerTwo.setAdapter(CDAdapterTwo);
+
+        CDSpinnerTwo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+
+                CDTextTwo = convDefToNum(parent.getItemAtPosition(pos).toString());
+
+            }
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
+        Spinner CDSpinnerThree = (Spinner) findViewById(R.id.CDSpinnerThree);
+
+        ArrayAdapter<String> CDAdapterThree = new ArrayAdapter<String>(ScoutingPage.this,
+                android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.defenseValues));
+        CDAdapterThree.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        CDSpinnerThree.setAdapter(CDAdapterThree);
+
+        CDSpinnerThree.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+
+                CDTextThree = convDefToNum(parent.getItemAtPosition(pos).toString());
 
             }
             public void onNothingSelected(AdapterView<?> parent) {
@@ -253,25 +306,18 @@ public class ScoutingPage extends ActionBarActivity {
     // work these two below
     public Boolean canProceed() {
         Boolean canProceed = true;
-        ArrayList<String> dataNames = new ArrayList<>(Arrays.asList("Speed", "Agility", "Counter Defense"));
-        for (int i = 0; i < 3; i++) {
+        ArrayList<String> dataNames = new ArrayList<>(Arrays.asList("Speed", "Agility"));
+        for (int i = 0; i < 2; i++) {
             String dataName = dataNames.get(i);
             int valOne = panelOne.getData().get(dataName);
             int valTwo = panelTwo.getData().get(dataName);
             int valThree = panelThree.getData().get(dataName);
 
-            if (dataName.equals("Counter Defense")) {
-                if ((valOne != 0 && valTwo != 0 && valOne != 1 && valTwo != 1 && valOne == valTwo) || (valOne != 0 && valThree != 0 && valOne != 1 && valThree != 1 && valOne == valThree) || (valTwo != 0 && valThree != 0 && valTwo != 1 && valThree != 1 && valTwo == valThree)) {
-                    canProceed = false;
-                    return canProceed;
-                }
-            } else {
-                if ((valOne != 0 && valTwo != 0 && valOne == valTwo) || (valOne != 0 && valThree != 0 && valOne == valThree) || (valTwo != 0 && valThree != 0 && valTwo == valThree)) {
+    if ((valOne != 0 && valTwo != 0 && valOne == valTwo) || (valOne != 0 && valThree != 0 && valOne == valThree) || (valTwo != 0 && valThree != 0 && valTwo == valThree)) {
                     canProceed = false;
                     return canProceed;
                 }
             }
-        }
         return canProceed;
     }
 
@@ -407,9 +453,9 @@ public class ScoutingPage extends ActionBarActivity {
     // TODO: Fix the above error.
     public void sendExtras() {
         Intent intent = new Intent(this, FinalDataPoints.class);
-        intent.putExtra("teamOneDefense",spinnerTextOne);
-        intent.putExtra("teamTwoDefense",spinnerTextTwo);
-        intent.putExtra("teamThreeDefense",spinnerTextThree);
+        intent.putExtra("teamOneDefense", defenseTextOne);
+        intent.putExtra("teamTwoDefense", defenseTextTwo);
+        intent.putExtra("teamThreeDefense", defenseTextThree);
         intent.putExtra("teamOneNotes", teamOneNotes);
         intent.putExtra("teamTwoNotes", teamTwoNotes);
         intent.putExtra("teamThreeNotes", teamThreeNotes);
@@ -439,9 +485,12 @@ public class ScoutingPage extends ActionBarActivity {
         intent.putExtra("dataBaseUrl", dataBaseUrl);
         intent.putExtra("allianceScore", allianceScoreData);
         intent.putExtra("allianceFoul", allianceFoulData);
-        intent.putExtra("teamOneDefense", spinnerTextOne);
-        intent.putExtra("teamTwoDefense", spinnerTextTwo);
-        intent.putExtra("teamThreeDefense", spinnerTextThree);
+        intent.putExtra("teamOneDefense", defenseTextOne);
+        intent.putExtra("teamTwoDefense", defenseTextTwo);
+        intent.putExtra("teamThreeDefense", defenseTextThree);
+        intent.putExtra("teamOneCounterDefense", CDTextOne);
+        intent.putExtra("teamTwoCounterDefense", CDTextTwo);
+        intent.putExtra("teamThreeCounterDefense", CDTextThree);
         intent.putExtra("mute", isMute);
         intent.putExtra("noShowOne",noShowOne);
         intent.putExtra("noShowTwo",noShowTwo);

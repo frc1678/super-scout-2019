@@ -100,6 +100,10 @@ public class FinalDataPoints extends ActionBarActivity {
     String teamTwoDefense;
     String teamThreeDefense;
 
+    String teamOneCounterDefense;
+    String teamTwoCounterDefense;
+    String teamThreeCounterDefense;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -224,6 +228,10 @@ public class FinalDataPoints extends ActionBarActivity {
             QrDisplay.putExtra("teamTwoDefense", teamTwoDefense);
             QrDisplay.putExtra("teamThreeDefense", teamThreeDefense);
 
+            QrDisplay.putExtra("teamOneCounterDefense", teamOneCounterDefense);
+            QrDisplay.putExtra("teamTwoCounterDefense", teamTwoCounterDefense);
+            QrDisplay.putExtra("teamThreeCounterDefense", teamThreeCounterDefense);
+
             QrDisplay.putExtra("noShowOne",noShowOne);
             QrDisplay.putExtra("noShowTwo",noShowTwo);
             QrDisplay.putExtra("noShowThree",noShowThree);
@@ -324,6 +332,10 @@ public class FinalDataPoints extends ActionBarActivity {
         teamOneDefense = intent.getExtras().getString("teamOneDefense");
         teamTwoDefense = intent.getExtras().getString("teamTwoDefense");
         teamThreeDefense = intent.getExtras().getString("teamThreeDefense");
+
+        teamOneCounterDefense = intent.getExtras().getString("teamOneCounterDefense");
+        teamTwoCounterDefense = intent.getExtras().getString("teamTwoCounterDefense");
+        teamThreeCounterDefense = intent.getExtras().getString("teamThreeCounterDefense");
 
         noShowOne = intent.getExtras().getString("noShowOne");
         noShowTwo = intent.getExtras().getString("noShowTwo");
