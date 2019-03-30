@@ -269,9 +269,7 @@ public class FinalDataPoints extends ActionBarActivity {
 
     public String reformatDataNames(String dataName) {
         String reformattedDataName = "";
-        if(dataName.equals("Good Decisions") || dataName.equals("Bad Decisions")){
-            reformattedDataName = "num" + dataName.replace(" ", "");
-        } else if(dataName.equals("superNotes")) {
+        if(dataName.equals("superNotes")) {
             reformattedDataName = dataName;
         } else {
             reformattedDataName = "rank" + dataName.replace(" ", "");

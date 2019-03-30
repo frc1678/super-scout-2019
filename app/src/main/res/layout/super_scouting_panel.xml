@@ -54,31 +54,5 @@
         custom:max="4"
         custom:min="0"
         custom:increment="1"/>
-
-    <com.example.sam.blutoothsocketreceiver.Counter
-        android:id="@+id/GoodDecision"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:paddingTop="3dp"
-        custom:dataName="Good Decisions"
-        custom:startingValue="0"
-        custom:max="100"
-        custom:min="0"
-        custom:increment="1"/>
-
-    <com.example.sam.blutoothsocketreceiver.Counter
-        android:id="@+id/BadDecision"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:paddingTop="3dp"
-        custom:dataName="Bad Decisions"
-        custom:startingValue="0"
-        custom:max="100"
-        custom:min="0"
-        custom:increment="1"/>
-
-
-
+    
 </LinearLayout>
