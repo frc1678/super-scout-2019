@@ -11,7 +11,15 @@
         <item>No Defense </item>
         <item>Ineffective Defense </item>
         <item>Effective Defense </item>
-        <item>Shut Down Alliance </item>
+        <item>Shut Down </item>
+    </string-array>
+
+    <string-array name="counterDefenseValues">
+        <item> No Counter Defense </item>
+        <item>Ineffective Counter Defense </item>
+        <item>Effective Counter Defense </item>
+        <item>Shut Down </item>
+
     </string-array>
 
 </resources>

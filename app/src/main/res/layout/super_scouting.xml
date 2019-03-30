@@ -46,7 +46,6 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="30dp">
 
-
         <Spinner
             android:layout_width="0dp"
             android:layout_height="wrap_content"

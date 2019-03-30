@@ -193,7 +193,7 @@ public class ScoutingPage extends ActionBarActivity {
         Spinner CDSpinnerOne = (Spinner) findViewById(R.id.CDSpinnerOne);
 
         ArrayAdapter<String> CDAdapterOne = new ArrayAdapter<String>(ScoutingPage.this,
-                android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.defenseValues));
+                android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.counterDefenseValues));
         CDAdapterOne.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         CDSpinnerOne.setAdapter(CDAdapterOne);
 
@@ -211,7 +211,7 @@ public class ScoutingPage extends ActionBarActivity {
         Spinner CDSpinnerTwo = (Spinner) findViewById(R.id.CDSpinnerTwo);
 
         ArrayAdapter<String> CDAdapterTwo = new ArrayAdapter<String>(ScoutingPage.this,
-                android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.defenseValues));
+                android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.counterDefenseValues));
         CDAdapterTwo.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         CDSpinnerTwo.setAdapter(CDAdapterTwo);
 
@@ -229,7 +229,7 @@ public class ScoutingPage extends ActionBarActivity {
         Spinner CDSpinnerThree = (Spinner) findViewById(R.id.CDSpinnerThree);
 
         ArrayAdapter<String> CDAdapterThree = new ArrayAdapter<String>(ScoutingPage.this,
-                android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.defenseValues));
+                android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.counterDefenseValues));
         CDAdapterThree.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         CDSpinnerThree.setAdapter(CDAdapterThree);
 
@@ -250,13 +250,22 @@ public class ScoutingPage extends ActionBarActivity {
         if (typeDef.equals("No Defense")) {
             return "0";
         }
+        if (typeDef.equals("No Counter Defense")) {
+            return "0";
+        }
         if (typeDef.equals("Ineffective Defense")) {
+            return "1";
+        }
+        if (typeDef.equals("Ineffective Counter Defense")) {
             return "1";
         }
         if (typeDef.equals("Effective Defense")) {
             return "2";
         }
-        if (typeDef.equals("Shut Down Alliance")) {
+        if (typeDef.equals("Effective Counter Defense")) {
+            return "2";
+        }
+        if (typeDef.equals("Shut Down")) {
             return "3";
         }
         return "0";
