@@ -10,7 +10,6 @@
         android:id="@+id/panelsLinearLayout"
         android:layout_weight="1">
 
-
     <fragment
         android:name="com.example.sam.blutoothsocketreceiver.SuperScoutingPanel"
         android:id="@+id/panelOne"
@@ -85,8 +84,7 @@
         android:showDividers="middle"
         android:dividerPadding="2dp"
         android:paddingTop="10dp"
-        android:layout_gravity="center_horizontal"
-        >
+        android:layout_gravity="center_horizontal">
 
         <Spinner
             android:layout_width="0dp"
@@ -116,7 +114,6 @@
         </Spinner>
 
     </LinearLayout>
-
 
 </LinearLayout>
 

@@ -15,7 +15,9 @@
         android:textSize="20sp"
         android:textStyle="bold"
         android:clickable="true"
-        android:onClick="onClickTeamNumber"/>
+        android:onClick="onClickTeamNumber"
+        android:scaleX="2"
+        android:scaleY="2"/>
 
 
     <!--Make as many of these counters as you need-->
