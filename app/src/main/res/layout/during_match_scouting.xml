@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:orientation="horizontal"
+        android:layout_height="match_parent">
+
+
+        <FrameLayout
+            android:id="@+id/timerFrameLayout"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="@color/LightGrey"
+            android:layout_width="150dp"
+            android:layout_height="match_parent">
+
+            <RelativeLayout
+                android:focusable="false"
+                android:clickable="false"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <View
+                    android:id="@+id/timerSeparator"
+                    android:layout_width="match_parent"
+                    android:layout_centerVertical="true"
+                    android:background="@color/transparent"
+                    android:layout_height="0dp"/>
+
+                <TextView
+                    android:id="@+id/timerStatusDisplay"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@+id/timerSeparator"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginBottom="3dp"
+                    android:background="@color/transparent"
+                    android:gravity="center"
+                    android:text="STOP"
+                    android:textColor="@color/Black"
+                    android:textSize="42sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/timerTimeDisplay"
+                    android:text="33"
+                    android:textSize="36sp"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center"
+                    android:layout_below="@+id/timerSeparator"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </RelativeLayout>
+
+        </FrameLayout>
+
+        <View
+            android:layout_width="3dp"
+            android:layout_height="match_parent"
+            android:background="@color/KateGray"/>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_height="75dp">
+
+            <Button
+                android:text="null"
+                android:textSize="32sp"
+                android:textColor="@color/KateGray"
+                android:id="@+id/teamOneSelectionButton"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:background="@color/LightGrey"
+                android:layout_height="match_parent" />
+
+            <View
+                android:layout_width="3dp"
+                android:layout_height="match_parent"
+                android:background="@color/KateGray"/>
+
+            <Button
+                android:text="null"
+                android:textSize="32sp"
+                android:textColor="@color/KateGray"
+                android:id="@+id/teamTwoSelectionButton"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:background="@color/LightGrey"
+                android:layout_height="match_parent" />
+
+            <View
+                android:layout_width="3dp"
+                android:layout_height="match_parent"
+                android:background="@color/KateGray"/>
+
+            <Button
+                android:text="null"
+                android:textSize="32sp"
+                android:textColor="@color/KateGray"
+                android:id="@+id/teamThreeSelectionButton"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:background="@color/LightGrey"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:background="@color/KateGray"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/currentSelectedTeam"
+                    android:text="1678"
+                    android:gravity="center"
+                    android:textStyle="bold"
+                    android:textSize="42sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="3dp"
+                    android:background="@color/KateGray"/>
+
+                <TextView
+                    android:id="@+id/firstOpposingTeam"
+                    android:text="971"
+                    android:gravity="center"
+                    android:textSize="42sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="3dp"
+                    android:background="@color/KateGray"/>
+
+                <TextView
+                    android:id="@+id/secondOpposingTeam"
+                    android:text="972"
+                    android:gravity="center"
+                    android:textSize="42sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="3dp"
+                    android:background="@color/KateGray"/>
+
+                <TextView
+                    android:id="@+id/thirdOpposingTeam"
+                    android:text="973"
+                    android:gravity="center"
+                    android:textSize="42sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="3dp"
+                android:layout_height="match_parent"
+                android:background="@color/KateGray"/>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:layout_height="match_parent">
+
+
+                <Button
+                    android:background="@color/LightGrey"
+                    android:gravity="center"
+                    android:textSize="42sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="3dp"
+                    android:background="@color/KateGray"/>
+
+                <Button
+                    android:id="@+id/robotOneDefensiveReaction"
+                    android:text="NULL"
+                    android:background="@color/transparent"
+                    android:gravity="center"
+                    android:textSize="42sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="3dp"
+                    android:background="@color/KateGray"/>
+
+                <Button
+                    android:id="@+id/robotTwoDefensiveReaction"
+                    android:text="NULL"
+                    android:background="@color/transparent"
+                    android:gravity="center"
+                    android:textSize="42sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="3dp"
+                    android:background="@color/KateGray"/>
+
+                <Button
+                    android:id="@+id/robotThreeDefensiveReaction"
+                    android:text="NULL"
+                    android:background="@color/transparent"
+                    android:gravity="center"
+                    android:textSize="42sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="3dp"
+                android:layout_height="match_parent"
+                android:background="@color/KateGray"/>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:layout_height="match_parent">
+
+                <Spinner
+                    android:id="@+id/currentRobotDefenseEffectiveness"
+                    android:textStyle="bold"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:textSize="42sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    style="@style/spinnerItemStyle"
+                    android:ellipsize="marquee"
+                    />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="3dp"
+                    android:background="@color/KateGray"/>
+
+                <Spinner
+                    android:id="@+id/robotOneDefensiveReactionEffectiveness"
+                    android:textStyle="bold"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:textSize="42sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    style="@style/spinnerItemStyle"
+                    android:ellipsize="marquee"
+                    />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="3dp"
+                    android:background="@color/KateGray"/>
+
+                <Spinner
+                    android:id="@+id/robotTwoDefensiveReactionEffectiveness"
+                    android:textStyle="bold"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:textSize="42sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    style="@style/spinnerItemStyle"
+                    android:ellipsize="marquee"
+                    />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="3dp"
+                    android:background="@color/KateGray"/>
+
+                <Spinner
+                    android:id="@+id/robotThreeDefensiveReactionEffectiveness"
+                    android:textStyle="bold"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:textSize="42sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    style="@style/spinnerItemStyle"
+                    android:ellipsize="marquee"
+                    />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

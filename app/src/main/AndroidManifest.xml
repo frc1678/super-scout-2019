@@ -28,6 +28,9 @@
         <activity android:name=".FinalDataPoints"/>
         <activity android:name=".Fields.LeftField"/>
         <activity android:name=".Fields.RightField"/>
+        <activity android:name=".DuringMatchScouting"/>
+        <activity android:name=".AfterMatchScouting"/>
+
         <activity
             android:name=".finalNotes"
             android:windowSoftInputMode="adjustPan"
