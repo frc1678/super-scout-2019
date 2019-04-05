@@ -1,5 +1,9 @@
 package com.example.sam.blutoothsocketreceiver;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -72,18 +76,15 @@ public class DuringMatchScouting extends AppCompatActivity { //Comments will be 
 
 
 	//Holds all of the data in a matrix
-	public String[][] opponentDataStructure = new String[3][2];
+	public String[][] opponentDataStructure = new String[3][3];
 				//First [], [O.teamOne, O.teamTwo, O.teamThree]
 				//Second [] :
-				//  [ robotDefensiveReaction ('RESISTOR' or 'C. DEFENDER'), robotDefensiveCDefenseEffectiveness ('Poor C. Defense', etc) ]
+				//  [ robotDefensiveReaction ('RESISTOR' or 'C. DEFENDER'), robotDefensiveCDefenseEffectiveness ('Poor C. Defense', etc), O.team ]
 
-	public String[][] allianceDataStructure = new String[3][2];
+	public String[][] allianceDataStructure = new String[3][3];
 				//First [], [teamOne, teamTwo, teamThree]
 				//Second [] :
-				//  [ robotDefensiveEffectiveness (Effective, Attempted, etc), totalDefenseTime <- ? ]
-
-	public Object[] matchDataStructure = new Object[2]; //contains both alliances data.
-
+				//  [ robotDefensiveEffectiveness (Effective, Attempted, etc), totalDefenseTime <- ?, team]
 
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) { //During Match Scouting is the MAIN scouting page for the super scout
@@ -124,14 +125,58 @@ public class DuringMatchScouting extends AppCompatActivity { //Comments will be 
 		return super.onOptionsItemSelected(item);
 	}
 
+	@Override
+	public void onBackPressed(){
+		final Activity activity = this;
+		new AlertDialog.Builder(this)
+				.setTitle("WARNING!")
+				.setMessage("GOING BACK WILL CAUSE LOSS OF DATA")
+				.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int which) {
+						activity.finish();
+					}
+				})
+				.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int which) {
+						// do nothing
+					}
+				})
+				.setIcon(android.R.drawable.ic_dialog_alert)
+				.show();
+	}
+
 	//populates the last lists before finally going to the next activity
 	public void setupForFinalData() {
+		opponentDataStructure[0][0] = String.valueOf(robotOneDefensiveReaction.getText());
+		opponentDataStructure[0][1] = String.valueOf(opponentRobotOneDefensiveEffectivenessValue);
+		opponentDataStructure[0][2] = String.valueOf(opposingTeamOne);
+
+		opponentDataStructure[1][0] = String.valueOf(robotTwoDefensiveReaction.getText());
+		opponentDataStructure[1][1] = String.valueOf(opponentRobotTwoDefensiveEffectivenessValue);
+		opponentDataStructure[1][2] = String.valueOf(opposingTeamTwo);
+
+		opponentDataStructure[2][0] = String.valueOf(robotTwoDefensiveReaction.getText());
+		opponentDataStructure[2][1] = String.valueOf(opponentRobotTwoDefensiveEffectivenessValue);
+		opponentDataStructure[2][2] = String.valueOf(opposingTeamThree);
+
+
+		allianceDataStructure[0][0] = String.valueOf(allianceRobotOneDefensiveEffectivenessValue);
+		allianceDataStructure[1][0] = String.valueOf(allianceRobotTwoDefensiveEffectivenessValue);
+		allianceDataStructure[2][0] = String.valueOf(allianceRobotThreeDefensiveEffectivenessValue);
+		allianceDataStructure[0][2] = String.valueOf(teamOne);
+		allianceDataStructure[1][2] = String.valueOf(teamTwo);
+		allianceDataStructure[2][2] = String.valueOf(teamThree);
 
 	}
 
 	//the method that handles the intent to the next activity
 	public void intentFinalData() {
-
+		Intent intent = new Intent(getApplicationContext(), AfterMatchScouting.class);
+		intent.putExtra("allianceDataStructure", allianceDataStructure);
+		intent.putExtra("opponentDataStructure",opponentDataStructure);
+		intent.putExtra("alliance", alliance);
+		intent.putExtra("matchNumber", matchNumber);
+		startActivity(intent);
 	}
 
 	public void getExtras() {

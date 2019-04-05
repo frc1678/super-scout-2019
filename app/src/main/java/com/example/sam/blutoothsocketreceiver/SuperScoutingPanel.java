@@ -37,26 +37,18 @@ public class SuperScoutingPanel extends Fragment {
     }
 
 
-    public void setAllianceColor(String allianceColor, String teamNumberNoShow) {
+    public void setAllianceColor(String allianceColor) {
         TextView teamNumberTextView = (TextView) getView().findViewById(R.id.teamNumberTextView);
         if (allianceColor.equals("red")) {
             teamNumberTextView.setTextColor(ContextCompat.getColor(getContext(), R.color.TeamNumberRed));
         } else {
             teamNumberTextView.setTextColor(ContextCompat.getColor(getContext(), R.color.TeamNumberBlue));
         }
-        if (teamNumberNoShow.equals("true")) {
-            teamNumberTextView.setTextColor(ContextCompat.getColor(getContext(), R.color.KateGray));
-        }
     }
 
-    public void setTeamNumber(String teamNumber, String teamNumberNoShow) {
+    public void setTeamNumber(String teamNumber) {
         TextView teamNumberTextView = (TextView) getView().findViewById(R.id.teamNumberTextView);
         teamNumberTextView.setText(teamNumber);
-
-        String noShowText = " (NO SHOW) ";
-        if (teamNumberNoShow.equals("true")) {
-            teamNumberTextView.setText(teamNumber + noShowText);
-        }
     }
 
     public int getDataNameCount() {

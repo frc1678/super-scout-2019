@@ -490,14 +490,7 @@ public class MainActivity extends ActionBarActivity {
             isRed = getIntent().getBooleanExtra("shouldBeRed", false);
         } else {
             SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
-            Log.e("isRedd",isRed.toString() + "" );
             isRed = prefs.getBoolean("allianceColor", false);
-	        Log.e("isReddd",isRed.toString() + "" );
-        }
-        if (!backToHome.hasExtra("mute")) {
-            mute.setChecked(false);
-        } else if (backToHome.hasExtra("mute")) {
-            mute.setChecked(true);
         }
     }
 

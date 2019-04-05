@@ -122,7 +122,6 @@ public class ScoutingPage extends ActionBarActivity {
         setPanels();
         initializeTeamTextViews();
         initTeamsList();
-        defenseSpinners();
         context = this;
         teamOneNotes = "";
         teamTwoNotes = "";
@@ -130,66 +129,6 @@ public class ScoutingPage extends ActionBarActivity {
 
         seekBarActiveThumb = getResources().getDrawable(R.drawable.seekbar_thumb);
         seekBarInactiveThumb = getResources().getDrawable(R.drawable.seekbar_thumb_inactive);
-
-    }
-
-    public void defenseSpinners() {
-
-        final Spinner defenseSpinnerOne = (Spinner) findViewById(R.id.defenseSpinnerOne);
-
-        ArrayAdapter<String> defenseAdapterOne = new ArrayAdapter<String>(ScoutingPage.this,
-                android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.defenseValues));
-        defenseAdapterOne.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        defenseSpinnerOne.setAdapter(defenseAdapterOne);
-
-        defenseSpinnerOne.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
-    public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-
-        spinnerTextOne = convDefToNum(parent.getItemAtPosition(pos).toString());
-
-
-    }
-    public void onNothingSelected(AdapterView<?> parent) {
-
-    }
-        });
-
-        Spinner defenseSpinnerTwo = (Spinner) findViewById(R.id.defenseSpinnerTwo);
-
-        ArrayAdapter<String> defenseAdapterTwo = new ArrayAdapter<String>(ScoutingPage.this,
-                android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.defenseValues));
-        defenseAdapterTwo.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        defenseSpinnerTwo.setAdapter(defenseAdapterTwo);
-
-        defenseSpinnerTwo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
-            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-
-                spinnerTextTwo = convDefToNum(parent.getItemAtPosition(pos).toString());
-            }
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        });
-
-
-        Spinner defenseSpinnerThree = (Spinner) findViewById(R.id.defenseSpinnerThree);
-
-        ArrayAdapter<String> defenseAdapterThree = new ArrayAdapter<String>(ScoutingPage.this,
-                android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.defenseValues));
-        defenseAdapterThree.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        defenseSpinnerThree.setAdapter(defenseAdapterThree);
-
-        defenseSpinnerThree.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
-            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-
-                spinnerTextThree = convDefToNum(parent.getItemAtPosition(pos).toString());
-
-            }
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        });
 
     }
 
@@ -397,12 +336,12 @@ public class ScoutingPage extends ActionBarActivity {
 
     public void setPanels() {
 
-        panelOne.setAllianceColor(alliance, noShowOnePanel);
-        panelOne.setTeamNumber(teamNumberOne, noShowOnePanel);
-        panelTwo.setAllianceColor(alliance, noShowTwoPanel);
-        panelTwo.setTeamNumber(teamNumberTwo, noShowTwoPanel);
-        panelThree.setAllianceColor(alliance, noShowThreePanel);
-        panelThree.setTeamNumber(teamNumberThree, noShowThreePanel);
+        panelOne.setAllianceColor(alliance);
+        panelOne.setTeamNumber(teamNumberOne);
+        panelTwo.setAllianceColor(alliance);
+        panelTwo.setTeamNumber(teamNumberTwo);
+        panelThree.setAllianceColor(alliance);
+        panelThree.setTeamNumber(teamNumberThree);
     }
     // TODO: Fix the above error.
     public void sendExtras() {

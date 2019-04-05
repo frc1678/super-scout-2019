@@ -248,22 +248,6 @@ public class FinalDataPoints extends ActionBarActivity {
             
             startActivity(QrDisplay);
         }
-
-        if(id == R.id.finalSuperNotes){
-            final Activity context = this;
-            Intent finalNotesIntent = new Intent(context, finalNotes.class);
-            finalNotesIntent.putExtra("teamNumOne", teamNumberOne);
-            finalNotesIntent.putExtra("teamNumTwo", teamNumberTwo);
-            finalNotesIntent.putExtra("teamNumThree", teamNumberThree);
-            updateNotes();
-            appendNotes();
-            finalNotesIntent.putExtra("teamOneNotes", teamOneNotes); //TODO: Make sure notes are saved on return & save notes to teamOneNotes.
-            finalNotesIntent.putExtra("teamTwoNotes", teamTwoNotes);
-            finalNotesIntent.putExtra("teamThreeNotes", teamThreeNotes);
-            finalNotesIntent.putExtra("qualNum", numberOfMatch);
-
-            startActivity(finalNotesIntent);
-        }
         return super.onOptionsItemSelected(item);
     }
 

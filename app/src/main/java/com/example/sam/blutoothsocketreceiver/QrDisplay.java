@@ -87,7 +87,9 @@ public class QrDisplay extends ActionBarActivity {
     String teamTwoConflict;
     String teamThreeConflict;
 
-
+    String[][] allianceDataStructure = new String[3][3];
+    String[][] opponentDataStructure = new String[3][3];
+    ArrayList<int[]> counterStats = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,9 +101,7 @@ public class QrDisplay extends ActionBarActivity {
         intent = getIntent();
         getExtras();
         QRImage = (ImageView) findViewById(R.id.QRCode_Display);
-        convertValues();
         createCompressedFormat();
-        Log.e("COMPRESSED", compressedData);
         displayQR(compressedData);
     }
 
@@ -110,49 +110,11 @@ public class QrDisplay extends ActionBarActivity {
     public void getExtras() {
         matchNumber = intent.getExtras().getString("matchNumber");
         alliance = intent.getExtras().getString("alliance");
-        teamNumberOne = intent.getExtras().getString("teamNumberOne");
-        teamNumberTwo = intent.getExtras().getString("teamNumberTwo");
-        teamNumberThree = intent.getExtras().getString("teamNumberThree");
+        allianceDataStructure = (String[][]) getIntent().getSerializableExtra("allianceDataStructure");
+        opponentDataStructure = (String[][]) getIntent().getSerializableExtra("opponentDataStructure");
+        counterStats = (ArrayList<int[]>) getIntent().getSerializableExtra("counterStats");
 
-        superNotesOne = intent.getExtras().getString("superNotesOne");
-        superNotesTwo = intent.getExtras().getString("superNotesTwo");
-        superNotesThree = intent.getExtras().getString("superNotesThree");
-
-        score = intent.getExtras().getString("score");
-        foul = intent.getExtras().getString("foul");
-
-        teamOneDataName = intent.getStringArrayListExtra("teamOneDataName");
-        teamOneDataScore = intent.getStringArrayListExtra("teamOneDataScore");
-        teamTwoDataName = intent.getStringArrayListExtra("teamTwoDataName");
-        teamTwoDataScore = intent.getStringArrayListExtra("teamTwoDataScore");
-        teamThreeDataName = intent.getStringArrayListExtra("teamThreeDataName");
-        teamThreeDataScore = intent.getStringArrayListExtra("teamThreeDataScore");
-
-        leftNear = intent.getStringExtra(Constants.leftNear);
-        leftMid = intent.getStringExtra(Constants.leftMid);
-        leftFar = intent.getStringExtra(Constants.leftFar);
-        rightNear = intent.getStringExtra(Constants.rightNear);
-        rightMid = intent.getStringExtra(Constants.rightMid);
-        rightFar = intent.getStringExtra(Constants.rightFar);
-
-        teamOneDefense = intent.getExtras().getString("teamOneDefense");
-        teamTwoDefense = intent.getExtras().getString("teamTwoDefense");
-        teamThreeDefense = intent.getExtras().getString("teamThreeDefense");
-
-        isMute = intent.getExtras().getBoolean("isMute");
-
-        noShowOne = intent.getExtras().getString("noShowOne");
-        noShowTwo = intent.getExtras().getString("noShowTwo");
-        noShowThree = intent.getExtras().getString("noShowThree");
-
-        didRocketRP = intent.getExtras().getString("didRocketRP");
-        didHabClimb = intent.getExtras().getString("didHabClimb");
-
-        teamOneConflict = intent.getExtras().getString("teamOneConflict");
-        teamTwoConflict = intent.getExtras().getString("teamTwoConflict");
-        teamThreeConflict = intent.getExtras().getString("teamThreeConflict");
-
-
+        Log.e("CounterStats",String.valueOf(counterStats.get(0)[1])+"");
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -191,84 +153,7 @@ public class QrDisplay extends ActionBarActivity {
         compressedData = "S!Q"
                 + matchNumber
                 + "-"
-                + allianceCompressed
-                + "|a{b"
-                + leftNear
-                + ";c"
-                + leftMid
-                + ";d"
-                + leftFar
-                + ";e"
-                + rightNear
-                + ";f"
-                + rightMid
-                + ";g"
-                + rightFar
-                + "},h"
-                + generateNoShowList(noShowOne, noShowTwo, noShowThree).toString().replace(", ", ";") + ","
-                + getStringAlliance(alliance)
-                + score + ","
-                + getFoulAlliance(alliance)
-                + foul + ","
-                + getRocketRPAlliance(alliance)
-                + didRocketRP + ","
-                + getHabClimbAlliance(alliance)
-                + didHabClimb
-                + "_1{u"
-                + teamNumberOne
-                + ";v"
-                + teamOneDataScore.get(1)
-                + ";w"
-                + teamOneDataScore.get(0)
-                + ";x"
-                + teamOneDefense
-                + ";y"
-                + teamOneDataScore.get(4)
-                + ";z\""
-                + superNotesOne
-                + "\";A"
-                + teamOneDataScore.get(2)
-                + ";B"
-                + teamOneDataScore.get(3)
-                + ";j"
-                + teamOneConflict
-                + "},2{u"
-                + teamNumberTwo
-                + ";v"
-                + teamTwoDataScore.get(1)
-                + ";w"
-                + teamTwoDataScore.get(0)
-                + ";x"
-                + teamTwoDefense
-                + ";y"
-                + teamTwoDataScore.get(4)
-                + ";z\""
-                + superNotesTwo
-                + "\";A"
-                + teamTwoDataScore.get(2)
-                + ";B"
-                + teamTwoDataScore.get(3)
-                + ";j"
-                + teamTwoConflict
-                + "},3{u"
-                + teamNumberThree
-                + ";v"
-                + teamThreeDataScore.get(1)
-                + ";w"
-                + teamThreeDataScore.get(0)
-                + ";x"
-                + teamThreeDefense
-                + ";y"
-                + teamThreeDataScore.get(4)
-                + ";z\""
-                + superNotesThree
-                + "\";A"
-                + teamThreeDataScore.get(2)
-                + ";B"
-                + teamThreeDataScore.get(3)
-                + ";j"
-                + teamThreeConflict
-                + "}";
+                + allianceCompressed;
 
         new Thread() {
 
@@ -342,82 +227,6 @@ public class QrDisplay extends ActionBarActivity {
         }
     }
 
-    public void convertValues() {
-        if (leftNear.equals(Bay.yellowValue)) {
-            leftNear = "L";
-        } else if (leftNear.equals(Bay.orangeValue)) {
-            leftNear = "G";
-        }
-        if (leftMid.equals(Bay.yellowValue)) {
-            leftMid = "L";
-        } else if (leftMid.equals(Bay.orangeValue)) {
-            leftMid = "G";
-        }
-        if (leftFar.equals(Bay.yellowValue)) {
-            leftFar = "L";
-        } else if (leftFar.equals(Bay.orangeValue)) {
-            leftFar = "G";
-        }
-        if (rightNear.equals(Bay.yellowValue)) {
-            rightNear = "L";
-        } else if (rightNear.equals(Bay.orangeValue)) {
-            rightNear = "G";
-        }
-        if (rightMid.equals(Bay.yellowValue)) {
-            rightMid = "L";
-        } else if (rightMid.equals(Bay.orangeValue)) {
-            rightMid = "G";
-        }
-        if (rightFar.equals(Bay.yellowValue)) {
-            rightFar = "L";
-        } else if (rightFar.equals(Bay.orangeValue)) {
-            rightFar = "G";
-        }
-
-        if (noShowOne.equals("true")) {
-            noShowOne = teamNumberOne;
-        } else {
-            noShowOne = "";
-        }
-        if (noShowTwo.equals("true")) {
-            noShowTwo = teamNumberTwo;
-        } else {
-            noShowTwo = "";
-        }
-        if (noShowThree.equals("true")) {
-            noShowThree = teamNumberThree;
-        } else {
-            noShowThree = "";
-        }
-        if (didRocketRP.equals("true")) {
-            didRocketRP = "T";
-        } else {
-            didRocketRP = "F";
-        }
-        Log.e("didHabClimb", didHabClimb + "");
-        if (didHabClimb.equals("true")) {
-            didHabClimb = "T";
-        } else {
-            didHabClimb = "F";
-        }
-        if (teamOneConflict.equals("true")) {
-            teamOneConflict = "T";
-        } else {
-            teamOneConflict = "F";
-        }
-        if (teamTwoConflict.equals("true")) {
-            teamTwoConflict = "T";
-        } else {
-            teamTwoConflict = "F";
-        }
-        if (teamThreeConflict.equals("true")) {
-            teamThreeConflict = "T";
-        } else {
-            teamThreeConflict = "F";
-        }
-
-
-    }
 
     public String getStringAlliance(String alliance) {
         if (alliance.equals("Red Alliance")) {
@@ -455,18 +264,5 @@ public class QrDisplay extends ActionBarActivity {
         return "null";
     }
 
-    public ArrayList<String> generateNoShowList(String noShowOne, String noShowTwo, String noShowThree) {
-        ArrayList<String> noShowList = new ArrayList<>();
-        if (!noShowOne.equals("")) {
-            noShowList.add(noShowOne);
-        }
-        if (!noShowTwo.equals("")) {
-            noShowList.add(noShowTwo);
-        }
-        if (!noShowThree.equals("")) {
-            noShowList.add(noShowThree);
-        }
-        return noShowList;
-    }
 
 }
