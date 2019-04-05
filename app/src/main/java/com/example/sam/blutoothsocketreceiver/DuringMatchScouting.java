@@ -63,6 +63,11 @@ public class DuringMatchScouting extends AppCompatActivity { //Comments will be 
 		timerStatusDisplay = (TextView) findViewById(R.id.timerStatusDisplay);
 		timerTimeDisplay = (TextView) findViewById(R.id.timerTimeDisplay);
 
+		currentSelectedTeam = (TextView) findViewById(R.id.currentSelectedTeam);
+		firstOpposingTeam = (TextView) findViewById(R.id.firstOpposingTeam);
+		secondOpposingTeam = (TextView) findViewById(R.id.secondOpposingTeam);
+		thirdOpposingTeam = (TextView) findViewById(R.id.thirdOpposingTeam);
+
 		robotOneDefensiveReaction = (Button) findViewById(R.id.robotOneDefensiveReaction);
 		robotTwoDefensiveReaction = (Button) findViewById(R.id.robotTwoDefensiveReaction);
 		robotThreeDefensiveReaction = (Button) findViewById(R.id.robotThreeDefensiveReaction);

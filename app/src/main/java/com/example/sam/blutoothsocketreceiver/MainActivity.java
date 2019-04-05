@@ -71,16 +71,10 @@ import org.json.JSONObject;
 public class MainActivity extends ActionBarActivity {
     protected SuperScoutApplication app;
     Activity context;
-    Boolean teamNumberOneNoShow = false;
-    Boolean teamNumberTwoNoShow = false;
-    Boolean teamNumberThreeNoShow = false;
-    Boolean scrollableConflictBar = false;
     EditText numberOfMatch;
-    EditText teamNumberOne;
-    EditText teamNumberTwo;
-    EditText teamNumberThree;
-    String teamOne, teamTwo, teamThree;
-    EditText searchBar;
+    EditText allianceTeamOne, allianceTeamTwo, allianceTeamThree;
+    EditText opposingAllianceTeamOne, opposingAllianceTeamTwo, opposingAllianceTeamThree;
+    String teamOne, teamTwo, teamThree, opposingTeamOne, opposingTeamTwo, opposingTeamThree;
     Boolean overrideOnBackPressed;
     TextView alliance;
     ListView listView;
@@ -88,19 +82,12 @@ public class MainActivity extends ActionBarActivity {
     String leftViewColor;
     Integer matchNumber = 0;
     DatabaseReference dataBase;
-    Boolean leftSideBoolean = true, rightSideBoolean = true, firstClick = true;
-    //TODO: Why are these global?
-    //String previousScore, previousFoul, previousAllianceSimple;
-    //Boolean facedTheBoss = false, didAutoQuest = false;
-    //Integer previousBoost = 0, previousLevitate = 0, previousForce = 0;
+    Boolean firstClick = true;
 
-    final static String dataBaseUrl = Constants.dataBaseUrl;
     boolean isMute = false;
     boolean isOverriden;
     ToggleButton mute;
     ArrayAdapter<String> adapter;
-
-    //THIS IS THE MASTER BRANCH
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,9 +102,12 @@ public class MainActivity extends ActionBarActivity {
         Constants.teamThreeNoteHolder = "";
 
         numberOfMatch = (EditText) findViewById(R.id.matchNumber);
-        teamNumberOne = (EditText) findViewById(R.id.teamOneNumber);
-        teamNumberTwo = (EditText) findViewById(R.id.teamTwoNumber);
-        teamNumberThree = (EditText) findViewById(R.id.teamThreeNumber);
+        allianceTeamOne = (EditText) findViewById(R.id.allianceTeamOne);
+        allianceTeamTwo = (EditText) findViewById(R.id.allianceTeamTwo);
+        allianceTeamThree = (EditText) findViewById(R.id.allianceTeamThree);
+        opposingAllianceTeamOne = (EditText) findViewById(R.id.opponentTeamOne);
+        opposingAllianceTeamTwo = (EditText) findViewById(R.id.opponentTeamTwo);
+        opposingAllianceTeamThree = (EditText) findViewById(R.id.opponentTeamThree);
         mute = (ToggleButton) findViewById(R.id.mute);
         alliance = (TextView) findViewById(R.id.allianceName);
         dataBase = FirebaseDatabase.getInstance().getReference();
@@ -162,10 +152,9 @@ public class MainActivity extends ActionBarActivity {
         changeTeamsByMatchName();
         commitSharedPreferences();
         clearTeamSP();
-        createAllianceClickListener();
 
         if (overrideOnBackPressed) {
-            setTeamNumbers(teamOne, teamTwo, teamThree);
+            setTeamNumbers(teamOne, teamTwo, teamThree, opposingTeamOne, opposingTeamTwo, opposingTeamThree);
         }
         listenForResendClick();
         //listLongClick();
@@ -220,31 +209,30 @@ public class MainActivity extends ActionBarActivity {
         if (id == R.id.scout) {
                 if (numberOfMatch.getText().toString().equals("")) {
                     Toast.makeText(context, "Input match name!", Toast.LENGTH_SHORT).show();
-                } else if (teamNumberOne.getText().toString().equals("")) {
-                    Toast.makeText(context, "Input team one number!", Toast.LENGTH_SHORT).show();
-                } else if (teamNumberTwo.getText().toString().equals("")) {
-                    Toast.makeText(context, "Input team two number!", Toast.LENGTH_SHORT).show();
-                } else if (teamNumberThree.getText().toString().equals("")) {
-                    Toast.makeText(context, "Input team three number!", Toast.LENGTH_SHORT).show();
-                }
-                else {
+                } else if (allianceTeamOne.getText().toString().equals("")) {
+                    Toast.makeText(context, "Input alliance team one number!", Toast.LENGTH_SHORT).show();
+                } else if (allianceTeamTwo.getText().toString().equals("")) {
+                    Toast.makeText(context, "Input alliance team two number!", Toast.LENGTH_SHORT).show();
+                } else if (allianceTeamThree.getText().toString().equals("")) {
+                    Toast.makeText(context, "Input alliance team three number!", Toast.LENGTH_SHORT).show();
+                } else if (opposingAllianceTeamOne.getText().toString().equals("")) {
+                    Toast.makeText(context, "Input opponent team one number!", Toast.LENGTH_SHORT).show();
+                } else if (opposingAllianceTeamTwo.getText().toString().equals("")) {
+                    Toast.makeText(context, "Input opponent team two number!", Toast.LENGTH_SHORT).show();
+                } else if (opposingAllianceTeamThree.getText().toString().equals("")) {
+                    Toast.makeText(context, "Input opponent team three number!", Toast.LENGTH_SHORT).show();
+                } else {
                     commitSharedPreferences();
                     commitOverrideTeamsSP();
-                    Intent intent = new Intent(context, FieldSetupPage.class);
+                    Intent intent = new Intent(context, DuringMatchScouting.class);
                     intent.putExtra("matchNumber", numberOfMatch.getText().toString());
-                    intent.putExtra("teamNumberOne", teamNumberOne.getText().toString());
-                    intent.putExtra("teamNumberTwo", teamNumberTwo.getText().toString());
-                    intent.putExtra("teamNumberThree", teamNumberThree.getText().toString());
+                    intent.putExtra("allianceTeamOne", allianceTeamOne.getText().toString());
+                    intent.putExtra("allianceTeamTwo", allianceTeamTwo.getText().toString());
+                    intent.putExtra("allianceTeamThree", allianceTeamThree.getText().toString());
+                    intent.putExtra("opponentTeamOne", opposingAllianceTeamOne.getText().toString());
+                    intent.putExtra("opponentTeamTwo", opposingAllianceTeamTwo.getText().toString());
+                    intent.putExtra("opponentTeamThree", opposingAllianceTeamThree.getText().toString());
                     intent.putExtra("alliance", alliance.getText().toString());
-                    intent.putExtra("dataBaseUrl", dataBaseUrl);
-                    intent.putExtra("mute", isMute);
-                    intent.putExtra("allianceColor", isRed);
-                    intent.putExtra("leftViewColor", leftViewColor);
-                    intent.putExtra("teamNumberOneNoShow", String.valueOf(teamNumberOneNoShow));
-                    intent.putExtra("teamNumberTwoNoShow", String.valueOf(teamNumberTwoNoShow));
-                    intent.putExtra("teamNumberThreeNoShow", String.valueOf(teamNumberThreeNoShow));
-                    Log.e("scroll1",scrollableConflictBar.toString());
-                    intent.putExtra("scrollableConflictBar", String.valueOf(scrollableConflictBar));
                     startActivity(intent);
                 }
 
@@ -291,95 +279,6 @@ public class MainActivity extends ActionBarActivity {
 
                 }
             }).show();
-        } else if (id == R.id.noShowTeams) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(context);
-            final View noShowLayout = LayoutInflater.from(context).inflate(R.layout.noshowteams, null);
-            final Button noShowTeamOne = (Button) noShowLayout.findViewById(R.id.noShowTeamOne);
-            final Button noShowTeamTwo = (Button) noShowLayout.findViewById(R.id.noShowTeamTwo);
-            final Button noShowTeamThree = (Button) noShowLayout.findViewById(R.id.noShowTeamThree);
-
-            noShowTeamOne.setText(teamNumberOne.getText().toString());
-            noShowTeamTwo.setText(teamNumberTwo.getText().toString());
-            noShowTeamThree.setText(teamNumberThree.getText().toString());
-
-            if (teamNumberOneNoShow) {
-                noShowTeamOne.setBackgroundColor(ContextCompat.getColor(this, R.color.TeamNumberRed));
-            } else {
-                noShowTeamOne.setBackgroundColor(ContextCompat.getColor(this, R.color.LightGrey));
-            }
-            if (teamNumberTwoNoShow) {
-                noShowTeamTwo.setBackgroundColor(ContextCompat.getColor(this, R.color.TeamNumberRed));
-            } else {
-                noShowTeamTwo.setBackgroundColor(ContextCompat.getColor(this, R.color.LightGrey));
-            }
-            if (teamNumberThreeNoShow) {
-                noShowTeamThree.setBackgroundColor(ContextCompat.getColor(this, R.color.TeamNumberRed));
-            } else {
-                noShowTeamThree.setBackgroundColor(ContextCompat.getColor(this, R.color.LightGrey));
-            }
-
-            noShowTeamOne.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Integer buttonColor = ((ColorDrawable) noShowTeamOne.getBackground()).getColor();
-                    if (String.valueOf(buttonColor).equals(FieldLayout.neutralColor)) {
-                        noShowTeamOne.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.TeamNumberRed));
-                    } else {
-                        noShowTeamOne.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.LightGrey));
-                    }
-
-                }
-            });
-            noShowTeamTwo.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Integer buttonColor = ((ColorDrawable) noShowTeamTwo.getBackground()).getColor();
-                    if (String.valueOf(buttonColor).equals(FieldLayout.neutralColor)) {
-                        noShowTeamTwo.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.TeamNumberRed));
-                    } else {
-                        noShowTeamTwo.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.LightGrey));
-                    }
-
-                }
-            });
-            noShowTeamThree.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Integer buttonColor = ((ColorDrawable) noShowTeamThree.getBackground()).getColor();
-                    if (String.valueOf(buttonColor).equals(FieldLayout.neutralColor)) {
-                        noShowTeamThree.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.TeamNumberRed));
-                    } else {
-                        noShowTeamThree.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.LightGrey));
-                    }
-
-                }
-            });
-            builder.setView(noShowLayout); builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    Integer teamOneColor = ((ColorDrawable) noShowTeamOne.getBackground()).getColor();
-                    Integer teamTwoColor = ((ColorDrawable) noShowTeamTwo.getBackground()).getColor();
-                    Integer teamThreeColor = ((ColorDrawable) noShowTeamThree.getBackground()).getColor();
-
-                    if (String.valueOf(teamOneColor).equals(String.valueOf(FieldLayout.causedColor))) {
-                        teamNumberOneNoShow = true;
-                    } else {
-                        teamNumberOneNoShow = false;
-                    }
-                    if (String.valueOf(teamTwoColor).equals(String.valueOf(FieldLayout.causedColor))) {
-                        teamNumberTwoNoShow = true;
-                    } else {
-                        teamNumberTwoNoShow = false;
-                    }
-                    if (String.valueOf(teamThreeColor).equals(String.valueOf(FieldLayout.causedColor))) {
-                        teamNumberThreeNoShow = true;
-                    } else {
-                        teamNumberThreeNoShow = false;
-                    }
-
-                }
-            }).show();
-
         }
         return super.onOptionsItemSelected(item);
     }
@@ -471,13 +370,19 @@ public class MainActivity extends ActionBarActivity {
 
                 //start
                 if(isRed) {
-                    teamNumberOne.setText(String.valueOf(backupData.getJSONObject("1").getInt("number")));
-                    teamNumberTwo.setText(String.valueOf(backupData.getJSONObject("2").getInt("number")));
-                    teamNumberThree.setText(String.valueOf(backupData.getJSONObject("3").getInt("number")));
+                    allianceTeamOne.setText(String.valueOf(backupData.getJSONObject("1").getInt("number")));
+                    allianceTeamTwo.setText(String.valueOf(backupData.getJSONObject("2").getInt("number")));
+                    allianceTeamThree.setText(String.valueOf(backupData.getJSONObject("3").getInt("number")));
+                    opposingAllianceTeamOne.setText(String.valueOf(backupData.getJSONObject("4").getInt("number")));
+                    opposingAllianceTeamOne.setText(String.valueOf(backupData.getJSONObject("5").getInt("number")));
+                    opposingAllianceTeamOne.setText(String.valueOf(backupData.getJSONObject("6").getInt("number")));
                 } else if(!isRed) {
-                    teamNumberOne.setText(String.valueOf(backupData.getJSONObject("4").getInt("number")));
-                    teamNumberTwo.setText(String.valueOf(backupData.getJSONObject("5").getInt("number")));
-                    teamNumberThree.setText(String.valueOf(backupData.getJSONObject("6").getInt("number")));
+                    allianceTeamOne.setText(String.valueOf(backupData.getJSONObject("4").getInt("number")));
+                    allianceTeamTwo.setText(String.valueOf(backupData.getJSONObject("5").getInt("number")));
+                    allianceTeamThree.setText(String.valueOf(backupData.getJSONObject("6").getInt("number")));
+                    opposingAllianceTeamOne.setText(String.valueOf(backupData.getJSONObject("1").getInt("number")));
+                    opposingAllianceTeamOne.setText(String.valueOf(backupData.getJSONObject("2").getInt("number")));
+                    opposingAllianceTeamOne.setText(String.valueOf(backupData.getJSONObject("3").getInt("number")));
                 }
             }
             catch(JSONException JE) {
@@ -497,27 +402,25 @@ public class MainActivity extends ActionBarActivity {
     }
     public void commitOverrideTeamsSP() {
         SharedPreferences.Editor editor = getSharedPreferences("override_teams", MODE_PRIVATE).edit();
-        editor.putString("teamOne", String.valueOf(teamNumberOne.getText()));
-        editor.putString("teamTwo", String.valueOf(teamNumberTwo.getText()));
-        editor.putString("teamThree",String.valueOf(teamNumberThree.getText()));
-        editor.putString("teamOneNoShow", String.valueOf(teamNumberOneNoShow));
-        editor.putString("teamTwoNoShow", String.valueOf(teamNumberTwoNoShow));
-        editor.putString("teamThreeNoShow",String.valueOf(teamNumberThreeNoShow));
+        editor.putString("allianceTeamOne", String.valueOf(allianceTeamOne.getText()));
+        editor.putString("allianceTeamTwo", String.valueOf(allianceTeamTwo.getText()));
+        editor.putString("allianceTeamThree", String.valueOf(allianceTeamThree.getText()));
+        editor.putString("opponentTeamOne", String.valueOf(opposingAllianceTeamOne.getText()));
+        editor.putString("opponentTeamTwo", String.valueOf(opposingAllianceTeamTwo.getText()));
+        editor.putString("opponentTeamThree", String.valueOf(opposingAllianceTeamThree.getText()));
         editor.putInt("matchNumber", Integer.valueOf(numberOfMatch.getText().toString()));
-        editor.putString("scrollableConflictBar", String.valueOf(scrollableConflictBar));
         editor.putString("isRed",String.valueOf(isRed));
         editor.commit();
     }
     public void getOverrideTeamsSP() {
         SharedPreferences prefs = getSharedPreferences("override_teams", MODE_PRIVATE);
-        teamOne = prefs.getString("teamOne", "");
-        teamTwo = prefs.getString("teamTwo", "");
-        teamThree = prefs.getString("teamThree", "");
-        teamNumberOneNoShow = convertToBool(prefs.getString("teamOneNoShow","false"));
-        teamNumberTwoNoShow = convertToBool(prefs.getString("teamTwoNoShow","false"));
-        teamNumberThreeNoShow = convertToBool(prefs.getString("teamThreeNoShow","false"));
+        teamOne = prefs.getString("allianceTeamOne", "");
+        teamTwo = prefs.getString("allianceTeamTwo", "");
+        teamThree = prefs.getString("allianceTeamThree", "");
+        opposingTeamOne = prefs.getString("opponentTeamOne", "");
+        opposingTeamTwo = prefs.getString("opponentTeamTwo", "");
+        opposingTeamThree = prefs.getString("opponentTeamThree", "");
         matchNumber = prefs.getInt("matchNumber",0);
-        scrollableConflictBar = convertToBool(prefs.getString("scrollableConflictBar","false"));
         isRed = convertToBool(prefs.getString("isRed","false"));
     }
 
@@ -544,25 +447,34 @@ public class MainActivity extends ActionBarActivity {
     public void enableEditTextEditing() {
 
         numberOfMatch.setFocusableInTouchMode(true);
-        teamNumberOne.setFocusableInTouchMode(true);
-        teamNumberTwo.setFocusableInTouchMode(true);
-        teamNumberThree.setFocusableInTouchMode(true);
+        allianceTeamOne.setFocusableInTouchMode(true);
+        allianceTeamTwo.setFocusableInTouchMode(true);
+        allianceTeamThree.setFocusableInTouchMode(true);
+        opposingAllianceTeamOne.setFocusableInTouchMode(true);
+        opposingAllianceTeamTwo.setFocusableInTouchMode(true);
+        opposingAllianceTeamThree.setFocusableInTouchMode(true);
         isOverriden = true;
     }
 
     public void disenableEditTextEditing() {
 
         numberOfMatch.setFocusable(false);
-        teamNumberOne.setFocusable(false);
-        teamNumberTwo.setFocusable(false);
-        teamNumberThree.setFocusable(false);
+        allianceTeamOne.setFocusableInTouchMode(false);
+        allianceTeamTwo.setFocusableInTouchMode(false);
+        allianceTeamThree.setFocusableInTouchMode(false);
+        opposingAllianceTeamOne.setFocusableInTouchMode(false);
+        opposingAllianceTeamTwo.setFocusableInTouchMode(false);
+        opposingAllianceTeamThree.setFocusableInTouchMode(false);
         isOverriden = false;
     }
 
-    public void setTeamNumbers(String teamOne, String teamTwo, String teamThree) {
-        teamNumberOne.setText(teamOne);
-        teamNumberTwo.setText(teamTwo);
-        teamNumberThree.setText(teamThree);
+    public void setTeamNumbers(String teamOne, String teamTwo, String teamThree, String opponentOne, String opponentTwo, String opponentThree) {
+        allianceTeamOne.setText(teamOne);
+        allianceTeamTwo.setText(teamTwo);
+        allianceTeamThree.setText(teamThree);
+        opposingAllianceTeamOne.setText(opponentOne);
+        opposingAllianceTeamTwo.setText(opponentTwo);
+        opposingAllianceTeamThree.setText(opponentThree);
     }
     //reads the data of the clicked file
     public String readFile(String name) {
@@ -711,35 +623,6 @@ public class MainActivity extends ActionBarActivity {
             Log.e("QrGenerate",er.getMessage());
         }
     }
-
-    public void initializeColorConceptLeft(final Button buttonSide) {
-        buttonSide.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.e("onclickcc","left");
-                if (leftSideBoolean) {
-                    buttonSide.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.Bloo));leftSideBoolean = false;
-                } else if (!leftSideBoolean) {
-                    buttonSide.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.TeamNumberRed)); leftSideBoolean = true;
-                }}});
-    }
-    public void initializeColorConceptRight(final Button buttonSide) {
-        buttonSide.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.e("onclickcc","left");
-                if (rightSideBoolean) {
-                    buttonSide.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.Bloo));rightSideBoolean = false;
-                } else if (!rightSideBoolean) {
-                    buttonSide.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.TeamNumberRed)); rightSideBoolean = true;
-                }}});
-    }
-    public void setPrimaryFieldLayout(Button left, Button right) {
-        right.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.Bloo));
-        left.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.TeamNumberRed));
-
-
-    }
     public void initializeColorConcept(final Button rightSide, final Button leftSide) {
         rightSide.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -775,21 +658,6 @@ public class MainActivity extends ActionBarActivity {
         } else {
             return false;
         }
-    }
-
-    public void createAllianceClickListener() {
-        alliance.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (!scrollableConflictBar) {
-                    scrollableConflictBar = true;
-                    toasts("You have enabled the Scrolling Conflict Bar!", false);
-                } else {
-                    scrollableConflictBar = false;
-                    toasts("You have disabled the Scrolling Conflict Bar!", false);
-                }
-            }
-        });
     }
 
 }
