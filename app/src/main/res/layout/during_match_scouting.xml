@@ -14,7 +14,7 @@
             android:id="@+id/timerFrameLayout"
             android:clickable="true"
             android:focusable="true"
-            android:background="@color/LightGrey"
+            android:background="@color/CarlGreen"
             android:layout_width="150dp"
             android:layout_height="match_parent">
 
@@ -40,14 +40,14 @@
                     android:layout_marginBottom="3dp"
                     android:background="@color/transparent"
                     android:gravity="center"
-                    android:text="STOP"
+                    android:text="START"
                     android:textColor="@color/Black"
                     android:textSize="42sp"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/timerTimeDisplay"
-                    android:text="33"
+                    android:text="0"
                     android:textSize="36sp"
                     android:layout_centerHorizontal="true"
                     android:gravity="center"
@@ -221,7 +221,7 @@
 
                 <Button
                     android:id="@+id/robotOneDefensiveReaction"
-                    android:text="NULL"
+                    android:text="RESISTOR"
                     android:background="@color/transparent"
                     android:gravity="center"
                     android:textSize="42sp"
@@ -237,7 +237,7 @@
 
                 <Button
                     android:id="@+id/robotTwoDefensiveReaction"
-                    android:text="NULL"
+                    android:text="RESISTOR"
                     android:background="@color/transparent"
                     android:gravity="center"
                     android:textSize="42sp"
@@ -253,7 +253,7 @@
 
                 <Button
                     android:id="@+id/robotThreeDefensiveReaction"
-                    android:text="NULL"
+                    android:text="RESISTOR"
                     android:background="@color/transparent"
                     android:gravity="center"
                     android:textSize="42sp"
@@ -284,7 +284,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    style="@style/spinnerItemStyle"
                     android:ellipsize="marquee"
                     />
 
@@ -302,7 +301,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    style="@style/spinnerItemStyle"
                     android:ellipsize="marquee"
                     />
 
@@ -320,7 +318,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    style="@style/spinnerItemStyle"
                     android:ellipsize="marquee"
                     />
 
@@ -338,7 +335,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    style="@style/spinnerItemStyle"
                     android:ellipsize="marquee"
                     />
 

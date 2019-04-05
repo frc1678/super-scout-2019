@@ -2,6 +2,7 @@ package com.example.sam.blutoothsocketreceiver;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -83,6 +84,7 @@ public class MainActivity extends ActionBarActivity {
     Integer matchNumber = 0;
     DatabaseReference dataBase;
     Boolean firstClick = true;
+    Button resendButton;
 
     boolean isMute = false;
     boolean isOverriden;
@@ -108,7 +110,6 @@ public class MainActivity extends ActionBarActivity {
         opposingAllianceTeamOne = (EditText) findViewById(R.id.opponentTeamOne);
         opposingAllianceTeamTwo = (EditText) findViewById(R.id.opponentTeamTwo);
         opposingAllianceTeamThree = (EditText) findViewById(R.id.opponentTeamThree);
-        mute = (ToggleButton) findViewById(R.id.mute);
         alliance = (TextView) findViewById(R.id.allianceName);
         dataBase = FirebaseDatabase.getInstance().getReference();
         //If there was an intent to MainActivity (qr code -> mainact), get the alliance and new match num
@@ -132,10 +133,23 @@ public class MainActivity extends ActionBarActivity {
         }
         matchNumber = Integer.parseInt(numberOfMatch.getText().toString());
         disenableEditTextEditing();
+
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
-        listView = (ListView) findViewById(R.id.view_files_received);
+        resendButton = (Button) findViewById(R.id.resendButton);
+
+        final Dialog dialog = new Dialog(MainActivity.this);
+        dialog.setContentView(R.layout.view_files_received);
+        listView = (ListView) dialog.findViewById(R.id.filesListView);
         listView.setAdapter(adapter);
-        updateListView();
+        dialog.setTitle("Resend");
+        resendButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                updateListView();
+                dialog.show();
+            }
+        });
+
 
         LocalBroadcastManager.getInstance(getApplicationContext()).registerReceiver(new BroadcastReceiver() {
             @Override
@@ -285,7 +299,6 @@ public class MainActivity extends ActionBarActivity {
 
     public void updateListView() {
 
-        final EditText searchBar = (EditText)findViewById(R.id.searchEditText);
         final File dir;
         dir = new File(android.os.Environment.getExternalStorageDirectory().getAbsolutePath() + "/Super_scout_data");
         if (!dir.mkdir()) {
@@ -301,59 +314,6 @@ public class MainActivity extends ActionBarActivity {
             Log.e("json error", "failed to add tempfile to adapter");
             toasts("Failed to show past matches.", true);
         }
-
-        searchBar.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence Register, int start, int count, int after) {}
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
-            @Override
-            public void afterTextChanged(Editable s) {
-                if (searchBar.getText().toString().equals("")){
-                    adapter.clear();
-                    searchBar.setFocusable(false);
-                    try {
-                        for (File tmpFile : files) {
-                            adapter.add(tmpFile.getName());
-                        }
-                    } catch(Exception JE) {
-                        Log.e("json error", "failed to add tempfile to adapter");
-                        toasts("Failed to show past matches.", true);
-                    }
-                    searchBar.setFocusableInTouchMode(true);
-                    adapter.sort(new Comparator<String>() {
-                        @Override
-                        public int compare(String lhs, String rhs) {
-                            File lhsFile = new File(dir, lhs);
-                            File rhsFile = new File(dir, rhs);
-                            Date lhsDate = new Date(lhsFile.lastModified());
-                            Date rhsDate = new Date(rhsFile.lastModified());
-                            return rhsDate.compareTo(lhsDate);
-                        }
-                    });
-                }else{
-                    for (int i = 0; i < adapter.getCount();){
-                        if(adapter.getItem(i).startsWith((searchBar.getText().toString()).toUpperCase()) || adapter.getItem(i).contains((searchBar.getText().toString()).toUpperCase())){
-                            i++;
-                        }else{
-                            adapter.remove(adapter.getItem(i));
-                        }
-                    }
-                }
-                adapter.sort(new Comparator<String>() {
-                    @Override
-                    public int compare(String lhs, String rhs) {
-                        File lhsFile = new File(dir, lhs);
-                        File rhsFile = new File(dir, rhs);
-                        Date lhsDate = new Date(lhsFile.lastModified());
-                        Date rhsDate = new Date(rhsFile.lastModified());
-                        return rhsDate.compareTo(lhsDate);
-                    }
-                });
-            }
-        });
-
-        adapter.notifyDataSetChanged();
     }
 
     //updates the team numbers in the front screen according to the match number and the alliance;
@@ -374,15 +334,15 @@ public class MainActivity extends ActionBarActivity {
                     allianceTeamTwo.setText(String.valueOf(backupData.getJSONObject("2").getInt("number")));
                     allianceTeamThree.setText(String.valueOf(backupData.getJSONObject("3").getInt("number")));
                     opposingAllianceTeamOne.setText(String.valueOf(backupData.getJSONObject("4").getInt("number")));
-                    opposingAllianceTeamOne.setText(String.valueOf(backupData.getJSONObject("5").getInt("number")));
-                    opposingAllianceTeamOne.setText(String.valueOf(backupData.getJSONObject("6").getInt("number")));
+                    opposingAllianceTeamTwo.setText(String.valueOf(backupData.getJSONObject("5").getInt("number")));
+                    opposingAllianceTeamThree.setText(String.valueOf(backupData.getJSONObject("6").getInt("number")));
                 } else if(!isRed) {
                     allianceTeamOne.setText(String.valueOf(backupData.getJSONObject("4").getInt("number")));
                     allianceTeamTwo.setText(String.valueOf(backupData.getJSONObject("5").getInt("number")));
                     allianceTeamThree.setText(String.valueOf(backupData.getJSONObject("6").getInt("number")));
                     opposingAllianceTeamOne.setText(String.valueOf(backupData.getJSONObject("1").getInt("number")));
-                    opposingAllianceTeamOne.setText(String.valueOf(backupData.getJSONObject("2").getInt("number")));
-                    opposingAllianceTeamOne.setText(String.valueOf(backupData.getJSONObject("3").getInt("number")));
+                    opposingAllianceTeamTwo.setText(String.valueOf(backupData.getJSONObject("2").getInt("number")));
+                    opposingAllianceTeamThree.setText(String.valueOf(backupData.getJSONObject("3").getInt("number")));
                 }
             }
             catch(JSONException JE) {
