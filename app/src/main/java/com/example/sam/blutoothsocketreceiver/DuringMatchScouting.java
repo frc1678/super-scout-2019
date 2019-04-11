@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -144,6 +143,7 @@ public class DuringMatchScouting extends AppCompatActivity { //Comments will be 
 		return super.onOptionsItemSelected(item);
 	}
 
+	//gives the user a chance to stop a back press when the back button is pressed accidentally
 	@Override
 	public void onBackPressed(){
 		final Activity activity = this;
@@ -166,6 +166,16 @@ public class DuringMatchScouting extends AppCompatActivity { //Comments will be 
 
 	//populates the last lists before finally going to the next activity
 	public void setupForFinalData() {
+
+		//sample: a[x][y]
+		//in opponentDataStructure, [x] is the opposing alliance team number
+		//[y] is the actual datapoint identifier (how they react to the defense played on them etc)
+
+		//in allianceDataStructure, [x] is the alliance team number
+		//[0] is the actual defensive effectiveness value for the team
+		//[1] is the total amount of effective defense time played for the team
+		//[2] is the team number
+
 		opponentDataStructure[0][0] = String.valueOf(robotOneDefensiveReaction.getText());
 		opponentDataStructure[0][1] = String.valueOf(opponentRobotOneDefensiveEffectivenessValue);
 		opponentDataStructure[0][2] = String.valueOf(opposingTeamOne);
@@ -304,47 +314,31 @@ public class DuringMatchScouting extends AppCompatActivity { //Comments will be 
 
 	//creates the listener for a click on the spinner (dropdown menu) in the ranking portion of the super scout
 	public void createSpinnerClickListener() {
-		ArrayAdapter<String> currentRobotSpinnerAdapter = new ArrayAdapter<String>(this,
+		ArrayAdapter<String> robotEffectivenessAdapter = new ArrayAdapter<String>(this,
 				android.R.layout.simple_spinner_item, alliance_effectiveness_list);
-		currentRobotSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		robotEffectivenessAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-		ArrayAdapter<String> opponentOneSpinnerAdapter_resistor = new ArrayAdapter<String>(this,
+		ArrayAdapter<String> opponentSpinnerAdapter_resistor = new ArrayAdapter<String>(this,
 				android.R.layout.simple_spinner_item, opponent_effectiveness_list_resistor);
-		opponentOneSpinnerAdapter_resistor.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		opponentSpinnerAdapter_resistor.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-		ArrayAdapter<String> opponentTwoSpinnerAdapter_resistor = new ArrayAdapter<String>(this,
-				android.R.layout.simple_spinner_item, opponent_effectiveness_list_resistor);
-		opponentTwoSpinnerAdapter_resistor.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-		ArrayAdapter<String> opponentThreeSpinnerAdapter_resistor = new ArrayAdapter<String>(this,
-				android.R.layout.simple_spinner_item, opponent_effectiveness_list_resistor);
-		opponentThreeSpinnerAdapter_resistor.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-		ArrayAdapter<String> opponentOneSpinnerAdapter = new ArrayAdapter<String>(this,
-				android.R.layout.simple_spinner_item, alliance_effectiveness_list);
-		opponentOneSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-		ArrayAdapter<String> opponentTwoSpinnerAdapter = new ArrayAdapter<String>(this,
-				android.R.layout.simple_spinner_item, alliance_effectiveness_list);
-		opponentTwoSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-		ArrayAdapter<String> opponentThreeSpinnerAdapter = new ArrayAdapter<String>(this,
-				android.R.layout.simple_spinner_item, alliance_effectiveness_list);
-		opponentThreeSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-		currentRobotDefenseEffectiveness.setAdapter(currentRobotSpinnerAdapter);
+		currentRobotDefenseEffectiveness.setAdapter(robotEffectivenessAdapter);
 
 		robotOneDefensiveReactionEffectiveness.setAdapter(String.valueOf(robotOneDefensiveReaction.getText()).equals("RESISTOR") ?
-				opponentOneSpinnerAdapter_resistor : opponentOneSpinnerAdapter);
+				opponentSpinnerAdapter_resistor : robotEffectivenessAdapter);
 		robotTwoDefensiveReactionEffectiveness.setAdapter(String.valueOf(robotTwoDefensiveReaction.getText()).equals("RESISTOR") ?
-				opponentTwoSpinnerAdapter_resistor : opponentTwoSpinnerAdapter);
+				opponentSpinnerAdapter_resistor : robotEffectivenessAdapter);
 		robotThreeDefensiveReactionEffectiveness.setAdapter(String.valueOf(robotThreeDefensiveReaction.getText()).equals("RESISTOR") ?
-				opponentThreeSpinnerAdapter_resistor : opponentThreeSpinnerAdapter);
-		
+				opponentSpinnerAdapter_resistor : robotEffectivenessAdapter);
+
+		//sets the dropdown menus to the right list values (shows the lists after updating)
 		setSpinnerSelectedItems();
 
+		//only enable the current robot defensiveness value dropdown menu when a team has been selected ("0" is the null value for the selected team)
 		currentRobotDefenseEffectiveness.setEnabled(!selectedDefensiveRobot.equals("0"));
 
+		//for the current selected robot, the defensive effectiveness value gets set to the selected item
 		currentRobotDefenseEffectiveness.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 			@Override
 			public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -356,14 +350,14 @@ public class DuringMatchScouting extends AppCompatActivity { //Comments will be 
 					allianceRobotThreeDefensiveEffectivenessValue = i;
 			}
 			@Override
-			public void onNothingSelected(AdapterView<?> adapterView) {
-
-			}
+			public void onNothingSelected(AdapterView<?> adapterView) { }
 		});
+
+		//for the opposing alliance's robots, if it's in resistor mode (the toggle), the resistor value is set
+		//to the selected item. Else (counter defender mode), the counter defender value is set to the selected item
 		robotOneDefensiveReactionEffectiveness.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 			@Override
 			public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-				Log.e("/////",String.valueOf(opOne_r));
 				if (!opOne_r) {
 					opponentRobotOneDefensiveEffectivenessValue = i;
 					defensiveEffectivenessValues[indexOfTeamString()][0] = opponentRobotOneDefensiveEffectivenessValue;
@@ -373,9 +367,7 @@ public class DuringMatchScouting extends AppCompatActivity { //Comments will be 
 				}
 			}
 			@Override
-			public void onNothingSelected(AdapterView<?> adapterView) {
-
-			}
+			public void onNothingSelected(AdapterView<?> adapterView) { }
 		});
 		robotTwoDefensiveReactionEffectiveness.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 			@Override
@@ -405,12 +397,11 @@ public class DuringMatchScouting extends AppCompatActivity { //Comments will be 
 				}
 			}
 			@Override
-			public void onNothingSelected(AdapterView<?> adapterView) {
-
-			}
+			public void onNothingSelected(AdapterView<?> adapterView) { }
 		});
 	}
-	
+
+	//updates the selected item on the dropdown menu when the mode is switched from both C. Defender to Resistor or current team switches, and vice versa
 	public void setSpinnerSelectedItems() {
 		if (selectedDefensiveRobot.equals(teamOne)) currentRobotDefenseEffectiveness.setSelection(allianceRobotOneDefensiveEffectivenessValue);
 		if (selectedDefensiveRobot.equals(teamTwo)) currentRobotDefenseEffectiveness.setSelection(allianceRobotTwoDefensiveEffectivenessValue);
@@ -614,6 +605,7 @@ public class DuringMatchScouting extends AppCompatActivity { //Comments will be 
 		}
 	}
 
+	//adds the timeline value for each selected alliance robot when the defensive timer is either pressed or stopped
 	public void createTimelineInput(String type) {
 		TimerUtil.MatchTimer match_timer = new TimerUtil.MatchTimer();
 		Map<String, String> timeline = new HashMap<>();

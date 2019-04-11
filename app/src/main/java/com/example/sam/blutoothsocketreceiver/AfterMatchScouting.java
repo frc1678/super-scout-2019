@@ -16,9 +16,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Map;
 
-public class AfterMatchScouting extends AppCompatActivity {
-
-	String[][] allianceDataStructure = new String[3][3];
+public class AfterMatchScouting extends AppCompatActivity { //AfterMatchScouting is the counter page from the previous super scout
+															//Only contains 'Speed' and 'Agility', and leads into the QR display
+	String[][] allianceDataStructure = new String[3][3];    //IS ONLY DONE AFTER THE MATCH ENDS ('AFTER'MatchScouting)
 	String[][] opponentDataStructure = new String[3][3];
 	ArrayList<int[]> counterStats = new ArrayList<>();
 
@@ -57,6 +57,7 @@ public class AfterMatchScouting extends AppCompatActivity {
 		panelThree = (SuperScoutingPanel) getSupportFragmentManager().findFragmentById(R.id.panelThree);
 	}
 
+	//sets the panel color and team numbers according to the alliance and teams on the alliance
 	public void setPanels() {
 
 		panelOne.setAllianceColor(alliance.equals("Red Alliance") ? "red" : "blue");
@@ -125,6 +126,7 @@ public class AfterMatchScouting extends AppCompatActivity {
 		return super.onOptionsItemSelected(item);
 	}
 
+	//used to retrieve the data from the counters after the 'NEXT' button was pressed
 	public void listDataValues() {
 		ArrayList<String> teamOneDataName = new ArrayList<>(panelOne.getData().keySet());
 		ArrayList<String> teamTwoDataName = new ArrayList<>(panelTwo.getData().keySet());
@@ -163,6 +165,7 @@ public class AfterMatchScouting extends AppCompatActivity {
 		startActivity(intent);
 	}
 
+	//checks whether all of the counters are different values from eachother per row
 	public Boolean canProceed() {
 		Boolean canProceed = true;
 		ArrayList<String> dataNames = new ArrayList<>(Arrays.asList("Speed", "Agility"));
