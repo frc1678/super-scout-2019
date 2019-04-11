@@ -35,6 +35,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -54,6 +55,7 @@ import java.util.Map;
 
 import com.example.sam.blutoothsocketreceiver.Fields.FieldLayout;
 import com.example.sam.blutoothsocketreceiver.Utilities.TeamAssignment;
+import com.example.sam.blutoothsocketreceiver.Utils.TimerUtil;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.JsonObject;
@@ -91,6 +93,8 @@ public class MainActivity extends ActionBarActivity {
     ToggleButton mute;
     ArrayAdapter<String> adapter;
 
+    LinearLayout allianceLL, opponentLL;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -110,6 +114,8 @@ public class MainActivity extends ActionBarActivity {
         opposingAllianceTeamOne = (EditText) findViewById(R.id.opponentTeamOne);
         opposingAllianceTeamTwo = (EditText) findViewById(R.id.opponentTeamTwo);
         opposingAllianceTeamThree = (EditText) findViewById(R.id.opponentTeamThree);
+        opponentLL = (LinearLayout) findViewById(R.id.opponentLL);
+        allianceLL = (LinearLayout) findViewById(R.id.allianceLL);
         alliance = (TextView) findViewById(R.id.allianceName);
         dataBase = FirebaseDatabase.getInstance().getReference();
         //If there was an intent to MainActivity (qr code -> mainact), get the alliance and new match num
@@ -124,13 +130,7 @@ public class MainActivity extends ActionBarActivity {
         }
 
         updateUI();
-        if (leftViewColor == null) {
-            numberOfMatch.setText("0");
-            numberOfMatch.setTextColor(Color.RED);
-            numberOfMatch.setTextSize(28);
-        } else {
-            numberOfMatch.setText(matchNumber.toString());
-        }
+        numberOfMatch.setText(matchNumber.toString());
         matchNumber = Integer.parseInt(numberOfMatch.getText().toString());
         disenableEditTextEditing();
 
@@ -236,6 +236,8 @@ public class MainActivity extends ActionBarActivity {
                 } else if (opposingAllianceTeamThree.getText().toString().equals("")) {
                     Toast.makeText(context, "Input opponent team three number!", Toast.LENGTH_SHORT).show();
                 } else {
+                    TimerUtil.MatchTimer match_timer = new TimerUtil.MatchTimer();
+                    match_timer.initTimer();
                     commitSharedPreferences();
                     commitOverrideTeamsSP();
                     Intent intent = new Intent(context, DuringMatchScouting.class);
@@ -336,6 +338,10 @@ public class MainActivity extends ActionBarActivity {
                     opposingAllianceTeamOne.setText(String.valueOf(backupData.getJSONObject("4").getInt("number")));
                     opposingAllianceTeamTwo.setText(String.valueOf(backupData.getJSONObject("5").getInt("number")));
                     opposingAllianceTeamThree.setText(String.valueOf(backupData.getJSONObject("6").getInt("number")));
+
+                    allianceLL.setBackgroundColor(getApplicationContext().getResources().getColor(R.color.CarlRed));
+                    opponentLL.setBackgroundColor(getApplicationContext().getResources().getColor(R.color.LightBlue));
+
                 } else if(!isRed) {
                     allianceTeamOne.setText(String.valueOf(backupData.getJSONObject("4").getInt("number")));
                     allianceTeamTwo.setText(String.valueOf(backupData.getJSONObject("5").getInt("number")));
@@ -343,6 +349,9 @@ public class MainActivity extends ActionBarActivity {
                     opposingAllianceTeamOne.setText(String.valueOf(backupData.getJSONObject("1").getInt("number")));
                     opposingAllianceTeamTwo.setText(String.valueOf(backupData.getJSONObject("2").getInt("number")));
                     opposingAllianceTeamThree.setText(String.valueOf(backupData.getJSONObject("3").getInt("number")));
+
+                    allianceLL.setBackgroundColor(getApplicationContext().getResources().getColor(R.color.LightBlue));
+                    opponentLL.setBackgroundColor(getApplicationContext().getResources().getColor(R.color.CarlRed));
                 }
             }
             catch(JSONException JE) {
@@ -482,6 +491,7 @@ public class MainActivity extends ActionBarActivity {
         Intent backToHome = getIntent();
         if (backToHome.hasExtra("number")) {
             matchNumber = Integer.parseInt(backToHome.getExtras().getString("number")) + 1;
+            Log.e("...",String.valueOf(matchNumber)+"");
         } else {
             SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
             matchNumber = prefs.getInt("match_number", 1);

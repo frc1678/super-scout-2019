@@ -18,6 +18,7 @@ import android.widget.Toast;
 import android.content.SharedPreferences;
 
 import com.example.sam.blutoothsocketreceiver.Fields.Bay;
+import com.example.sam.blutoothsocketreceiver.Utils.TimerUtil;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
 import com.google.zxing.MultiFormatWriter;
@@ -72,6 +73,8 @@ public class QrDisplay extends ActionBarActivity {
     String rightMid;
     String rightFar;
 
+    int[][] defensiveEffectivenessValues = new int[3][6];
+
     String teamOneDefense;
     String teamTwoDefense;
     String teamThreeDefense;
@@ -90,6 +93,14 @@ public class QrDisplay extends ActionBarActivity {
     String[][] allianceDataStructure = new String[3][3];
     String[][] opponentDataStructure = new String[3][3];
     ArrayList<int[]> counterStats = new ArrayList<>();
+
+    public ArrayList<Map<String, String>> timelineRobotOne = new ArrayList<>();
+    public ArrayList<Map<String, String>> timelineRobotTwo = new ArrayList<>();
+    public ArrayList<Map<String, String>> timelineRobotThree = new ArrayList<>();
+
+    ArrayList<Map<String, String>> opponentRobotOneDataStructure = new ArrayList<>();
+    ArrayList<Map<String, String>> opponentRobotTwoDataStructure = new ArrayList<>();
+    ArrayList<Map<String, String>> opponentRobotThreeDataStructure = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,7 +125,15 @@ public class QrDisplay extends ActionBarActivity {
         opponentDataStructure = (String[][]) getIntent().getSerializableExtra("opponentDataStructure");
         counterStats = (ArrayList<int[]>) getIntent().getSerializableExtra("counterStats");
 
-        Log.e("CounterStats",String.valueOf(counterStats.get(0)[1])+"");
+        timelineRobotOne = (ArrayList<Map<String,String>>) getIntent().getSerializableExtra("timelineOne");
+        timelineRobotTwo = (ArrayList<Map<String,String>>) getIntent().getSerializableExtra("timelineTwo");
+        timelineRobotThree = (ArrayList<Map<String,String>>) getIntent().getSerializableExtra("timelineThree");
+        opponentRobotOneDataStructure = (ArrayList<Map<String,String>>) getIntent().getSerializableExtra("opponentRobotOneData");
+        opponentRobotTwoDataStructure = (ArrayList<Map<String,String>>) getIntent().getSerializableExtra("opponentRobotTwoData");
+        opponentRobotThreeDataStructure = (ArrayList<Map<String,String>>) getIntent().getSerializableExtra("opponentRobotThreeData");
+
+        defensiveEffectivenessValues = (int[][]) getIntent().getSerializableExtra("defensiveEffectivenessValues");
+
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -153,7 +172,76 @@ public class QrDisplay extends ActionBarActivity {
         compressedData = "S!Q"
                 + matchNumber
                 + "-"
-                + allianceCompressed;
+                + allianceCompressed
+                //teamONE
+                + "|u"
+                + allianceDataStructure[0][2]
+                + ";v"
+                + counterStats.get(0)[1]
+                + ";w"
+                + counterStats.get(0)[0]
+                + ";x"
+                + allianceDataStructure[0][0]
+                + ";F"
+                + String.valueOf(timelineRobotOne).replace(" ", "").replace("{", "")
+                .replace("type", "G").replace("=", "").replace(",", "?").replace("}", "")
+                .replace("startDefense", "a").replace("endDefense", "b").replace("time", "H").replace("?G",",").replace(",b",",Gb").replace(",a",",Gb")
+                + ";E[u" + opponentDataStructure[0][2]
+                + "?y" + defensiveEffectivenessValues[0][0]
+                + "?z" + defensiveEffectivenessValues[0][3]
+                + ",u" + opponentDataStructure[1][2]
+                + "?y" + defensiveEffectivenessValues[0][1]
+                + "?z" + defensiveEffectivenessValues[0][4]
+                + ",u" + opponentDataStructure[2][2]
+                + "?y" + defensiveEffectivenessValues[0][2]
+                + "?z" + defensiveEffectivenessValues[0][5]
+                + "]_"
+                //teamTWO
+                + "u"
+                + allianceDataStructure[1][2]
+                + ";v"
+                + counterStats.get(1)[1]
+                + ";w"
+                + counterStats.get(1)[0]
+                + ";x"
+                + allianceDataStructure[1][0]
+                + ";F"
+                + String.valueOf(timelineRobotTwo).replace(" ", "").replace("{", "")
+                .replace("type", "G").replace("=", "").replace(",", "?").replace("}", "")
+                .replace("startDefense", "a").replace("endDefense", "b").replace("time", "H").replace("?G",",").replace(",b",",Gb").replace(",a",",Gb")
+                + ";E[u" + opponentDataStructure[0][2]
+                + "?y" + defensiveEffectivenessValues[1][0]
+                + "?z" + defensiveEffectivenessValues[1][3]
+                + ",u" + opponentDataStructure[1][2]
+                + "?y" + defensiveEffectivenessValues[1][1]
+                + "?z" + defensiveEffectivenessValues[1][4]
+                + ",u" + opponentDataStructure[2][2]
+                + "?y" + defensiveEffectivenessValues[1][2]
+                + "?z" + defensiveEffectivenessValues[1][5]
+                + "]_"
+                + "u"
+                + allianceDataStructure[2][2]
+                + ";v"
+                + counterStats.get(2)[1]
+                + ";w"
+                + counterStats.get(2)[0]
+                + ";x"
+                + allianceDataStructure[2][0]
+                + ";F"
+                + String.valueOf(timelineRobotThree).replace(" ", "").replace("{", "")
+                .replace("type", "G").replace("=", "").replace(",", "?").replace("}", "")
+                .replace("startDefense", "a").replace("endDefense", "b").replace("time", "H").replace("?G",",").replace(",b",",Gb").replace(",a",",Gb")
+                + ";E[u" + opponentDataStructure[0][2]
+                + "?y" + defensiveEffectivenessValues[2][0]
+                + "?z" + defensiveEffectivenessValues[2][3]
+                + ",u" + opponentDataStructure[1][2]
+                + "?y" + defensiveEffectivenessValues[2][1]
+                + "?z" + defensiveEffectivenessValues[2][4]
+                + ",u" + opponentDataStructure[2][2]
+                + "?y" + defensiveEffectivenessValues[2][2]
+                + "?z" + defensiveEffectivenessValues[2][5] + "]";
+
+        Log.e("rree", String.valueOf(compressedData));
 
         new Thread() {
 

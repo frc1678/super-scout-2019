@@ -7,12 +7,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Map;
 
 public class AfterMatchScouting extends AppCompatActivity {
 
@@ -25,6 +27,16 @@ public class AfterMatchScouting extends AppCompatActivity {
 	SuperScoutingPanel panelOne;
 	SuperScoutingPanel panelTwo;
 	SuperScoutingPanel panelThree;
+
+	public int[][] defensiveEffectivenessValues = new int[3][6];
+
+	public ArrayList<Map<String, String>> timelineRobotOne = new ArrayList<>();
+	public ArrayList<Map<String, String>> timelineRobotTwo = new ArrayList<>();
+	public ArrayList<Map<String, String>> timelineRobotThree = new ArrayList<>();
+
+	ArrayList<Map<String, String>> opponentRobotOneDataStructure = new ArrayList<>();
+	ArrayList<Map<String, String>> opponentRobotTwoDataStructure = new ArrayList<>();
+	ArrayList<Map<String, String>> opponentRobotThreeDataStructure = new ArrayList<>();
 
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -61,6 +73,16 @@ public class AfterMatchScouting extends AppCompatActivity {
 
 		matchNumber = getIntent().getStringExtra("matchNumber");
 		alliance = getIntent().getStringExtra("alliance");
+
+		timelineRobotOne = (ArrayList<Map<String,String>>) getIntent().getSerializableExtra("robotOneTimeline");
+		timelineRobotTwo = (ArrayList<Map<String,String>>) getIntent().getSerializableExtra("robotTwoTimeline");
+		timelineRobotThree = (ArrayList<Map<String,String>>) getIntent().getSerializableExtra("robotThreeTimeline");
+
+		opponentRobotOneDataStructure = (ArrayList<Map<String,String>>) getIntent().getSerializableExtra("opponentRobotOneData");
+		opponentRobotTwoDataStructure = (ArrayList<Map<String,String>>) getIntent().getSerializableExtra("opponentRobotTwoData");
+		opponentRobotThreeDataStructure = (ArrayList<Map<String,String>>) getIntent().getSerializableExtra("opponentRobotThreeData");
+
+		defensiveEffectivenessValues = (int[][]) getIntent().getSerializableExtra("defensiveEffectivenessValues");
 
 	}
 
@@ -131,6 +153,13 @@ public class AfterMatchScouting extends AppCompatActivity {
 		intent.putExtra("counterStats", counterStats);
 		intent.putExtra("alliance", alliance);
 		intent.putExtra("matchNumber", matchNumber);
+		intent.putExtra("timelineOne",timelineRobotOne);
+		intent.putExtra("timelineTwo",timelineRobotTwo);
+		intent.putExtra("timelineThree", timelineRobotThree);
+		intent.putExtra("opponentRobotOneData", opponentRobotOneDataStructure);
+		intent.putExtra("opponentRobotTwoData", opponentRobotTwoDataStructure);
+		intent.putExtra("opponentRobotThreeData", opponentRobotThreeDataStructure);
+		intent.putExtra("defensiveEffectivenessValues", defensiveEffectivenessValues);
 		startActivity(intent);
 	}
 

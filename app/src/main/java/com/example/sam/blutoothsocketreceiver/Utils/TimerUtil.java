@@ -3,6 +3,7 @@ package com.example.sam.blutoothsocketreceiver.Utils;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.SystemClock;
+import android.util.Log;
 import android.widget.TextView;
 
 public class TimerUtil {
@@ -16,7 +17,7 @@ public class TimerUtil {
 
 	public static String displayTime;
 
-	public static class DefenseTimer extends Thread {
+	public static class MatchTimer extends Thread {
 
 		@Override
 		public void run() {
@@ -25,13 +26,17 @@ public class TimerUtil {
 					float tempTime = millisUntilFinished / 1000f;
 					timestamp = Float.parseFloat(String.format("%.1f", tempTime));
 					displayTime = String.valueOf(Math.round(tempTime));
-					mTimerView.setText(displayTime);
-				}
+					}
 
 				public void onFinish() {
-
+					Stopwatch sw = new Stopwatch();
+					sw.stop();
 				}
 			}.start();
+		}
+
+		public String getTime() {
+			return String.valueOf(timestamp);
 		}
 
 		public void initTimer() {
@@ -44,6 +49,10 @@ public class TimerUtil {
 		private long startTime = 0;
 		private boolean running = false;
 		Handler handler = new Handler();
+
+		public Boolean isRunning() {
+			return this.running;
+		}
 
 		public void start() {
 			this.startTime = System.currentTimeMillis();
@@ -58,7 +67,7 @@ public class TimerUtil {
 		public long getElapsedTimeSecs() {
 			long elapsed = 0;
 			if (running) {
-				elapsed = ((System.currentTimeMillis() - startTime) / 1000) % 60;
+				elapsed = ((System.currentTimeMillis() - startTime) / 1000);
 			}
 			return elapsed;
 		}

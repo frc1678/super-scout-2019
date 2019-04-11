@@ -22,6 +22,8 @@ import android.widget.Toast;
 import com.example.sam.blutoothsocketreceiver.Utils.TimerUtil;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class DuringMatchScouting extends AppCompatActivity { //Comments will be included to explain meanings of variable names
 															 //to prevent unnecessary confusion.
@@ -58,22 +60,33 @@ public class DuringMatchScouting extends AppCompatActivity { //Comments will be 
 
 	public String selectedDefensiveRobot = "0"; //the value contains which team is on defense for the SCOUT's alliance.
 
+	public TimerUtil.Stopwatch defenseTimer = null;
+
 	ArrayList<String> alliance_effectiveness_list = new ArrayList<String>() {{ //list for the dropdown menu for ranking defense for ALLIANCE
-		add("No Attempt");
-		add("Attempted");
-		add("Effective");
-		add("Shutdown");
+
+		add("N/A");
+		add("Not effective");
+		add("Slow down");
+		add("Shut down");
 	}};
-	ArrayList<String> opponent_effectiveness_list = new ArrayList<String>() {{ //list for the dropdown menu for ranking defense for OPPONENTS
-		add("Not Applicable");
-		add("Poor C. Defense");
-		add("Fair C. Defense");
-		add("Good C. Defense");
+	ArrayList<String> opponent_effectiveness_list_resistor = new ArrayList<String>() {{ //list for the dropdown menu for ranking defense for OPPONENTS
+		add("N/A");
+		add("Not affected");
+		add("Slowed down");
+		add("Shut down");
 	}};
+
+	public ArrayList<Map<String, String>> timelineRobotOne = new ArrayList<>();
+	public ArrayList<Map<String, String>> timelineRobotTwo = new ArrayList<>();
+	public ArrayList<Map<String, String>> timelineRobotThree = new ArrayList<>();
 
 	public int allianceRobotOneDefensiveEffectivenessValue, allianceRobotTwoDefensiveEffectivenessValue, allianceRobotThreeDefensiveEffectivenessValue;
-	public int opponentRobotOneDefensiveEffectivenessValue, opponentRobotTwoDefensiveEffectivenessValue, opponentRobotThreeDefensiveEffectivenessValue;
+	public int opponentRobotOneDefensiveEffectivenessValue, opponentRobotTwoDefensiveEffectivenessValue ,opponentRobotThreeDefensiveEffectivenessValue;
+	public int opponentRobotOneDefensiveEffectivenessValue_resistor, opponentRobotTwoDefensiveEffectivenessValue_resistor, opponentRobotThreeDefensiveEffectivenessValue_resistor;
 
+	public int[][] defensiveEffectivenessValues = new int[3][6];
+
+	Boolean opOne_r = true; Boolean opTwo_r = true; Boolean opThree_r = true;
 
 	//Holds all of the data in a matrix
 	public String[][] opponentDataStructure = new String[3][3];
@@ -85,6 +98,12 @@ public class DuringMatchScouting extends AppCompatActivity { //Comments will be 
 				//First [], [teamOne, teamTwo, teamThree]
 				//Second [] :
 				//  [ robotDefensiveEffectiveness (Effective, Attempted, etc), totalDefenseTime <- ?, team]
+
+	ArrayList<Map<String, String>> opponentRobotOneDataStructure = new ArrayList<>();
+	ArrayList<Map<String, String>> opponentRobotTwoDataStructure = new ArrayList<>();
+	ArrayList<Map<String, String>> opponentRobotThreeDataStructure = new ArrayList<>();
+
+	int[] teams = new int[3];
 
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) { //During Match Scouting is the MAIN scouting page for the super scout
@@ -155,10 +174,9 @@ public class DuringMatchScouting extends AppCompatActivity { //Comments will be 
 		opponentDataStructure[1][1] = String.valueOf(opponentRobotTwoDefensiveEffectivenessValue);
 		opponentDataStructure[1][2] = String.valueOf(opposingTeamTwo);
 
-		opponentDataStructure[2][0] = String.valueOf(robotTwoDefensiveReaction.getText());
-		opponentDataStructure[2][1] = String.valueOf(opponentRobotTwoDefensiveEffectivenessValue);
+		opponentDataStructure[2][0] = String.valueOf(robotThreeDefensiveReaction.getText());
+		opponentDataStructure[2][1] = String.valueOf(opponentRobotThreeDefensiveEffectivenessValue);
 		opponentDataStructure[2][2] = String.valueOf(opposingTeamThree);
-
 
 		allianceDataStructure[0][0] = String.valueOf(allianceRobotOneDefensiveEffectivenessValue);
 		allianceDataStructure[1][0] = String.valueOf(allianceRobotTwoDefensiveEffectivenessValue);
@@ -166,6 +184,35 @@ public class DuringMatchScouting extends AppCompatActivity { //Comments will be 
 		allianceDataStructure[0][2] = String.valueOf(teamOne);
 		allianceDataStructure[1][2] = String.valueOf(teamTwo);
 		allianceDataStructure[2][2] = String.valueOf(teamThree);
+
+		addOpponentData(opposingTeamOne); addOpponentData(opposingTeamTwo); addOpponentData(opposingTeamThree);
+
+		if (defenseTimer.isRunning()) defenseTimer.stop();
+		updateTimerColor();
+
+	}
+
+	public Integer indexOfTeamString() {
+		if (teamOne.equals(selectedDefensiveRobot) || selectedDefensiveRobot.equals("0")) return 0;
+		if (teamTwo.equals(selectedDefensiveRobot)) return 1;
+		if (teamThree.equals(selectedDefensiveRobot)) return 2;
+		return null;
+	}
+
+	public void addOpponentData(String team) {
+		Map<String, String> data = new HashMap<>();
+		data.put("teamNumber", team);
+		if (team.equals(opposingTeamOne)) data.put("rankCounterDefense", String.valueOf(opponentRobotOneDefensiveEffectivenessValue));
+		if (team.equals(opposingTeamTwo)) data.put("rankCounterDefense", String.valueOf(opponentRobotTwoDefensiveEffectivenessValue));
+		if (team.equals(opposingTeamThree)) data.put("rankCounterDefense", String.valueOf(opponentRobotThreeDefensiveEffectivenessValue));
+
+		if (team.equals(opposingTeamOne)) data.put("rankResistance", String.valueOf(opponentRobotOneDefensiveEffectivenessValue_resistor));
+		if (team.equals(opposingTeamTwo)) data.put("rankResistance", String.valueOf(opponentRobotTwoDefensiveEffectivenessValue_resistor));
+		if (team.equals(opposingTeamThree)) data.put("rankResistance", String.valueOf(opponentRobotThreeDefensiveEffectivenessValue_resistor));
+
+		if (team.equals(opposingTeamOne)) opponentRobotOneDataStructure.add(data);
+		if (team.equals(opposingTeamTwo)) opponentRobotTwoDataStructure.add(data);
+		if (team.equals(opposingTeamThree)) opponentRobotThreeDataStructure.add(data);
 
 	}
 
@@ -176,6 +223,13 @@ public class DuringMatchScouting extends AppCompatActivity { //Comments will be 
 		intent.putExtra("opponentDataStructure",opponentDataStructure);
 		intent.putExtra("alliance", alliance);
 		intent.putExtra("matchNumber", matchNumber);
+		intent.putExtra("robotOneTimeline",timelineRobotOne);
+		intent.putExtra("robotTwoTimeline",timelineRobotTwo);
+		intent.putExtra("robotThreeTimeline",timelineRobotThree);
+		intent.putExtra("opponentRobotOneData",opponentRobotOneDataStructure);
+		intent.putExtra("opponentRobotTwoData",opponentRobotTwoDataStructure);
+		intent.putExtra("opponentRobotThreeData",opponentRobotThreeDataStructure);
+		intent.putExtra("defensiveEffectivenessValues", defensiveEffectivenessValues);
 		startActivity(intent);
 	}
 
@@ -188,12 +242,22 @@ public class DuringMatchScouting extends AppCompatActivity { //Comments will be 
 		opposingTeamOne = getIntent().getExtras().getString("opponentTeamOne");
 		opposingTeamTwo = getIntent().getExtras().getString("opponentTeamTwo");
 		opposingTeamThree = getIntent().getExtras().getString("opponentTeamThree");
+
+		createTeamsList();
+
 	}
 
-
+	public void createTeamsList() {
+		teams[0] = Integer.valueOf(teamOne);
+		teams[1] = Integer.valueOf(teamTwo);
+		teams[2] = Integer.valueOf(teamThree);
+	}
 
 	//initializes the xml elements with their according xml id's.
 	public void initializeXML() {
+
+		defenseTimer = new TimerUtil.Stopwatch();
+
 		teamOneSelectionButton = (Button) findViewById(R.id.teamOneSelectionButton);
 		teamTwoSelectionButton = (Button) findViewById(R.id.teamTwoSelectionButton);
 		teamThreeSelectionButton = (Button) findViewById(R.id.teamThreeSelectionButton);
@@ -221,13 +285,18 @@ public class DuringMatchScouting extends AppCompatActivity { //Comments will be 
 
 	//method that calls other methods to create listeners for on clicks
 	public void activateListeners() {
+
+		//resets the timer on the onCreate
+		timerIsActive = false;
+		if (new TimerUtil.Stopwatch().isRunning()) new TimerUtil.Stopwatch().stop();
+
+		setDefensiveValues();
 		createTimerListener();
 		createAllianceTeamSelectionListener();
 		createAllianceTeamColors();
 		createRobotDefensiveEffectiveness();
 		createSpinnerClickListener();
 		setTeamNumbersToTeamNumberView();
-		setDefensiveValues();
 		setTeamNumbersToTeamRankingView();
 		setBackgroundOfDefenseRankingTeams();
 
@@ -235,22 +304,56 @@ public class DuringMatchScouting extends AppCompatActivity { //Comments will be 
 
 	//creates the listener for a click on the spinner (dropdown menu) in the ranking portion of the super scout
 	public void createSpinnerClickListener() {
-		ArrayAdapter<String> allianceSpinnerAdapter = new ArrayAdapter<String>(this,
+		ArrayAdapter<String> currentRobotSpinnerAdapter = new ArrayAdapter<String>(this,
 				android.R.layout.simple_spinner_item, alliance_effectiveness_list);
-		allianceSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		ArrayAdapter<String> opponentSpinnerAdapter = new ArrayAdapter<String>(this,
-				android.R.layout.simple_spinner_item, opponent_effectiveness_list);
-		opponentSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		currentRobotDefenseEffectiveness.setAdapter(allianceSpinnerAdapter);
-		robotOneDefensiveReactionEffectiveness.setAdapter(opponentSpinnerAdapter);
-		robotTwoDefensiveReactionEffectiveness.setAdapter(opponentSpinnerAdapter);
-		robotThreeDefensiveReactionEffectiveness.setAdapter(opponentSpinnerAdapter);
+		currentRobotSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+		ArrayAdapter<String> opponentOneSpinnerAdapter_resistor = new ArrayAdapter<String>(this,
+				android.R.layout.simple_spinner_item, opponent_effectiveness_list_resistor);
+		opponentOneSpinnerAdapter_resistor.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+		ArrayAdapter<String> opponentTwoSpinnerAdapter_resistor = new ArrayAdapter<String>(this,
+				android.R.layout.simple_spinner_item, opponent_effectiveness_list_resistor);
+		opponentTwoSpinnerAdapter_resistor.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+		ArrayAdapter<String> opponentThreeSpinnerAdapter_resistor = new ArrayAdapter<String>(this,
+				android.R.layout.simple_spinner_item, opponent_effectiveness_list_resistor);
+		opponentThreeSpinnerAdapter_resistor.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+		ArrayAdapter<String> opponentOneSpinnerAdapter = new ArrayAdapter<String>(this,
+				android.R.layout.simple_spinner_item, alliance_effectiveness_list);
+		opponentOneSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+		ArrayAdapter<String> opponentTwoSpinnerAdapter = new ArrayAdapter<String>(this,
+				android.R.layout.simple_spinner_item, alliance_effectiveness_list);
+		opponentTwoSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+		ArrayAdapter<String> opponentThreeSpinnerAdapter = new ArrayAdapter<String>(this,
+				android.R.layout.simple_spinner_item, alliance_effectiveness_list);
+		opponentThreeSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+		currentRobotDefenseEffectiveness.setAdapter(currentRobotSpinnerAdapter);
+
+		robotOneDefensiveReactionEffectiveness.setAdapter(String.valueOf(robotOneDefensiveReaction.getText()).equals("RESISTOR") ?
+				opponentOneSpinnerAdapter_resistor : opponentOneSpinnerAdapter);
+		robotTwoDefensiveReactionEffectiveness.setAdapter(String.valueOf(robotTwoDefensiveReaction.getText()).equals("RESISTOR") ?
+				opponentTwoSpinnerAdapter_resistor : opponentTwoSpinnerAdapter);
+		robotThreeDefensiveReactionEffectiveness.setAdapter(String.valueOf(robotThreeDefensiveReaction.getText()).equals("RESISTOR") ?
+				opponentThreeSpinnerAdapter_resistor : opponentThreeSpinnerAdapter);
+		
+		setSpinnerSelectedItems();
+
+		currentRobotDefenseEffectiveness.setEnabled(!selectedDefensiveRobot.equals("0"));
+
 		currentRobotDefenseEffectiveness.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 			@Override
 			public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-				if (teamOne.equals(String.valueOf(currentSelectedTeam.getText()))) allianceRobotOneDefensiveEffectivenessValue = i;
-				if (teamTwo.equals(String.valueOf(currentSelectedTeam.getText()))) allianceRobotTwoDefensiveEffectivenessValue = i;
-				if (teamThree.equals(String.valueOf(currentSelectedTeam.getText()))) allianceRobotThreeDefensiveEffectivenessValue = i;
+				if (teamOne.equals(String.valueOf(currentSelectedTeam.getText())))
+					allianceRobotOneDefensiveEffectivenessValue = i;
+				if (teamTwo.equals(String.valueOf(currentSelectedTeam.getText())))
+					allianceRobotTwoDefensiveEffectivenessValue = i;
+				if (teamThree.equals(String.valueOf(currentSelectedTeam.getText())))
+					allianceRobotThreeDefensiveEffectivenessValue = i;
 			}
 			@Override
 			public void onNothingSelected(AdapterView<?> adapterView) {
@@ -260,7 +363,14 @@ public class DuringMatchScouting extends AppCompatActivity { //Comments will be 
 		robotOneDefensiveReactionEffectiveness.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 			@Override
 			public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-				opponentRobotOneDefensiveEffectivenessValue = i;
+				Log.e("/////",String.valueOf(opOne_r));
+				if (!opOne_r) {
+					opponentRobotOneDefensiveEffectivenessValue = i;
+					defensiveEffectivenessValues[indexOfTeamString()][0] = opponentRobotOneDefensiveEffectivenessValue;
+				} else {
+					opponentRobotOneDefensiveEffectivenessValue_resistor = i;
+					defensiveEffectivenessValues[indexOfTeamString()][3] = opponentRobotOneDefensiveEffectivenessValue_resistor;
+				}
 			}
 			@Override
 			public void onNothingSelected(AdapterView<?> adapterView) {
@@ -270,7 +380,13 @@ public class DuringMatchScouting extends AppCompatActivity { //Comments will be 
 		robotTwoDefensiveReactionEffectiveness.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 			@Override
 			public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-				opponentRobotTwoDefensiveEffectivenessValue = i;
+				if (!opTwo_r) {
+					opponentRobotTwoDefensiveEffectivenessValue = i;
+					defensiveEffectivenessValues[indexOfTeamString()][1] = opponentRobotTwoDefensiveEffectivenessValue;
+				} else {
+					opponentRobotTwoDefensiveEffectivenessValue_resistor = i;
+					defensiveEffectivenessValues[indexOfTeamString()][4] = opponentRobotTwoDefensiveEffectivenessValue_resistor;
+				}
 			}
 			@Override
 			public void onNothingSelected(AdapterView<?> adapterView) {
@@ -280,14 +396,31 @@ public class DuringMatchScouting extends AppCompatActivity { //Comments will be 
 		robotThreeDefensiveReactionEffectiveness.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 			@Override
 			public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-				opponentRobotThreeDefensiveEffectivenessValue = i;
+				if (!opThree_r) {
+					opponentRobotThreeDefensiveEffectivenessValue = i;
+					defensiveEffectivenessValues[indexOfTeamString()][2] = opponentRobotThreeDefensiveEffectivenessValue;
+				} else {
+					opponentRobotThreeDefensiveEffectivenessValue_resistor = i;
+					defensiveEffectivenessValues[indexOfTeamString()][5] = opponentRobotThreeDefensiveEffectivenessValue_resistor;
+				}
 			}
 			@Override
 			public void onNothingSelected(AdapterView<?> adapterView) {
 
 			}
 		});
-
+	}
+	
+	public void setSpinnerSelectedItems() {
+		if (selectedDefensiveRobot.equals(teamOne)) currentRobotDefenseEffectiveness.setSelection(allianceRobotOneDefensiveEffectivenessValue);
+		if (selectedDefensiveRobot.equals(teamTwo)) currentRobotDefenseEffectiveness.setSelection(allianceRobotTwoDefensiveEffectivenessValue);
+		if (selectedDefensiveRobot.equals(teamThree)) currentRobotDefenseEffectiveness.setSelection(allianceRobotThreeDefensiveEffectivenessValue);
+		robotOneDefensiveReactionEffectiveness.setSelection(opOne_r ?
+				defensiveEffectivenessValues[indexOfTeamString()][3] : defensiveEffectivenessValues[indexOfTeamString()][0]);
+		robotTwoDefensiveReactionEffectiveness.setSelection(opTwo_r ?
+				defensiveEffectivenessValues[indexOfTeamString()][4] : defensiveEffectivenessValues[indexOfTeamString()][1]);
+		robotThreeDefensiveReactionEffectiveness.setSelection(opThree_r ?
+				defensiveEffectivenessValues[indexOfTeamString()][5] : defensiveEffectivenessValues[indexOfTeamString()][2]);
 	}
 
 	//creates the listener for handling the on click of the effectiveness tracker in the ranking portion of the super scout
@@ -296,22 +429,34 @@ public class DuringMatchScouting extends AppCompatActivity { //Comments will be 
 		robotOneDefensiveReaction.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				robotOneDefensiveReaction.setText(String.valueOf(robotOneDefensiveReaction.getText()).equals("RESISTOR") ?
+				robotOneDefensiveReaction.setText(opOne_r ?
 						"C. DEFENDER" : "RESISTOR");
+				createSpinnerClickListener();
+				opOne_r = !opOne_r;
+				robotOneDefensiveReactionEffectiveness.setSelection(opOne_r ?
+						defensiveEffectivenessValues[indexOfTeamString()][3] : defensiveEffectivenessValues[indexOfTeamString()][0]);
 			}
 		});
 		robotTwoDefensiveReaction.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				robotTwoDefensiveReaction.setText(String.valueOf(robotTwoDefensiveReaction.getText()).equals("RESISTOR") ?
+				robotTwoDefensiveReaction.setText(opTwo_r ?
 						"C. DEFENDER" : "RESISTOR");
+				createSpinnerClickListener();
+				opTwo_r = !opTwo_r;
+				robotTwoDefensiveReactionEffectiveness.setSelection(opTwo_r ?
+						defensiveEffectivenessValues[indexOfTeamString()][4] : defensiveEffectivenessValues[indexOfTeamString()][1]);
 			}
 		});
 		robotThreeDefensiveReaction.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				robotThreeDefensiveReaction.setText(String.valueOf(robotThreeDefensiveReaction.getText()).equals("RESISTOR") ?
+				robotThreeDefensiveReaction.setText(opThree_r ?
 						"C. DEFENDER" : "RESISTOR");
+				createSpinnerClickListener();
+				opThree_r = !opThree_r;
+				robotThreeDefensiveReactionEffectiveness.setSelection(opThree_r ?
+						defensiveEffectivenessValues[indexOfTeamString()][5] : defensiveEffectivenessValues[indexOfTeamString()][2]);
 			}
 		});
 	}
@@ -346,22 +491,37 @@ public class DuringMatchScouting extends AppCompatActivity { //Comments will be 
 		teamOneSelectionButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				if (!selectedDefensiveRobot.equals(teamOne)) selectedDefensiveRobot = teamOne;
+				if (!selectedDefensiveRobot.equals(teamOne) && !timerIsActive) {
+					selectedDefensiveRobot = teamOne;
+				} else {
+					Toast.makeText(DuringMatchScouting.this, "Please stop the defense timer before switching teams!", Toast.LENGTH_SHORT).show();
+				}
 				createAllianceTeamColors();
+				createSpinnerClickListener();
 			}
 		});
 		teamTwoSelectionButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				if (!selectedDefensiveRobot.equals(teamTwo)) selectedDefensiveRobot = teamTwo;
+				if (!selectedDefensiveRobot.equals(teamTwo) && !timerIsActive) {
+					selectedDefensiveRobot = teamTwo;
+				} else {
+					Toast.makeText(DuringMatchScouting.this, "Please stop the defense timer before switching teams!", Toast.LENGTH_SHORT).show();
+				}
 				createAllianceTeamColors();
+				createSpinnerClickListener();
 			}
 		});
 		teamThreeSelectionButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				if (!selectedDefensiveRobot.equals(teamThree)) selectedDefensiveRobot = teamThree;
+				if (!selectedDefensiveRobot.equals(teamThree) && !timerIsActive) {
+					selectedDefensiveRobot = teamThree;
+				} else {
+					Toast.makeText(DuringMatchScouting.this, "Please stop the defense timer before switching teams!", Toast.LENGTH_SHORT).show();
+				}
 				createAllianceTeamColors();
+				createSpinnerClickListener();
 			}
 		});
 
@@ -376,6 +536,10 @@ public class DuringMatchScouting extends AppCompatActivity { //Comments will be 
 		opponentRobotOneDefensiveEffectivenessValue = 0;
 		opponentRobotTwoDefensiveEffectivenessValue = 0;
 		opponentRobotThreeDefensiveEffectivenessValue = 0;
+
+		opponentRobotOneDefensiveEffectivenessValue_resistor = 0;
+		opponentRobotTwoDefensiveEffectivenessValue_resistor = 0;
+		opponentRobotThreeDefensiveEffectivenessValue_resistor = 0;
 	}
 
 	//sets the team numbers to the text views of the three team views at the top of the screen
@@ -410,16 +574,15 @@ public class DuringMatchScouting extends AppCompatActivity { //Comments will be 
 
 	//Creates a stopwatch timer that increases from 0 to count how long a robot has been on defense.
 	public void createTimerListener() {
-		final TimerUtil.Stopwatch defenseTimer = new TimerUtil.Stopwatch();
 		timerButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
 				if (!timerIsActive && !selectedDefensiveRobot.equals("0")) {
 					defenseTimer.start();
-					timerStatusDisplay.setText("STOP");
-					timerButton.setBackgroundColor(getApplicationContext().getResources().getColor(R.color.TeamNumberRed));
-					timerIsActive = true;
+					createTimelineInput("startDefense");
+					updateTimerColor();
 				} else if (timerIsActive) {
+					createTimelineInput("endDefense");
 					if (String.valueOf(currentSelectedTeam.getText()).equals(teamOne)) allianceDataStructure[0][1] = allianceDataStructure[0][1] == null ?
 							String.valueOf(TimerUtil.mTimerView.getText()) :
 							String.valueOf(Integer.valueOf(allianceDataStructure[0][1]) + Integer.valueOf(TimerUtil.mTimerView.getText().toString()));
@@ -429,15 +592,36 @@ public class DuringMatchScouting extends AppCompatActivity { //Comments will be 
 					if (String.valueOf(currentSelectedTeam.getText()).equals(teamThree)) allianceDataStructure[2][1] = allianceDataStructure[2][1] == null ?
 							String.valueOf(TimerUtil.mTimerView.getText()) :
 							String.valueOf(Integer.valueOf(allianceDataStructure[2][1]) + Integer.valueOf(TimerUtil.mTimerView.getText().toString()));
+
 					defenseTimer.stop();
-					timerStatusDisplay.setText("START");
-					timerButton.setBackgroundColor(getApplicationContext().getResources().getColor(R.color.CarlGreen));
-					timerIsActive = false;
+					updateTimerColor();
 				} else {
 					Toast.makeText(DuringMatchScouting.this, "Please select a team before starting the DEFENSE timer!", Toast.LENGTH_SHORT).show();
 				}
 			}
 		});
+	}
+
+	public void updateTimerColor() {
+		if (!defenseTimer.isRunning()) {
+			timerStatusDisplay.setText("START");
+			timerButton.setBackgroundColor(getApplicationContext().getResources().getColor(R.color.CarlGreen));
+			timerIsActive = false;
+		} else {
+			timerStatusDisplay.setText("STOP");
+			timerButton.setBackgroundColor(getApplicationContext().getResources().getColor(R.color.TeamNumberRed));
+			timerIsActive = true;
+		}
+	}
+
+	public void createTimelineInput(String type) {
+		TimerUtil.MatchTimer match_timer = new TimerUtil.MatchTimer();
+		Map<String, String> timeline = new HashMap<>();
+		timeline.put("time", match_timer.getTime());
+		timeline.put("type", type);
+		if (selectedDefensiveRobot.equals(teamOne)) timelineRobotOne.add(timeline);
+		if (selectedDefensiveRobot.equals(teamTwo)) timelineRobotTwo.add(timeline);
+		if (selectedDefensiveRobot.equals(teamThree)) timelineRobotThree.add(timeline);
 	}
 
 
