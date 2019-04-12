@@ -266,35 +266,6 @@ public class MainActivity extends ActionBarActivity {
                 item.setTitle("Override Match and Team Number");
             }
 
-        } else if (id == R.id.fieldLayout) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(context);
-            final View fieldLayout = LayoutInflater.from(context).inflate(R.layout.field_layout, null);
-            final Button leftSide = (Button) fieldLayout.findViewById(R.id.leftSide);
-            final Button rightSide = (Button) fieldLayout.findViewById(R.id.rightSide);
-
-            if (leftViewColor.equals(FieldLayout.blue)) {
-                leftSide.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.Bloo));
-                rightSide.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.TeamNumberRed));
-            } else if (leftViewColor.equals(FieldLayout.red)) {
-                rightSide.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.Bloo));
-                leftSide.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.TeamNumberRed));
-            }
-            initializeColorConcept(rightSide, leftSide);
-
-            builder.setView(fieldLayout); builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    Integer leftSideColor = ((ColorDrawable)leftSide.getBackground()).getColor();
-                    if (String.valueOf(leftSideColor).equals(String.valueOf(FieldLayout.Blue))) {
-                        leftViewColor = FieldLayout.blue;
-                    } else if (String.valueOf(leftSideColor).equals(String.valueOf(FieldLayout.Red))) {
-                        leftViewColor = FieldLayout.red;
-                    } else {
-                        Log.e("this is when we cry","");
-                    }
-
-                }
-            }).show();
         }
         return super.onOptionsItemSelected(item);
     }

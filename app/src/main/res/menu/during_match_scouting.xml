@@ -4,7 +4,7 @@
 
     <item
         android:id ="@+id/final_data"
-        android:title="Final Data"
+        android:title="Match Ended"
         app:showAsAction="always"/>
 
 </menu>

@@ -14,8 +14,7 @@
         android:paddingTop="5dp"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:clickable="true"
-        android:onClick="onClickTeamNumber"/>
+        android:clickable="true" />
 
 
     <!--Make as many of these counters as you need-->

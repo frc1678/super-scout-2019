@@ -146,6 +146,7 @@ public class DuringMatchScouting extends AppCompatActivity { //Comments will be 
 	//gives the user a chance to stop a back press when the back button is pressed accidentally
 	@Override
 	public void onBackPressed(){
+		if (defenseTimer.isRunning()) defenseTimer.stop();
 		final Activity activity = this;
 		new AlertDialog.Builder(this)
 				.setTitle("WARNING!")
@@ -244,6 +245,10 @@ public class DuringMatchScouting extends AppCompatActivity { //Comments will be 
 	}
 
 	public void getExtras() {
+
+		//makes sure the defense timer isn't active on the oncreate
+		if (defenseTimer.isRunning()) defenseTimer.stop();
+
 		matchNumber = getIntent().getExtras().getString("matchNumber");
 		alliance = getIntent().getExtras().getString("alliance");
 		teamOne = getIntent().getExtras().getString("allianceTeamOne");
@@ -335,8 +340,11 @@ public class DuringMatchScouting extends AppCompatActivity { //Comments will be 
 		//sets the dropdown menus to the right list values (shows the lists after updating)
 		setSpinnerSelectedItems();
 
-		//only enable the current robot defensiveness value dropdown menu when a team has been selected ("0" is the null value for the selected team)
+		//only enable the robot defensiveness value dropdown menu when a team has been selected ("0" is the null value for the selected team)
 		currentRobotDefenseEffectiveness.setEnabled(!selectedDefensiveRobot.equals("0"));
+		robotOneDefensiveReactionEffectiveness.setEnabled(!selectedDefensiveRobot.equals("0"));
+		robotTwoDefensiveReactionEffectiveness.setEnabled(!selectedDefensiveRobot.equals("0"));
+		robotThreeDefensiveReactionEffectiveness.setEnabled(!selectedDefensiveRobot.equals("0"));
 
 		//for the current selected robot, the defensive effectiveness value gets set to the selected item
 		currentRobotDefenseEffectiveness.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

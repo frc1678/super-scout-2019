@@ -19,14 +19,6 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
             android:id="@+id/changeAlliance"
             android:title="Change Alliance"
             app:showAsAction = "always"/>
-        <item
-            android:id="@+id/fieldLayout"
-            android:title="Change Field Layout"
-            app:showAsAction = "always"/>
-        <item
-            android:id="@+id/noShowTeams"
-            android:title="No Shows"
-            app:showAsAction="always"/>
 
     </menu>
 </item>

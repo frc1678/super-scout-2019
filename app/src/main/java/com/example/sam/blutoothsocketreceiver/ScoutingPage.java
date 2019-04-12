@@ -120,7 +120,6 @@ public class ScoutingPage extends ActionBarActivity {
         getExtrasForScouting();
         dataBase = FirebaseDatabase.getInstance().getReference();
         setPanels();
-        initializeTeamTextViews();
         initTeamsList();
         context = this;
         teamOneNotes = "";
@@ -422,115 +421,6 @@ public class ScoutingPage extends ActionBarActivity {
         panelOne = (SuperScoutingPanel) getSupportFragmentManager().findFragmentById(R.id.panelOne);
         panelTwo = (SuperScoutingPanel) getSupportFragmentManager().findFragmentById(R.id.panelTwo);
         panelThree = (SuperScoutingPanel) getSupportFragmentManager().findFragmentById(R.id.panelThree);
-    }
-
-    public void initializeTeamTextViews() {
-        teamNumberOneTextview = (TextView) panelOne.getView().findViewById(R.id.teamNumberTextView);
-        teamNumberTwoTextview = (TextView) panelTwo.getView().findViewById(R.id.teamNumberTextView);
-        teamNumberThreeTextview = (TextView) panelThree.getView().findViewById(R.id.teamNumberTextView);
-
-        teamNumberOneTextview.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                final String teamNumber = teamNumberOneTextview.getText().toString();
-                LayoutInflater layoutInflater = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                final LinearLayout teamOneNotesLayout = (LinearLayout)layoutInflater.inflate(R.layout.team_notes, null);
-                final EditText teamOneNotesEditText = (EditText)teamOneNotesLayout.findViewById(R.id.notesEditText);
-                final CheckBox teamNumberOneCheckboxTippy = (CheckBox) teamOneNotesLayout.findViewById(R.id.checkboxTippy);
-                final CheckBox teamNumberOneCheckboxAlignment = (CheckBox) teamOneNotesLayout.findViewById(R.id.checkboxAlignment);
-                final CheckBox teamNumberOneCheckboxGrip = (CheckBox) teamOneNotesLayout.findViewById(R.id.checkboxGrip);
-                final CheckBox teamNumberOneCheckboxInterference = (CheckBox) teamOneNotesLayout.findViewById(R.id.checkboxInterference);
-                
-                if (teamNumberOneBooleanTippy) {teamNumberOneCheckboxTippy.setChecked(true);}
-	            if (teamNumberOneBooleanAlignment) {teamNumberOneCheckboxAlignment.setChecked(true);}
-	            if (teamNumberOneBooleanGrip) {teamNumberOneCheckboxGrip.setChecked(true);}
-	            if (teamNumberOneBooleanInterference) {teamNumberOneCheckboxInterference.setChecked(true);}
-	          
-	            if (!teamOneNotes.equals("")) {teamOneNotesEditText.setText(teamOneNotes); }
-                teamOneNotesEditText.setTextColor(Color.BLACK);
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setTitle("Super Notes: " + teamNumber).setView(teamOneNotesLayout).setPositiveButton("Submit", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) { teamOneNotes = teamOneNotesEditText.getText().toString();
-                                teamNumberOneBooleanTippy = teamNumberOneCheckboxTippy.isChecked();
-                                teamNumberOneBooleanAlignment = teamNumberOneCheckboxAlignment.isChecked();
-                                teamNumberOneBooleanGrip = teamNumberOneCheckboxGrip.isChecked();
-                                teamNumberOneBooleanInterference = teamNumberOneCheckboxInterference.isChecked();}
-                        }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.cancel();
-                            }
-                        }).show();
-
-            }
-        });
-        teamNumberTwoTextview.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                final String teamNumber = teamNumberTwoTextview.getText().toString();
-
-                LayoutInflater layoutInflater = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                final LinearLayout teamTwoNotesLayout = (LinearLayout)layoutInflater.inflate(R.layout.team_notes, null);
-                final EditText teamTwoNotesEditText = (EditText)teamTwoNotesLayout.findViewById(R.id.notesEditText);
-                final CheckBox teamNumberTwoCheckboxTippy = (CheckBox) teamTwoNotesLayout.findViewById(R.id.checkboxTippy);
-                final CheckBox teamNumberTwoCheckboxAlignment = (CheckBox) teamTwoNotesLayout.findViewById(R.id.checkboxAlignment);
-                final CheckBox teamNumberTwoCheckboxGrip = (CheckBox) teamTwoNotesLayout.findViewById(R.id.checkboxGrip);
-                final CheckBox teamNumberTwoCheckboxInterference = (CheckBox) teamTwoNotesLayout.findViewById(R.id.checkboxInterference);
-
-	            if (teamNumberTwoBooleanTippy) {teamNumberTwoCheckboxTippy.setChecked(true);}
-	            if (teamNumberTwoBooleanAlignment) {teamNumberTwoCheckboxAlignment.setChecked(true);}
-	            if (teamNumberTwoBooleanGrip) {teamNumberTwoCheckboxGrip.setChecked(true);}
-	            if (teamNumberTwoBooleanInterference) {teamNumberTwoCheckboxInterference.setChecked(true);}
-
-                if (!teamTwoNotes.equals("")) {teamTwoNotesEditText.setText(teamTwoNotes); }
-                teamTwoNotesEditText.setTextColor(Color.BLACK);
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
-
-                builder.setTitle("Super Notes: " + teamNumber).setView(teamTwoNotesLayout).setPositiveButton("Submit", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) { teamTwoNotes = teamTwoNotesEditText.getText().toString();
-                                teamNumberTwoBooleanTippy = teamNumberTwoCheckboxTippy.isChecked();
-                                teamNumberTwoBooleanAlignment = teamNumberTwoCheckboxAlignment.isChecked();
-                                teamNumberTwoBooleanGrip = teamNumberTwoCheckboxGrip.isChecked();
-                                teamNumberTwoBooleanInterference = teamNumberTwoCheckboxInterference.isChecked();}
-                        }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.cancel();
-                            }
-                        }).show();
-            }
-        });
-        teamNumberThreeTextview.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                final String teamNumber = teamNumberThreeTextview.getText().toString();
-                LayoutInflater layoutInflater = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                final LinearLayout teamThreeNotesLayout = (LinearLayout)layoutInflater.inflate(R.layout.team_notes, null);
-                final EditText teamThreeNotesEditText = (EditText)teamThreeNotesLayout.findViewById(R.id.notesEditText);
-                final CheckBox teamNumberThreeCheckboxTippy = (CheckBox) teamThreeNotesLayout.findViewById(R.id.checkboxTippy);
-                final CheckBox teamNumberThreeCheckboxAlignment = (CheckBox) teamThreeNotesLayout.findViewById(R.id.checkboxAlignment);
-                final CheckBox teamNumberThreeCheckboxGrip = (CheckBox) teamThreeNotesLayout.findViewById(R.id.checkboxGrip);
-                final CheckBox teamNumberThreeCheckboxInterference = (CheckBox) teamThreeNotesLayout.findViewById(R.id.checkboxInterference);
-
-	            if (teamNumberThreeBooleanTippy) {teamNumberThreeCheckboxTippy.setChecked(true);}
-	            if (teamNumberThreeBooleanAlignment) {teamNumberThreeCheckboxAlignment.setChecked(true);}
-	            if (teamNumberThreeBooleanGrip) {teamNumberThreeCheckboxGrip.setChecked(true);}
-	            if (teamNumberThreeBooleanInterference) {teamNumberThreeCheckboxInterference.setChecked(true);}
-
-                if (!teamThreeNotes.equals("")) {teamThreeNotesEditText.setText(teamThreeNotes); }
-                teamThreeNotesEditText.setTextColor(Color.BLACK);
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setTitle("Super Notes: " + teamNumber).setView(teamThreeNotesLayout).setPositiveButton("Submit", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {teamThreeNotes = teamThreeNotesEditText.getText().toString();
-                                teamNumberThreeBooleanTippy = teamNumberThreeCheckboxTippy.isChecked();
-                                teamNumberThreeBooleanAlignment = teamNumberThreeCheckboxAlignment.isChecked();
-                                teamNumberThreeBooleanGrip = teamNumberThreeCheckboxGrip.isChecked();
-                                teamNumberThreeBooleanInterference = teamNumberThreeCheckboxInterference.isChecked();}
-                        }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.cancel();
-                            }
-                        }).show();
-            }
-        });
     }
 
 
