@@ -18,6 +18,7 @@ import android.widget.Toast;
 import android.content.SharedPreferences;
 
 import com.example.sam.blutoothsocketreceiver.Fields.Bay;
+import com.example.sam.blutoothsocketreceiver.Utils.TimerUtil;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
 import com.google.zxing.MultiFormatWriter;
@@ -72,6 +73,8 @@ public class QrDisplay extends ActionBarActivity {
     String rightMid;
     String rightFar;
 
+    int[][] defensiveEffectivenessValues = new int[3][6];
+
     String teamOneDefense;
     String teamTwoDefense;
     String teamThreeDefense;
@@ -87,7 +90,17 @@ public class QrDisplay extends ActionBarActivity {
     String teamTwoConflict;
     String teamThreeConflict;
 
+    String[][] allianceDataStructure = new String[3][3];
+    String[][] opponentDataStructure = new String[3][3];
+    ArrayList<int[]> counterStats = new ArrayList<>();
 
+    public ArrayList<Map<String, String>> timelineRobotOne = new ArrayList<>();
+    public ArrayList<Map<String, String>> timelineRobotTwo = new ArrayList<>();
+    public ArrayList<Map<String, String>> timelineRobotThree = new ArrayList<>();
+
+    ArrayList<Map<String, String>> opponentRobotOneDataStructure = new ArrayList<>();
+    ArrayList<Map<String, String>> opponentRobotTwoDataStructure = new ArrayList<>();
+    ArrayList<Map<String, String>> opponentRobotThreeDataStructure = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,9 +112,7 @@ public class QrDisplay extends ActionBarActivity {
         intent = getIntent();
         getExtras();
         QRImage = (ImageView) findViewById(R.id.QRCode_Display);
-        convertValues();
         createCompressedFormat();
-        Log.e("COMPRESSED", compressedData);
         displayQR(compressedData);
     }
 
@@ -110,48 +121,18 @@ public class QrDisplay extends ActionBarActivity {
     public void getExtras() {
         matchNumber = intent.getExtras().getString("matchNumber");
         alliance = intent.getExtras().getString("alliance");
-        teamNumberOne = intent.getExtras().getString("teamNumberOne");
-        teamNumberTwo = intent.getExtras().getString("teamNumberTwo");
-        teamNumberThree = intent.getExtras().getString("teamNumberThree");
+        allianceDataStructure = (String[][]) getIntent().getSerializableExtra("allianceDataStructure");
+        opponentDataStructure = (String[][]) getIntent().getSerializableExtra("opponentDataStructure");
+        counterStats = (ArrayList<int[]>) getIntent().getSerializableExtra("counterStats");
 
-        superNotesOne = intent.getExtras().getString("superNotesOne");
-        superNotesTwo = intent.getExtras().getString("superNotesTwo");
-        superNotesThree = intent.getExtras().getString("superNotesThree");
+        timelineRobotOne = (ArrayList<Map<String,String>>) getIntent().getSerializableExtra("timelineOne");
+        timelineRobotTwo = (ArrayList<Map<String,String>>) getIntent().getSerializableExtra("timelineTwo");
+        timelineRobotThree = (ArrayList<Map<String,String>>) getIntent().getSerializableExtra("timelineThree");
+        opponentRobotOneDataStructure = (ArrayList<Map<String,String>>) getIntent().getSerializableExtra("opponentRobotOneData");
+        opponentRobotTwoDataStructure = (ArrayList<Map<String,String>>) getIntent().getSerializableExtra("opponentRobotTwoData");
+        opponentRobotThreeDataStructure = (ArrayList<Map<String,String>>) getIntent().getSerializableExtra("opponentRobotThreeData");
 
-        score = intent.getExtras().getString("score");
-        foul = intent.getExtras().getString("foul");
-
-        teamOneDataName = intent.getStringArrayListExtra("teamOneDataName");
-        teamOneDataScore = intent.getStringArrayListExtra("teamOneDataScore");
-        teamTwoDataName = intent.getStringArrayListExtra("teamTwoDataName");
-        teamTwoDataScore = intent.getStringArrayListExtra("teamTwoDataScore");
-        teamThreeDataName = intent.getStringArrayListExtra("teamThreeDataName");
-        teamThreeDataScore = intent.getStringArrayListExtra("teamThreeDataScore");
-
-        leftNear = intent.getStringExtra(Constants.leftNear);
-        leftMid = intent.getStringExtra(Constants.leftMid);
-        leftFar = intent.getStringExtra(Constants.leftFar);
-        rightNear = intent.getStringExtra(Constants.rightNear);
-        rightMid = intent.getStringExtra(Constants.rightMid);
-        rightFar = intent.getStringExtra(Constants.rightFar);
-
-        teamOneDefense = intent.getExtras().getString("teamOneDefense");
-        teamTwoDefense = intent.getExtras().getString("teamTwoDefense");
-        teamThreeDefense = intent.getExtras().getString("teamThreeDefense");
-
-        isMute = intent.getExtras().getBoolean("isMute");
-
-        noShowOne = intent.getExtras().getString("noShowOne");
-        noShowTwo = intent.getExtras().getString("noShowTwo");
-        noShowThree = intent.getExtras().getString("noShowThree");
-
-        didRocketRP = intent.getExtras().getString("didRocketRP");
-        didHabClimb = intent.getExtras().getString("didHabClimb");
-
-        teamOneConflict = intent.getExtras().getString("teamOneConflict");
-        teamTwoConflict = intent.getExtras().getString("teamTwoConflict");
-        teamThreeConflict = intent.getExtras().getString("teamThreeConflict");
-
+        defensiveEffectivenessValues = (int[][]) getIntent().getSerializableExtra("defensiveEffectivenessValues");
 
     }
 
@@ -192,83 +173,75 @@ public class QrDisplay extends ActionBarActivity {
                 + matchNumber
                 + "-"
                 + allianceCompressed
-                + "|a{b"
-                + leftNear
-                + ";c"
-                + leftMid
-                + ";d"
-                + leftFar
-                + ";e"
-                + rightNear
-                + ";f"
-                + rightMid
-                + ";g"
-                + rightFar
-                + "},h"
-                + generateNoShowList(noShowOne, noShowTwo, noShowThree).toString().replace(", ", ";") + ","
-                + getStringAlliance(alliance)
-                + score + ","
-                + getFoulAlliance(alliance)
-                + foul + ","
-                + getRocketRPAlliance(alliance)
-                + didRocketRP + ","
-                + getHabClimbAlliance(alliance)
-                + didHabClimb
-                + "_1{u"
-                + teamNumberOne
+                //teamONE
+                + "|u"
+                + allianceDataStructure[0][2]
                 + ";v"
-                + teamOneDataScore.get(1)
+                + counterStats.get(0)[1]
                 + ";w"
-                + teamOneDataScore.get(0)
+                + counterStats.get(0)[0]
                 + ";x"
-                + teamOneDefense
-                + ";y"
-                + teamOneDataScore.get(4)
-                + ";z\""
-                + superNotesOne
-                + "\";A"
-                + teamOneDataScore.get(2)
-                + ";B"
-                + teamOneDataScore.get(3)
-                + ";j"
-                + teamOneConflict
-                + "},2{u"
-                + teamNumberTwo
+                + allianceDataStructure[0][0]
+                + ";F"
+                + String.valueOf(timelineRobotOne).replace(" ", "").replace("{", "")
+                .replace("type", "G").replace("=", "").replace(",", "?").replace("}", "")
+                .replace("startDefense", "a").replace("endDefense", "b").replace("time", "H").replace("?G",",").replace(",b",",Gb").replace(",a",",Gb")
+                + ";E[u" + opponentDataStructure[0][2]
+                + "?y" + defensiveEffectivenessValues[0][0]
+                + "?z" + defensiveEffectivenessValues[0][3]
+                + ",u" + opponentDataStructure[1][2]
+                + "?y" + defensiveEffectivenessValues[0][1]
+                + "?z" + defensiveEffectivenessValues[0][4]
+                + ",u" + opponentDataStructure[2][2]
+                + "?y" + defensiveEffectivenessValues[0][2]
+                + "?z" + defensiveEffectivenessValues[0][5]
+                + "]_"
+                //teamTWO
+                + "u"
+                + allianceDataStructure[1][2]
                 + ";v"
-                + teamTwoDataScore.get(1)
+                + counterStats.get(1)[1]
                 + ";w"
-                + teamTwoDataScore.get(0)
+                + counterStats.get(1)[0]
                 + ";x"
-                + teamTwoDefense
-                + ";y"
-                + teamTwoDataScore.get(4)
-                + ";z\""
-                + superNotesTwo
-                + "\";A"
-                + teamTwoDataScore.get(2)
-                + ";B"
-                + teamTwoDataScore.get(3)
-                + ";j"
-                + teamTwoConflict
-                + "},3{u"
-                + teamNumberThree
+                + allianceDataStructure[1][0]
+                + ";F"
+                + String.valueOf(timelineRobotTwo).replace(" ", "").replace("{", "")
+                .replace("type", "G").replace("=", "").replace(",", "?").replace("}", "")
+                .replace("startDefense", "a").replace("endDefense", "b").replace("time", "H").replace("?G",",").replace(",b",",Gb").replace(",a",",Gb")
+                + ";E[u" + opponentDataStructure[0][2]
+                + "?y" + defensiveEffectivenessValues[1][0]
+                + "?z" + defensiveEffectivenessValues[1][3]
+                + ",u" + opponentDataStructure[1][2]
+                + "?y" + defensiveEffectivenessValues[1][1]
+                + "?z" + defensiveEffectivenessValues[1][4]
+                + ",u" + opponentDataStructure[2][2]
+                + "?y" + defensiveEffectivenessValues[1][2]
+                + "?z" + defensiveEffectivenessValues[1][5]
+                + "]_"
+                + "u"
+                + allianceDataStructure[2][2]
                 + ";v"
-                + teamThreeDataScore.get(1)
+                + counterStats.get(2)[1]
                 + ";w"
-                + teamThreeDataScore.get(0)
+                + counterStats.get(2)[0]
                 + ";x"
-                + teamThreeDefense
-                + ";y"
-                + teamThreeDataScore.get(4)
-                + ";z\""
-                + superNotesThree
-                + "\";A"
-                + teamThreeDataScore.get(2)
-                + ";B"
-                + teamThreeDataScore.get(3)
-                + ";j"
-                + teamThreeConflict
-                + "}";
+                + allianceDataStructure[2][0]
+                + ";F"
+                + String.valueOf(timelineRobotThree).replace(" ", "").replace("{", "")
+                .replace("type", "G").replace("=", "").replace(",", "?").replace("}", "")
+                .replace("startDefense", "a").replace("endDefense", "b").replace("time", "H").replace("?G",",").replace(",b",",Gb").replace(",a",",Gb")
+                + ";E[u" + opponentDataStructure[0][2]
+                + "?y" + defensiveEffectivenessValues[2][0]
+                + "?z" + defensiveEffectivenessValues[2][3]
+                + ",u" + opponentDataStructure[1][2]
+                + "?y" + defensiveEffectivenessValues[2][1]
+                + "?z" + defensiveEffectivenessValues[2][4]
+                + ",u" + opponentDataStructure[2][2]
+                + "?y" + defensiveEffectivenessValues[2][2]
+                + "?z" + defensiveEffectivenessValues[2][5] + "]";
+
+        Log.e("rree", String.valueOf(compressedData));
 
         new Thread() {
 
@@ -342,82 +315,6 @@ public class QrDisplay extends ActionBarActivity {
         }
     }
 
-    public void convertValues() {
-        if (leftNear.equals(Bay.yellowValue)) {
-            leftNear = "L";
-        } else if (leftNear.equals(Bay.orangeValue)) {
-            leftNear = "G";
-        }
-        if (leftMid.equals(Bay.yellowValue)) {
-            leftMid = "L";
-        } else if (leftMid.equals(Bay.orangeValue)) {
-            leftMid = "G";
-        }
-        if (leftFar.equals(Bay.yellowValue)) {
-            leftFar = "L";
-        } else if (leftFar.equals(Bay.orangeValue)) {
-            leftFar = "G";
-        }
-        if (rightNear.equals(Bay.yellowValue)) {
-            rightNear = "L";
-        } else if (rightNear.equals(Bay.orangeValue)) {
-            rightNear = "G";
-        }
-        if (rightMid.equals(Bay.yellowValue)) {
-            rightMid = "L";
-        } else if (rightMid.equals(Bay.orangeValue)) {
-            rightMid = "G";
-        }
-        if (rightFar.equals(Bay.yellowValue)) {
-            rightFar = "L";
-        } else if (rightFar.equals(Bay.orangeValue)) {
-            rightFar = "G";
-        }
-
-        if (noShowOne.equals("true")) {
-            noShowOne = teamNumberOne;
-        } else {
-            noShowOne = "";
-        }
-        if (noShowTwo.equals("true")) {
-            noShowTwo = teamNumberTwo;
-        } else {
-            noShowTwo = "";
-        }
-        if (noShowThree.equals("true")) {
-            noShowThree = teamNumberThree;
-        } else {
-            noShowThree = "";
-        }
-        if (didRocketRP.equals("true")) {
-            didRocketRP = "T";
-        } else {
-            didRocketRP = "F";
-        }
-        Log.e("didHabClimb", didHabClimb + "");
-        if (didHabClimb.equals("true")) {
-            didHabClimb = "T";
-        } else {
-            didHabClimb = "F";
-        }
-        if (teamOneConflict.equals("true")) {
-            teamOneConflict = "T";
-        } else {
-            teamOneConflict = "F";
-        }
-        if (teamTwoConflict.equals("true")) {
-            teamTwoConflict = "T";
-        } else {
-            teamTwoConflict = "F";
-        }
-        if (teamThreeConflict.equals("true")) {
-            teamThreeConflict = "T";
-        } else {
-            teamThreeConflict = "F";
-        }
-
-
-    }
 
     public String getStringAlliance(String alliance) {
         if (alliance.equals("Red Alliance")) {
@@ -455,18 +352,5 @@ public class QrDisplay extends ActionBarActivity {
         return "null";
     }
 
-    public ArrayList<String> generateNoShowList(String noShowOne, String noShowTwo, String noShowThree) {
-        ArrayList<String> noShowList = new ArrayList<>();
-        if (!noShowOne.equals("")) {
-            noShowList.add(noShowOne);
-        }
-        if (!noShowTwo.equals("")) {
-            noShowList.add(noShowTwo);
-        }
-        if (!noShowThree.equals("")) {
-            noShowList.add(noShowThree);
-        }
-        return noShowList;
-    }
 
 }

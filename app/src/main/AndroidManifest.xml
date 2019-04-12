@@ -13,6 +13,7 @@
         android:clearTaskOnLaunch="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:debuggable="true"
         android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
@@ -28,6 +29,9 @@
         <activity android:name=".FinalDataPoints"/>
         <activity android:name=".Fields.LeftField"/>
         <activity android:name=".Fields.RightField"/>
+        <activity android:name=".DuringMatchScouting"/>
+        <activity android:name=".AfterMatchScouting"/>
+
         <activity
             android:name=".finalNotes"
             android:windowSoftInputMode="adjustPan"

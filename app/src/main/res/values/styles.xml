@@ -9,4 +9,7 @@
         <item name="colorControlActivated">#808080</item> <!-- activated color change as you wish -->
         <item name="android:textColor">#353839</item> <!-- checkbox text color -->
     </style>
+    <style name="spinnerItemStyle" parent="android:Widget.TextView.SpinnerItem">
+
+    </style>
 </resources>

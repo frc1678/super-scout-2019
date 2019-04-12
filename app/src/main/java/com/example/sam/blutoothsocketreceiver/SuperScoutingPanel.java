@@ -1,11 +1,8 @@
 package com.example.sam.blutoothsocketreceiver;
 
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,22 +10,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by sam on 5/12/16.
- */
 public class SuperScoutingPanel extends Fragment {
     public static ArrayList<Integer> Speed;
     public static ArrayList<Integer> Agility;
-    public static ArrayList<Integer> Defense;
-    public static ArrayList<Integer> Stacking;
 
-
-
-    Boolean isRed;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -37,26 +25,18 @@ public class SuperScoutingPanel extends Fragment {
     }
 
 
-    public void setAllianceColor(String allianceColor, String teamNumberNoShow) {
+    public void setAllianceColor(String allianceColor) {
         TextView teamNumberTextView = (TextView) getView().findViewById(R.id.teamNumberTextView);
         if (allianceColor.equals("red")) {
             teamNumberTextView.setTextColor(ContextCompat.getColor(getContext(), R.color.TeamNumberRed));
         } else {
             teamNumberTextView.setTextColor(ContextCompat.getColor(getContext(), R.color.TeamNumberBlue));
         }
-        if (teamNumberNoShow.equals("true")) {
-            teamNumberTextView.setTextColor(ContextCompat.getColor(getContext(), R.color.KateGray));
-        }
     }
 
-    public void setTeamNumber(String teamNumber, String teamNumberNoShow) {
+    public void setTeamNumber(String teamNumber) {
         TextView teamNumberTextView = (TextView) getView().findViewById(R.id.teamNumberTextView);
         teamNumberTextView.setText(teamNumber);
-
-        String noShowText = " (NO SHOW) ";
-        if (teamNumberNoShow.equals("true")) {
-            teamNumberTextView.setText(teamNumber + noShowText);
-        }
     }
 
     public int getDataNameCount() {
