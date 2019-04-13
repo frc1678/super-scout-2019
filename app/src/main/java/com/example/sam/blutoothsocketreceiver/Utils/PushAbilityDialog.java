@@ -10,11 +10,14 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.sam.blutoothsocketreceiver.R;
 
 public class PushAbilityDialog extends Dialog implements android.view.View.OnClickListener {
+
+	private TextView allianceWinnerText, opposingWinnerText;
 
 	private Activity activity;
 	private Button allianceTeamOne_b, allianceTeamTwo_b, allianceTeamThree_b;
@@ -24,7 +27,7 @@ public class PushAbilityDialog extends Dialog implements android.view.View.OnCli
 	private ImageView upArrowView;
 	private ImageView downArrowView;
 
-	private Button ineffectiveButton, effectiveButton, confirmButton;
+	private Button ineffectiveButton, effectiveButton, confirmButton, cancelButton;
 
 	private int[] alliance;
 	private int[] opposingAlliance;
@@ -50,10 +53,16 @@ public class PushAbilityDialog extends Dialog implements android.view.View.OnCli
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.push_ability_dialog);
 
+		setCancelable(false);
 		initXml();
 	}
 
 	public void initXml() {
+
+		cancelButton = (Button) findViewById(R.id.dismiss_button);
+
+		allianceWinnerText = (TextView) findViewById(R.id.allianceWinnerText);
+		opposingWinnerText = (TextView) findViewById(R.id.opposingWinnerText);
 
 		ineffectiveButton = (Button) findViewById(R.id.ineffective_button);
 		effectiveButton = (Button) findViewById(R.id.effective_button);
@@ -85,9 +94,10 @@ public class PushAbilityDialog extends Dialog implements android.view.View.OnCli
 		effectiveButton.setOnClickListener(this);
 		ineffectiveButton.setOnClickListener(this);
 		confirmButton.setOnClickListener(this);
+		cancelButton.setOnClickListener(this);
 
-		ineffectiveButton.setText("Ineffective");
-		effectiveButton.setText("Effective");
+		ineffectiveButton.setText("A LITTLE");
+		effectiveButton.setText("A LOT");
 		setupButtons();
 	}
 
@@ -138,6 +148,9 @@ public class PushAbilityDialog extends Dialog implements android.view.View.OnCli
 		setButtonColor(allianceTeamTwo_b, "blue");
 		setButtonColor(allianceTeamThree_b, "blue");
 
+		allianceWinnerText.setTextColor(activity.getResources().getColor(R.color.Bloo));
+		opposingWinnerText.setTextColor(activity.getResources().getColor(R.color.TeamNumberRed));
+
 		//
 
 		if (String.valueOf(alliance[0]).equals(selectedAllianceTeam)) setButtonColor(allianceTeamOne_b, "selectedBlue");
@@ -156,6 +169,9 @@ public class PushAbilityDialog extends Dialog implements android.view.View.OnCli
 			setButtonColor(allianceTeamOne_b, "red");
 			setButtonColor(allianceTeamTwo_b, "red");
 			setButtonColor(allianceTeamThree_b, "red");
+
+			allianceWinnerText.setTextColor(activity.getResources().getColor(R.color.TeamNumberRed));
+			opposingWinnerText.setTextColor(activity.getResources().getColor(R.color.Bloo));
 
 			//
 
@@ -233,7 +249,8 @@ public class PushAbilityDialog extends Dialog implements android.view.View.OnCli
 				if (canDismiss()) dismiss();
 				else makeToast("Please make sure you've inputted everything!");
 				break;
-
+			case R.id.dismiss_button:
+				dismiss();
 			default:
 				break;
 		}
@@ -252,10 +269,16 @@ public class PushAbilityDialog extends Dialog implements android.view.View.OnCli
 		if (upArrowView.getVisibility() == View.VISIBLE) {
 			upArrowView.setVisibility(View.INVISIBLE);
 			downArrowView.setVisibility(View.VISIBLE);
+
+			allianceWinnerText.setVisibility(View.INVISIBLE);
+			opposingWinnerText.setVisibility(View.VISIBLE);
 		} else
 		if (downArrowView.getVisibility() == View.VISIBLE) {
 			downArrowView.setVisibility(View.INVISIBLE);
 			upArrowView.setVisibility(View.VISIBLE);
+
+			allianceWinnerText.setVisibility(View.VISIBLE);
+			opposingWinnerText.setVisibility(View.INVISIBLE);
 		}
 	}
 	public String getAllianceSelectedTeam() {

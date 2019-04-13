@@ -104,7 +104,7 @@ public class DuringMatchScouting extends AppCompatActivity { //Comments will be 
 	ArrayList<Map<String, String>> opponentRobotTwoDataStructure = new ArrayList<>();
 	ArrayList<Map<String, String>> opponentRobotThreeDataStructure = new ArrayList<>();
 
-
+	ArrayList<Map<String, String>> pushAbilityDataStructure = new ArrayList<>();
 
 	int[] teams = new int[3];
 	int[] opposingTeams = new int[3];
@@ -251,6 +251,7 @@ public class DuringMatchScouting extends AppCompatActivity { //Comments will be 
 		intent.putExtra("opponentRobotTwoData",opponentRobotTwoDataStructure);
 		intent.putExtra("opponentRobotThreeData",opponentRobotThreeDataStructure);
 		intent.putExtra("defensiveEffectivenessValues", defensiveEffectivenessValues);
+		intent.putExtra("pushAbilityDataStructure", pushAbilityDataStructure);
 		startActivity(intent);
 	}
 
@@ -650,9 +651,19 @@ public class DuringMatchScouting extends AppCompatActivity { //Comments will be 
 	}
 
 	public void createThing(PushAbilityDialog pushAbilityDialog) {
-		String allianceSelectedTeam = pushAbilityDialog.getAllianceSelectedTeam();
-		String opposingSelectedTeam = pushAbilityDialog.getOpposingSelectedTeam();
-		String effectivity = pushAbilityDialog.getEffectivity();
-		String predator = pushAbilityDialog.getPredator();
+		Map<String, String> temp_PushAbilityData = new HashMap<>();
+
+		if (pushAbilityDialog.getPredator().equals("alliance"))
+			temp_PushAbilityData.put("K", pushAbilityDialog.getAllianceSelectedTeam());
+		else temp_PushAbilityData.put("K", pushAbilityDialog.getOpposingSelectedTeam());
+
+		if (pushAbilityDialog.getPredator().equals("alliance"))
+			temp_PushAbilityData.put("M", pushAbilityDialog.getOpposingSelectedTeam());
+		else temp_PushAbilityData.put("M", pushAbilityDialog.getAllianceSelectedTeam());
+
+		temp_PushAbilityData.put("N", (pushAbilityDialog.getEffectivity().equals("effective")) ? "true" : "false");
+
+		pushAbilityDataStructure.add(temp_PushAbilityData);
+
 	}
 }
