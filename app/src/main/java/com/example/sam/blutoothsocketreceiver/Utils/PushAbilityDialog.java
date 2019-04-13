@@ -291,7 +291,7 @@ public class PushAbilityDialog extends Dialog implements android.view.View.OnCli
 		return effectivity;
 	}
 	public String getPredator() {
-		if (upArrowView.getVisibility() == View.VISIBLE) return "opposingAlliance";
-		return "alliance";
+		if (upArrowView.getVisibility() == View.VISIBLE) return "alliance";
+		return "opposingAlliance";
 	}
 }
