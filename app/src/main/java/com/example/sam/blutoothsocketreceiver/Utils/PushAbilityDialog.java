@@ -2,6 +2,7 @@ package com.example.sam.blutoothsocketreceiver.Utils;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -116,13 +117,13 @@ public class PushAbilityDialog extends Dialog implements android.view.View.OnCli
 	public void setButtonColor(Button button, String color) {
 		switch (color) {
 			case "red":
-				button.setBackgroundColor(activity.getResources().getColor(R.color.TeamNumberRed));
+				button.setBackgroundColor(activity.getResources().getColor(R.color.CarlRed));
 				break;
 			case "blue":
-				button.setBackgroundColor(activity.getResources().getColor(R.color.Bloo));
+				button.setBackgroundColor(activity.getResources().getColor(R.color.LightBlue));
 				break;
 			case "selectedBlue":
-				button.setBackgroundColor(activity.getResources().getColor(R.color.DarkBlue));
+				button.setBackgroundColor(activity.getResources().getColor(R.color.TeamNumberBlue));
 				break;
 			case "selectedRed":
 				button.setBackgroundColor(activity.getResources().getColor(R.color.Red));
@@ -139,7 +140,32 @@ public class PushAbilityDialog extends Dialog implements android.view.View.OnCli
 		}
 	}
 
+	public void setTextColorWhite(Button button) {
+		button.setTextColor(activity.getResources().getColor(R.color.White));
+		button.setTypeface(null, Typeface.BOLD);
+	}
+	
+	public void resetTextColors() {
+		allianceTeamOne_b.setTextColor(activity.getResources().getColor(R.color.Black));
+		allianceTeamTwo_b.setTextColor(activity.getResources().getColor(R.color.Black));
+		allianceTeamThree_b.setTextColor(activity.getResources().getColor(R.color.Black));
+		opposingTeamOne_b.setTextColor(activity.getResources().getColor(R.color.Black));
+		opposingTeamTwo_b.setTextColor(activity.getResources().getColor(R.color.Black));
+		opposingTeamThree_b.setTextColor(activity.getResources().getColor(R.color.Black));
+
+		allianceTeamOne_b.setTypeface(null,Typeface.NORMAL);
+		allianceTeamTwo_b.setTypeface(null,Typeface.NORMAL);
+		allianceTeamThree_b.setTypeface(null,Typeface.NORMAL);
+		opposingTeamOne_b.setTypeface(null,Typeface.NORMAL);
+		opposingTeamTwo_b.setTypeface(null,Typeface.NORMAL);
+		opposingTeamThree_b.setTypeface(null,Typeface.NORMAL);
+		
+	}
+
 	public void setColor(String allianceColor) {
+		
+		resetTextColors();
+		
 		setButtonColor(opposingTeamOne_b, "red");
 		setButtonColor(opposingTeamTwo_b, "red");
 		setButtonColor(opposingTeamThree_b, "red");
@@ -148,8 +174,8 @@ public class PushAbilityDialog extends Dialog implements android.view.View.OnCli
 		setButtonColor(allianceTeamTwo_b, "blue");
 		setButtonColor(allianceTeamThree_b, "blue");
 
-		allianceWinnerText.setTextColor(activity.getResources().getColor(R.color.Bloo));
-		opposingWinnerText.setTextColor(activity.getResources().getColor(R.color.TeamNumberRed));
+		allianceWinnerText.setTextColor(activity.getResources().getColor(R.color.TeamNumberBlue));
+		opposingWinnerText.setTextColor(activity.getResources().getColor(R.color.Red));
 
 		//
 
@@ -161,6 +187,14 @@ public class PushAbilityDialog extends Dialog implements android.view.View.OnCli
 		if (String.valueOf(opposingAlliance[1]).equals(selectedOpposingTeam)) setButtonColor(opposingTeamTwo_b, "selectedRed");
 		if (String.valueOf(opposingAlliance[2]).equals(selectedOpposingTeam)) setButtonColor(opposingTeamThree_b, "selectedRed");
 
+		if (String.valueOf(alliance[0]).equals(selectedAllianceTeam)) setTextColorWhite(allianceTeamOne_b);
+		if (String.valueOf(alliance[1]).equals(selectedAllianceTeam)) setTextColorWhite(allianceTeamTwo_b);
+		if (String.valueOf(alliance[2]).equals(selectedAllianceTeam)) setTextColorWhite(allianceTeamThree_b);
+
+		if (String.valueOf(opposingAlliance[0]).equals(selectedOpposingTeam)) setTextColorWhite(opposingTeamOne_b);
+		if (String.valueOf(opposingAlliance[1]).equals(selectedOpposingTeam)) setTextColorWhite(opposingTeamTwo_b);
+		if (String.valueOf(opposingAlliance[2]).equals(selectedOpposingTeam)) setTextColorWhite(opposingTeamThree_b);
+
 		if (allianceColor.equals("red")) {
 			setButtonColor(opposingTeamOne_b, "blue");
 			setButtonColor(opposingTeamTwo_b, "blue");
@@ -170,8 +204,8 @@ public class PushAbilityDialog extends Dialog implements android.view.View.OnCli
 			setButtonColor(allianceTeamTwo_b, "red");
 			setButtonColor(allianceTeamThree_b, "red");
 
-			allianceWinnerText.setTextColor(activity.getResources().getColor(R.color.TeamNumberRed));
-			opposingWinnerText.setTextColor(activity.getResources().getColor(R.color.Bloo));
+			allianceWinnerText.setTextColor(activity.getResources().getColor(R.color.Red));
+			opposingWinnerText.setTextColor(activity.getResources().getColor(R.color.TeamNumberBlue));
 
 			//
 
