@@ -516,7 +516,7 @@ public class MainActivity extends ActionBarActivity {
             //setting parameters for qr code
             String charset = "UTF-8"; // or "ISO-8859-1"
             Map<EncodeHintType, ErrorCorrectionLevel> hintMap =new HashMap<EncodeHintType, ErrorCorrectionLevel>();
-            hintMap.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H);
+            hintMap.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.M);
             createQRCode(qrCode, charset, hintMap, smallestDimension, smallestDimension);
         } catch (Exception ex) {
             Log.e("QrGenerate",ex.getMessage());
@@ -543,16 +543,10 @@ public class MainActivity extends ActionBarActivity {
             bitmap.setPixels(pixels, 0, width, 0, 0, width, height);
             //setting bitmap to image view
             AlertDialog.Builder builder = new AlertDialog.Builder(context); //TODO: Add an edit alertdialog for fieldsetup and notes (maybe-check)
-            builder.setTitle("QR CODE");
             final View QrView = LayoutInflater.from(context).inflate(R.layout.qr_regenerate, null);
             ((ImageView) QrView.findViewById(R.id.QRCode_Regenerate)).setImageBitmap(null);
             ((ImageView) QrView.findViewById(R.id.QRCode_Regenerate)).setImageBitmap(bitmap);
-            builder.setView(QrView);
-            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                }
-            }).show();
+            builder.setView(QrView).show();
         }catch (Exception er){
             Log.e("QrGenerate",er.getMessage());
         }

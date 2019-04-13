@@ -11,7 +11,10 @@ import android.util.Log;
 import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -79,6 +82,8 @@ public class QrDisplay extends ActionBarActivity {
     String teamTwoDefense;
     String teamThreeDefense;
 
+    Button doneQRCodeButton;
+
     String noShowOne;
     String noShowTwo;
     String noShowThree;
@@ -102,18 +107,40 @@ public class QrDisplay extends ActionBarActivity {
     ArrayList<Map<String, String>> opponentRobotTwoDataStructure = new ArrayList<>();
     ArrayList<Map<String, String>> opponentRobotThreeDataStructure = new ArrayList<>();
 
+    ArrayList<Map<String, String>> pushAbilityDataStructure = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+	    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+	    requestWindowFeature(Window.FEATURE_NO_TITLE);
+	    getSupportActionBar().hide();
         setContentView(R.layout.qr_display);
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         dir = new File(android.os.Environment.getExternalStorageDirectory().getAbsolutePath() + "/Super_scout_data");
         context = this;
         intent = getIntent();
         getExtras();
+	    doneQRCodeButton = (Button) findViewById(R.id.doneQRCodeButton);
         QRImage = (ImageView) findViewById(R.id.QRCode_Display);
         createCompressedFormat();
         displayQR(compressedData);
+
+	    doneQRCodeButton.setOnClickListener(new View.OnClickListener() {
+		    @Override
+		    public void onClick(View view) {
+			    Intent backToHome = new Intent(context, MainActivity.class);
+			    backToHome.putExtra("number", matchNumber);
+			    backToHome.putExtra("leftViewColor", intent.getExtras().getString("leftViewColor"));
+			    if (allianceCompressed.equals("B")) {
+				    isRed = false;
+			    } else {
+				    isRed = true;
+			    }
+			    backToHome.putExtra("mute", isMute);
+			    backToHome.putExtra("shouldBeRed", isRed);
+			    startActivity(backToHome);
+		    }
+	    });
     }
 
     public String SHARED_PREF = "super_scout_sp";
@@ -131,6 +158,8 @@ public class QrDisplay extends ActionBarActivity {
         opponentRobotOneDataStructure = (ArrayList<Map<String,String>>) getIntent().getSerializableExtra("opponentRobotOneData");
         opponentRobotTwoDataStructure = (ArrayList<Map<String,String>>) getIntent().getSerializableExtra("opponentRobotTwoData");
         opponentRobotThreeDataStructure = (ArrayList<Map<String,String>>) getIntent().getSerializableExtra("opponentRobotThreeData");
+
+        pushAbilityDataStructure = (ArrayList<Map<String,String>>) getIntent().getSerializableExtra("pushAbilityDataStructure");
 
         defensiveEffectivenessValues = (int[][]) getIntent().getSerializableExtra("defensiveEffectivenessValues");
 
@@ -173,8 +202,12 @@ public class QrDisplay extends ActionBarActivity {
                 + matchNumber
                 + "-"
                 + allianceCompressed
+                + "|J"
+                + String.valueOf(pushAbilityDataStructure).replace("winMarginIsLarge","N").replace("=","")
+		        .replace("true","T").replace("false","F").replace("}, {",";").replace(" ","")
+		        .replace("{","").replace("}","")
                 //teamONE
-                + "|u"
+                + "!u"
                 + allianceDataStructure[0][2]
                 + ";v"
                 + counterStats.get(0)[1]
@@ -281,7 +314,7 @@ public class QrDisplay extends ActionBarActivity {
             //setting parameters for qr code
             String charset = "UTF-8"; // or "ISO-8859-1"
             Map<EncodeHintType, ErrorCorrectionLevel> hintMap = new HashMap<EncodeHintType, ErrorCorrectionLevel>();
-            hintMap.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H);
+            hintMap.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.M);
             createQRCode(qrCode, charset, hintMap, smallestDimension, smallestDimension);
         } catch (Exception ex) {
             Log.e("QrGenerate", ex.getMessage());

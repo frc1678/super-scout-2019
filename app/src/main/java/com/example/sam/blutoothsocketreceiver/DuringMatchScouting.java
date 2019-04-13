@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,6 +19,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.sam.blutoothsocketreceiver.Utils.PushAbilityDialog;
 import com.example.sam.blutoothsocketreceiver.Utils.TimerUtil;
 
 import java.util.ArrayList;
@@ -102,7 +104,12 @@ public class DuringMatchScouting extends AppCompatActivity { //Comments will be 
 	ArrayList<Map<String, String>> opponentRobotTwoDataStructure = new ArrayList<>();
 	ArrayList<Map<String, String>> opponentRobotThreeDataStructure = new ArrayList<>();
 
+	ArrayList<Map<String, String>> pushAbilityDataStructure = new ArrayList<>();
+
 	int[] teams = new int[3];
+	int[] opposingTeams = new int[3];
+
+	PushAbilityDialog pushAbilityDialog;
 
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) { //During Match Scouting is the MAIN scouting page for the super scout
@@ -136,6 +143,9 @@ public class DuringMatchScouting extends AppCompatActivity { //Comments will be 
 		int id = item.getItemId();
 
 		//noinspection SimplifiableIfStatement
+		if (id == R.id.push_ability) {
+			inflatePushAbilityDialog();
+		}
 		if (id == R.id.final_data) {
 			setupForFinalData();
 			intentFinalData();
@@ -241,6 +251,7 @@ public class DuringMatchScouting extends AppCompatActivity { //Comments will be 
 		intent.putExtra("opponentRobotTwoData",opponentRobotTwoDataStructure);
 		intent.putExtra("opponentRobotThreeData",opponentRobotThreeDataStructure);
 		intent.putExtra("defensiveEffectivenessValues", defensiveEffectivenessValues);
+		intent.putExtra("pushAbilityDataStructure", pushAbilityDataStructure);
 		startActivity(intent);
 	}
 
@@ -266,6 +277,10 @@ public class DuringMatchScouting extends AppCompatActivity { //Comments will be 
 		teams[0] = Integer.valueOf(teamOne);
 		teams[1] = Integer.valueOf(teamTwo);
 		teams[2] = Integer.valueOf(teamThree);
+
+		opposingTeams[0] = Integer.valueOf(opposingTeamOne);
+		opposingTeams[1] = Integer.valueOf(opposingTeamTwo);
+		opposingTeams[2] = Integer.valueOf(opposingTeamThree);
 	}
 
 	//initializes the xml elements with their according xml id's.
@@ -613,6 +628,17 @@ public class DuringMatchScouting extends AppCompatActivity { //Comments will be 
 		}
 	}
 
+	public void inflatePushAbilityDialog() {
+		pushAbilityDialog = new PushAbilityDialog(this, teams, opposingTeams, alliance);
+		pushAbilityDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+			@Override
+			public void onDismiss(DialogInterface dialogInterface) {
+				createPushAbilityInput(pushAbilityDialog);
+			}
+		});
+		pushAbilityDialog.show();
+	}
+
 	//adds the timeline value for each selected alliance robot when the defensive timer is either pressed or stopped
 	public void createTimelineInput(String type) {
 		TimerUtil.MatchTimer match_timer = new TimerUtil.MatchTimer();
@@ -624,5 +650,20 @@ public class DuringMatchScouting extends AppCompatActivity { //Comments will be 
 		if (selectedDefensiveRobot.equals(teamThree)) timelineRobotThree.add(timeline);
 	}
 
+	public void createPushAbilityInput(PushAbilityDialog pushAbilityDialog) {
+		Map<String, String> temp_PushAbilityData = new HashMap<>();
 
+		if (pushAbilityDialog.getPredator().equals("alliance"))
+			temp_PushAbilityData.put("K", pushAbilityDialog.getAllianceSelectedTeam());
+		else temp_PushAbilityData.put("K", pushAbilityDialog.getOpposingSelectedTeam());
+
+		if (pushAbilityDialog.getPredator().equals("alliance"))
+			temp_PushAbilityData.put("M", pushAbilityDialog.getOpposingSelectedTeam());
+		else temp_PushAbilityData.put("M", pushAbilityDialog.getAllianceSelectedTeam());
+
+		temp_PushAbilityData.put("N", (pushAbilityDialog.getEffectivity().equals("effective")) ? "true" : "false");
+
+		pushAbilityDataStructure.add(temp_PushAbilityData);
+
+	}
 }

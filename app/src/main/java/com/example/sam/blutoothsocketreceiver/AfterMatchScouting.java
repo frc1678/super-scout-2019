@@ -38,6 +38,8 @@ public class AfterMatchScouting extends AppCompatActivity { //AfterMatchScouting
 	ArrayList<Map<String, String>> opponentRobotTwoDataStructure = new ArrayList<>();
 	ArrayList<Map<String, String>> opponentRobotThreeDataStructure = new ArrayList<>();
 
+	ArrayList<Map<String, String>> pushAbilityDataStructure = new ArrayList<>();
+
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -82,6 +84,8 @@ public class AfterMatchScouting extends AppCompatActivity { //AfterMatchScouting
 		opponentRobotOneDataStructure = (ArrayList<Map<String,String>>) getIntent().getSerializableExtra("opponentRobotOneData");
 		opponentRobotTwoDataStructure = (ArrayList<Map<String,String>>) getIntent().getSerializableExtra("opponentRobotTwoData");
 		opponentRobotThreeDataStructure = (ArrayList<Map<String,String>>) getIntent().getSerializableExtra("opponentRobotThreeData");
+
+		pushAbilityDataStructure = (ArrayList<Map<String,String>>) getIntent().getSerializableExtra("pushAbilityDataStructure");
 
 		defensiveEffectivenessValues = (int[][]) getIntent().getSerializableExtra("defensiveEffectivenessValues");
 
@@ -162,6 +166,7 @@ public class AfterMatchScouting extends AppCompatActivity { //AfterMatchScouting
 		intent.putExtra("opponentRobotTwoData", opponentRobotTwoDataStructure);
 		intent.putExtra("opponentRobotThreeData", opponentRobotThreeDataStructure);
 		intent.putExtra("defensiveEffectivenessValues", defensiveEffectivenessValues);
+		intent.putExtra("pushAbilityDataStructure", pushAbilityDataStructure);
 		startActivity(intent);
 	}
 
