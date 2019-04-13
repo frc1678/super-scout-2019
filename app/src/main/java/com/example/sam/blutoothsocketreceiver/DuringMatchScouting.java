@@ -633,7 +633,7 @@ public class DuringMatchScouting extends AppCompatActivity { //Comments will be 
 		pushAbilityDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
 			@Override
 			public void onDismiss(DialogInterface dialogInterface) {
-				createThing(pushAbilityDialog);
+				createPushAbilityInput(pushAbilityDialog);
 			}
 		});
 		pushAbilityDialog.show();
@@ -650,7 +650,7 @@ public class DuringMatchScouting extends AppCompatActivity { //Comments will be 
 		if (selectedDefensiveRobot.equals(teamThree)) timelineRobotThree.add(timeline);
 	}
 
-	public void createThing(PushAbilityDialog pushAbilityDialog) {
+	public void createPushAbilityInput(PushAbilityDialog pushAbilityDialog) {
 		Map<String, String> temp_PushAbilityData = new HashMap<>();
 
 		if (pushAbilityDialog.getPredator().equals("alliance"))
