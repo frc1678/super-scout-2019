@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id ="@+id/push_ability"
-        android:title="Push Ability"
+        android:title="Push Battle"
         app:showAsAction="always"/>
 
     <item
