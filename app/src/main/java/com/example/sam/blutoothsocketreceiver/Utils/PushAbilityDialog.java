@@ -305,16 +305,16 @@ public class PushAbilityDialog extends Dialog implements android.view.View.OnCli
 	}
 
 	public void activatePredator() {
-		if (upArrowView.getVisibility() == View.VISIBLE) {
-			upArrowView.setVisibility(View.INVISIBLE);
-			downArrowView.setVisibility(View.VISIBLE);
+		if (upArrowView.getVisibility() == View.INVISIBLE) {
+			upArrowView.setVisibility(View.VISIBLE);
+			downArrowView.setVisibility(View.INVISIBLE);
 
 			allianceWinnerText.setVisibility(View.INVISIBLE);
 			opposingWinnerText.setVisibility(View.VISIBLE);
 		} else
-		if (downArrowView.getVisibility() == View.VISIBLE) {
-			downArrowView.setVisibility(View.INVISIBLE);
-			upArrowView.setVisibility(View.VISIBLE);
+		if (downArrowView.getVisibility() == View.INVISIBLE) {
+			downArrowView.setVisibility(View.VISIBLE);
+			upArrowView.setVisibility(View.INVISIBLE);
 
 			allianceWinnerText.setVisibility(View.VISIBLE);
 			opposingWinnerText.setVisibility(View.INVISIBLE);
@@ -330,7 +330,7 @@ public class PushAbilityDialog extends Dialog implements android.view.View.OnCli
 		return effectivity;
 	}
 	public String getPredator() {
-		if (upArrowView.getVisibility() == View.VISIBLE) return "alliance";
+		if (upArrowView.getVisibility() == View.INVISIBLE) return "alliance";
 		return "opposingAlliance";
 	}
 }
