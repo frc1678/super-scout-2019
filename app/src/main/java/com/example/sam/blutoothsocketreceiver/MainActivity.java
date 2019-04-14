@@ -235,6 +235,8 @@ public class MainActivity extends ActionBarActivity {
                     Toast.makeText(context, "Input opponent team two number!", Toast.LENGTH_SHORT).show();
                 } else if (opposingAllianceTeamThree.getText().toString().equals("")) {
                     Toast.makeText(context, "Input opponent team three number!", Toast.LENGTH_SHORT).show();
+                } else if (numberOfMatch.getText().toString().equals("0")) {
+                    Toast.makeText(context, "The match number cannot be zero!", Toast.LENGTH_SHORT).show();
                 } else {
                     TimerUtil.MatchTimer match_timer = new TimerUtil.MatchTimer();
                     match_timer.initTimer();
