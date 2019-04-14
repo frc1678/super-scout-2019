@@ -27,7 +27,6 @@ public class TimerUtil {
 					float tempTime = millisUntilFinished / 1000f;
 					timestamp = Float.parseFloat(String.format("%.1f", tempTime));
 					displayTime = String.valueOf(Math.round(tempTime));
-					Log.e("displ",String.valueOf(displayTime));
 					}
 
 				public void onFinish() {
