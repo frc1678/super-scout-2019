@@ -21,18 +21,22 @@ public class TimerUtil {
 
 		@Override
 		public void run() {
+			final Stopwatch sw = new Stopwatch();
 			matchTimer = new CountDownTimer(150000, 10) {
 				public void onTick(long millisUntilFinished) {
 					float tempTime = millisUntilFinished / 1000f;
 					timestamp = Float.parseFloat(String.format("%.1f", tempTime));
 					displayTime = String.valueOf(Math.round(tempTime));
+					Log.e("displ",String.valueOf(displayTime));
 					}
 
 				public void onFinish() {
-					Stopwatch sw = new Stopwatch();
 					sw.stop();
 				}
 			}.start();
+		}
+		public void stopTimer() {
+			matchTimer.cancel();
 		}
 
 		public String getTime() {
