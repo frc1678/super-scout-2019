@@ -711,7 +711,7 @@ public class DuringMatchScouting extends AppCompatActivity { //Comments will be 
 	}
 
 	public void inflatePushAbilityDialog() {
-		pushAbilityDialog = new PushAbilityDialog(this, teams, opposingTeams, alliance);
+		pushAbilityDialog = new PushAbilityDialog(this, teams, opposingTeams, alliance, selectedDefensiveRobot);
 		pushAbilityDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
 			@Override
 			public void onDismiss(DialogInterface dialogInterface) {
