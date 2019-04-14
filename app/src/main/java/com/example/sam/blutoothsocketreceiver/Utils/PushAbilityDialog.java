@@ -195,7 +195,6 @@ public class PushAbilityDialog extends Dialog implements android.view.View.OnCli
 		if (String.valueOf(opposingAlliance[1]).equals(selectedOpposingTeam)) setTextColorWhite(opposingTeamTwo_b);
 		if (String.valueOf(opposingAlliance[2]).equals(selectedOpposingTeam)) setTextColorWhite(opposingTeamThree_b);
 
-		Log.e("AC",allianceColor);
 		if (allianceColor.equals("Red Alliance")) {
 			setButtonColor(opposingTeamOne_b, "blue");
 			setButtonColor(opposingTeamTwo_b, "blue");
