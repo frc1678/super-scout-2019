@@ -371,6 +371,7 @@ public class DuringMatchScouting extends AppCompatActivity { //Comments will be 
 					allianceRobotTwoDefensiveEffectivenessValue = i;
 				if (teamThree.equals(String.valueOf(currentSelectedTeam.getText())))
 					allianceRobotThreeDefensiveEffectivenessValue = i;
+				setSpinnerSelectedItems();
 			}
 			@Override
 			public void onNothingSelected(AdapterView<?> adapterView) { }
@@ -388,6 +389,7 @@ public class DuringMatchScouting extends AppCompatActivity { //Comments will be 
 					opponentRobotOneDefensiveEffectivenessValue_resistor = i;
 					defensiveEffectivenessValues[indexOfTeamString()][3] = opponentRobotOneDefensiveEffectivenessValue_resistor;
 				}
+				setSpinnerSelectedItems();
 			}
 			@Override
 			public void onNothingSelected(AdapterView<?> adapterView) { }
@@ -402,6 +404,7 @@ public class DuringMatchScouting extends AppCompatActivity { //Comments will be 
 					opponentRobotTwoDefensiveEffectivenessValue_resistor = i;
 					defensiveEffectivenessValues[indexOfTeamString()][4] = opponentRobotTwoDefensiveEffectivenessValue_resistor;
 				}
+				setSpinnerSelectedItems();
 			}
 			@Override
 			public void onNothingSelected(AdapterView<?> adapterView) {
@@ -418,6 +421,7 @@ public class DuringMatchScouting extends AppCompatActivity { //Comments will be 
 					opponentRobotThreeDefensiveEffectivenessValue_resistor = i;
 					defensiveEffectivenessValues[indexOfTeamString()][5] = opponentRobotThreeDefensiveEffectivenessValue_resistor;
 				}
+				setSpinnerSelectedItems();
 			}
 			@Override
 			public void onNothingSelected(AdapterView<?> adapterView) { }
@@ -435,6 +439,70 @@ public class DuringMatchScouting extends AppCompatActivity { //Comments will be 
 				defensiveEffectivenessValues[indexOfTeamString()][4] : defensiveEffectivenessValues[indexOfTeamString()][1]);
 		robotThreeDefensiveReactionEffectiveness.setSelection(opThree_r ?
 				defensiveEffectivenessValues[indexOfTeamString()][5] : defensiveEffectivenessValues[indexOfTeamString()][2]);
+
+		setSpinnerBackgroundColor(robotOneDefensiveReactionEffectiveness, opOne_r, opOne_r ?
+				defensiveEffectivenessValues[indexOfTeamString()][3] : defensiveEffectivenessValues[indexOfTeamString()][0]);
+		setSpinnerBackgroundColor(robotTwoDefensiveReactionEffectiveness, opTwo_r, opTwo_r ?
+				defensiveEffectivenessValues[indexOfTeamString()][4] : defensiveEffectivenessValues[indexOfTeamString()][1]);
+		setSpinnerBackgroundColor(robotThreeDefensiveReactionEffectiveness, opThree_r, opThree_r ?
+				defensiveEffectivenessValues[indexOfTeamString()][5] : defensiveEffectivenessValues[indexOfTeamString()][2]);
+		if (selectedDefensiveRobot.equals(teamOne)) setSpinnerBackgroundColor(currentRobotDefenseEffectiveness, false, allianceRobotOneDefensiveEffectivenessValue);
+		if (selectedDefensiveRobot.equals(teamTwo)) setSpinnerBackgroundColor(currentRobotDefenseEffectiveness, false, allianceRobotTwoDefensiveEffectivenessValue);
+		if (selectedDefensiveRobot.equals(teamThree)) setSpinnerBackgroundColor(currentRobotDefenseEffectiveness, false, allianceRobotThreeDefensiveEffectivenessValue);
+
+	}
+
+	public void setSpinnerBackgroundColor(Spinner spinner, boolean isResistor, int effectiveness) {
+		if (isResistor)
+			switch (effectiveness) {
+				case 0:
+					spinnerColor(spinner, "white");
+					break;
+				case 1:
+					spinnerColor(spinner, "light_green");
+					break;
+				case 2:
+					spinnerColor(spinner, "light_yellow");
+					break;
+				case 3:
+					spinnerColor(spinner, "light_red");
+					break;
+				default:
+					spinnerColor(spinner, "white");
+			}
+		if (!isResistor)
+			switch (effectiveness) {
+				case 0:
+					spinnerColor(spinner, "white");
+					break;
+				case 1:
+					spinnerColor(spinner, "light_red");
+					break;
+				case 2:
+					spinnerColor(spinner, "light_yellow");
+					break;
+				case 3:
+					spinnerColor(spinner, "light_green");
+					break;
+				default:
+					spinnerColor(spinner, "white");
+			}
+	}
+	public void spinnerColor(Spinner spinner, String color) {
+		switch (color) {
+			case "light_green":
+				spinner.setBackgroundColor(getApplicationContext().getResources().getColor(R.color.MediumSpringGreen));
+				break;
+			case "light_yellow":
+				spinner.setBackgroundColor(getApplicationContext().getResources().getColor(R.color.JustinYellow));
+				break;
+			case "light_red":
+				spinner.setBackgroundColor(getApplicationContext().getResources().getColor(R.color.CarlRed));
+				break;
+			case "white":
+				spinner.setBackgroundColor(getApplicationContext().getResources().getColor(R.color.White));
+				break;
+		}
 	}
 
 	//creates the listener for handling the on click of the effectiveness tracker in the ranking portion of the super scout
@@ -445,10 +513,10 @@ public class DuringMatchScouting extends AppCompatActivity { //Comments will be 
 			public void onClick(View view) {
 				robotOneDefensiveReaction.setText(opOne_r ?
 						"C. DEFENDER" : "RESISTOR");
-				createSpinnerClickListener();
 				opOne_r = !opOne_r;
 				robotOneDefensiveReactionEffectiveness.setSelection(opOne_r ?
 						defensiveEffectivenessValues[indexOfTeamString()][3] : defensiveEffectivenessValues[indexOfTeamString()][0]);
+				createSpinnerClickListener();
 			}
 		});
 		robotTwoDefensiveReaction.setOnClickListener(new View.OnClickListener() {
@@ -456,10 +524,10 @@ public class DuringMatchScouting extends AppCompatActivity { //Comments will be 
 			public void onClick(View view) {
 				robotTwoDefensiveReaction.setText(opTwo_r ?
 						"C. DEFENDER" : "RESISTOR");
-				createSpinnerClickListener();
 				opTwo_r = !opTwo_r;
 				robotTwoDefensiveReactionEffectiveness.setSelection(opTwo_r ?
 						defensiveEffectivenessValues[indexOfTeamString()][4] : defensiveEffectivenessValues[indexOfTeamString()][1]);
+				createSpinnerClickListener();
 			}
 		});
 		robotThreeDefensiveReaction.setOnClickListener(new View.OnClickListener() {
@@ -467,10 +535,10 @@ public class DuringMatchScouting extends AppCompatActivity { //Comments will be 
 			public void onClick(View view) {
 				robotThreeDefensiveReaction.setText(opThree_r ?
 						"C. DEFENDER" : "RESISTOR");
-				createSpinnerClickListener();
 				opThree_r = !opThree_r;
 				robotThreeDefensiveReactionEffectiveness.setSelection(opThree_r ?
 						defensiveEffectivenessValues[indexOfTeamString()][5] : defensiveEffectivenessValues[indexOfTeamString()][2]);
+				createSpinnerClickListener();
 			}
 		});
 	}
