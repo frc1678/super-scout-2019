@@ -177,6 +177,7 @@ public class DuringMatchScouting extends AppCompatActivity { //Comments will be 
 				.setMessage("GOING BACK WILL CAUSE LOSS OF DATA")
 				.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int which) {
+						new TimerUtil.MatchTimer().stopTimer();
 						activity.finish();
 					}
 				})

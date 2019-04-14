@@ -21,6 +21,7 @@ public class TimerUtil {
 
 		@Override
 		public void run() {
+			final Stopwatch sw = new Stopwatch();
 			matchTimer = new CountDownTimer(150000, 10) {
 				public void onTick(long millisUntilFinished) {
 					float tempTime = millisUntilFinished / 1000f;
@@ -29,10 +30,12 @@ public class TimerUtil {
 					}
 
 				public void onFinish() {
-					Stopwatch sw = new Stopwatch();
 					sw.stop();
 				}
 			}.start();
+		}
+		public void stopTimer() {
+			matchTimer.cancel();
 		}
 
 		public String getTime() {
