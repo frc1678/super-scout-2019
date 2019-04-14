@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -126,6 +127,7 @@ public class AfterMatchScouting extends AppCompatActivity { //AfterMatchScouting
 		//noinspection SimplifiableIfStatement
 		if (id == R.id.Submit) {
 			if (canProceed()) listDataValues();
+			else Toast.makeText(getApplicationContext(),"Please make sure no values are the same for each row!",Toast.LENGTH_SHORT).show();
 		}
 		return super.onOptionsItemSelected(item);
 	}
