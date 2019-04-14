@@ -7,7 +7,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.text.SpannableString;
+import android.text.method.LinkMovementMethod;
+import android.text.util.Linkify;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,6 +19,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -147,8 +152,23 @@ public class DuringMatchScouting extends AppCompatActivity { //Comments will be 
 			inflatePushAbilityDialog();
 		}
 		if (id == R.id.final_data) {
-			setupForFinalData();
-			intentFinalData();
+			new AlertDialog.Builder(this)
+					.setMessage("Are you sure you want to proceed?")
+					.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int which) {
+							setupForFinalData();
+							intentFinalData();
+						}
+					})
+					.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialogInterface, int i) {
+							dialogInterface.dismiss();
+						}
+					})
+					.setCancelable(false)
+					.show();
+
 		}
 		return super.onOptionsItemSelected(item);
 	}
