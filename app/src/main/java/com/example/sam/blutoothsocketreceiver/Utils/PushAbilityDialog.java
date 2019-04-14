@@ -33,6 +33,7 @@ public class PushAbilityDialog extends Dialog implements android.view.View.OnCli
 	private int[] alliance;
 	private int[] opposingAlliance;
 	private String allianceColor;
+	private String selectedRobot;
 
 	//
 
@@ -40,12 +41,13 @@ public class PushAbilityDialog extends Dialog implements android.view.View.OnCli
 	private String selectedOpposingTeam = "0";
 	private String effectivity = "0";
 
-	public PushAbilityDialog(Activity a, int[] alliance, int[] opposingAlliance, String allianceColor) {
+	public PushAbilityDialog(Activity a, int[] alliance, int[] opposingAlliance, String allianceColor, String selectedRobot) {
 		super(a);
 		this.activity = a;
 		this.alliance = alliance;
 		this.opposingAlliance = opposingAlliance;
 		this.allianceColor = allianceColor;
+		this.selectedRobot = selectedRobot;
 	}
 
 	@Override
@@ -59,6 +61,8 @@ public class PushAbilityDialog extends Dialog implements android.view.View.OnCli
 	}
 
 	public void initXml() {
+
+		if (!selectedRobot.equals("0")) selectedAllianceTeam = selectedRobot;
 
 		cancelButton = (Button) findViewById(R.id.dismiss_button);
 
@@ -99,6 +103,7 @@ public class PushAbilityDialog extends Dialog implements android.view.View.OnCli
 
 		ineffectiveButton.setText("A LITTLE");
 		effectiveButton.setText("A LOT");
+
 		setupButtons();
 	}
 
