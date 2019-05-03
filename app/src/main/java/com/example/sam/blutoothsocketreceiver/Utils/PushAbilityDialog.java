@@ -35,6 +35,8 @@ public class PushAbilityDialog extends Dialog implements android.view.View.OnCli
 	private String allianceColor;
 	private String selectedRobot;
 
+	public boolean dismissed = false;
+
 	//
 
 	private String selectedAllianceTeam = "0";
@@ -62,6 +64,7 @@ public class PushAbilityDialog extends Dialog implements android.view.View.OnCli
 
 	public void initXml() {
 
+		dismissed = false;
 		if (!selectedRobot.equals("0")) selectedAllianceTeam = selectedRobot;
 
 		cancelButton = (Button) findViewById(R.id.dismiss_button);
@@ -285,7 +288,10 @@ public class PushAbilityDialog extends Dialog implements android.view.View.OnCli
 				updateEffectiveToggleColor();
 				break;
 			case R.id.confirm_button:
-				if (canDismiss()) dismiss();
+				if (canDismiss()) {
+					dismiss();
+					dismissed = true;
+				}
 				else makeToast("Please make sure you've inputted everything!");
 				break;
 			case R.id.dismiss_button:
@@ -320,6 +326,7 @@ public class PushAbilityDialog extends Dialog implements android.view.View.OnCli
 			opposingWinnerText.setVisibility(View.INVISIBLE);
 		}
 	}
+	public Boolean getDismissed() { return dismissed; }
 	public String getAllianceSelectedTeam() {
 		return selectedAllianceTeam;
 	}
