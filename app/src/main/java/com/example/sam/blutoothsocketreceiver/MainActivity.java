@@ -71,7 +71,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends ActionB
+        BarActivity {
     protected SuperScoutApplication app;
     Activity context;
     EditText numberOfMatch;
@@ -130,8 +131,8 @@ public class MainActivity extends ActionBarActivity {
         }
 
         updateUI();
-        numberOfMatch.setText(matchNumber.toString());
-        matchNumber = Integer.parseInt(numberOfMatch.getText().toString());
+        numberOfMatch.setText(String.valueOf(matchNumber));
+        matchNumber = Integer.parseInt(String.valueOf(numberOfMatch.getText()));
         disenableEditTextEditing();
 
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
@@ -221,21 +222,21 @@ public class MainActivity extends ActionBarActivity {
             updateUI();
         }
         if (id == R.id.scout) {
-                if (numberOfMatch.getText().toString().equals("")) {
+                if (String.valueOf(numberOfMatch.getText()).equals("")) {
                     Toast.makeText(context, "Input match name!", Toast.LENGTH_SHORT).show();
-                } else if (allianceTeamOne.getText().toString().equals("")) {
+                } else if (String.valueOf(allianceTeamOne.getText()).equals("")) {
                     Toast.makeText(context, "Input alliance team one number!", Toast.LENGTH_SHORT).show();
-                } else if (allianceTeamTwo.getText().toString().equals("")) {
+                } else if (String.valueOf(allianceTeamTwo.getText()).equals("")) {
                     Toast.makeText(context, "Input alliance team two number!", Toast.LENGTH_SHORT).show();
-                } else if (allianceTeamThree.getText().toString().equals("")) {
+                } else if (String.valueOf(allianceTeamThree.getText()).equals("")) {
                     Toast.makeText(context, "Input alliance team three number!", Toast.LENGTH_SHORT).show();
-                } else if (opposingAllianceTeamOne.getText().toString().equals("")) {
+                } else if (String.valueOf(opposingAllianceTeamOne.getText()).equals("")) {
                     Toast.makeText(context, "Input opponent team one number!", Toast.LENGTH_SHORT).show();
-                } else if (opposingAllianceTeamTwo.getText().toString().equals("")) {
+                } else if (String.valueOf(opposingAllianceTeamTwo.getText()).equals("")) {
                     Toast.makeText(context, "Input opponent team two number!", Toast.LENGTH_SHORT).show();
-                } else if (opposingAllianceTeamThree.getText().toString().equals("")) {
+                } else if (String.valueOf(opposingAllianceTeamThree.getText()).equals("")) {
                     Toast.makeText(context, "Input opponent team three number!", Toast.LENGTH_SHORT).show();
-                } else if (numberOfMatch.getText().toString().equals("0")) {
+                } else if (String.valueOf(numberOfMatch.getText()).equals("0")) {
                     Toast.makeText(context, "The match number cannot be zero!", Toast.LENGTH_SHORT).show();
                 } else {
                     TimerUtil.MatchTimer match_timer = new TimerUtil.MatchTimer();
@@ -243,22 +244,22 @@ public class MainActivity extends ActionBarActivity {
                     commitSharedPreferences();
                     commitOverrideTeamsSP();
                     Intent intent = new Intent(context, DuringMatchScouting.class);
-                    intent.putExtra("matchNumber", numberOfMatch.getText().toString());
-                    intent.putExtra("allianceTeamOne", allianceTeamOne.getText().toString());
-                    intent.putExtra("allianceTeamTwo", allianceTeamTwo.getText().toString());
-                    intent.putExtra("allianceTeamThree", allianceTeamThree.getText().toString());
-                    intent.putExtra("opponentTeamOne", opposingAllianceTeamOne.getText().toString());
-                    intent.putExtra("opponentTeamTwo", opposingAllianceTeamTwo.getText().toString());
-                    intent.putExtra("opponentTeamThree", opposingAllianceTeamThree.getText().toString());
-                    intent.putExtra("alliance", alliance.getText().toString());
+                    intent.putExtra("matchNumber", String.valueOf(numberOfMatch.getText()));
+                    intent.putExtra("allianceTeamOne", String.valueOf(allianceTeamOne.getText()));
+                    intent.putExtra("allianceTeamTwo", String.valueOf(allianceTeamTwo.getText()));
+                    intent.putExtra("allianceTeamThree", String.valueOf(allianceTeamThree.getText()));
+                    intent.putExtra("opponentTeamOne", String.valueOf(opposingAllianceTeamOne.getText()));
+                    intent.putExtra("opponentTeamTwo", String.valueOf(opposingAllianceTeamTwo.getText()));
+                    intent.putExtra("opponentTeamThree", String.valueOf(opposingAllianceTeamThree.getText()));
+                    intent.putExtra("alliance", String.valueOf(alliance.getText()));
                     startActivity(intent);
                 }
 
         } else if (id == R.id.action_override) {
-            if (item.getTitle().toString().equals("Override Match and Team Number")) {
+            if (String.valueOf(item.getTitle()).equals("Override Match and Team Number")) {
                 enableEditTextEditing();
                 item.setTitle("Automate");
-            } else if (item.getTitle().toString().equals("Automate")) {
+            } else if (String.valueOf(item.getTitle()).equals("Automate")) {
                 View view = context.getCurrentFocus();
                 updateUI();
                 commitSharedPreferences();
@@ -350,7 +351,7 @@ public class MainActivity extends ActionBarActivity {
         editor.putString("opponentTeamOne", String.valueOf(opposingAllianceTeamOne.getText()));
         editor.putString("opponentTeamTwo", String.valueOf(opposingAllianceTeamTwo.getText()));
         editor.putString("opponentTeamThree", String.valueOf(opposingAllianceTeamThree.getText()));
-        editor.putInt("matchNumber", Integer.valueOf(numberOfMatch.getText().toString()));
+        editor.putInt("matchNumber", Integer.valueOf(String.valueOf(numberOfMatch.getText())));
         editor.putString("isRed",String.valueOf(isRed));
         editor.commit();
     }
@@ -377,7 +378,7 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 try {
-                    matchNumber = Integer.parseInt(s.toString());
+                    matchNumber = Integer.parseInt(String.valueOf(s));
                 } catch (NumberFormatException NFE) {
                     matchNumber = 0;
                 }
@@ -496,7 +497,7 @@ public class MainActivity extends ActionBarActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String name = parent.getItemAtPosition(position).toString();
+                String name = String.valueOf(parent.getItemAtPosition(position));
                 name = android.os.Environment.getExternalStorageDirectory().getAbsolutePath() + "/Super_scout_data/" + name;
                 final String fileName = name;
                 String content = readFile(fileName);
