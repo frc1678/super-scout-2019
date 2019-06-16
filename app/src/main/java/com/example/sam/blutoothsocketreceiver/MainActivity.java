@@ -71,8 +71,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class MainActivity extends ActionB
-        BarActivity {
+public class MainActivity extends ActionBarActivity {
     protected SuperScoutApplication app;
     Activity context;
     EditText numberOfMatch;
