@@ -37,7 +37,7 @@ import static com.example.sam.blutoothsocketreceiver.Fields.Bay.isOrange;
 import static com.example.sam.blutoothsocketreceiver.Fields.Bay.isYellow;
 
 public class LeftField extends AppCompatActivity {
-
+    //"Imports" Data points to use within this class
     String numberOfMatch;
     Intent previous;
     boolean isRed;
@@ -64,6 +64,7 @@ public class LeftField extends AppCompatActivity {
     
     Context context;
 
+    //Creates the left_field layout and gets all the information on it (Match Number, Team Number, Color, etc.)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,22 +73,26 @@ public class LeftField extends AppCompatActivity {
         getMatchNumber(); getTeamNumbers(); getAlliance(); getLeftViewColor(); getXML();
         prepareField(); startFieldListener();
     }
+    //Gets the match number from the bundle it is stored in (from another class), unless it is null
     public void getMatchNumber() {
         if (bundle != null) {
             numberOfMatch = getIntent().getStringExtra("matchNumber");
         }
     }
+    //Gets the alliance color from the bundle it is stored in (from another class), unless it is null
     public void getAlliance() {
         if (bundle != null) {
             alliance = getIntent().getStringExtra("allianceColor");
             scrollableConflictBar = getIntent().getStringExtra("scrollableConflictBar");
         }
     }
+    //Gets the leftViewColor from the bundle it is stored in (from another class), unless it is null
     public void getLeftViewColor() {
         if (bundle != null) {
             leftViewColor = getIntent().getStringExtra("leftViewColor");
         }
     }
+    //Gets the team numbers, and noShowTeams (if there are any), from the bundle it is stored in (from another class), unless it is null
     public void getTeamNumbers() {
         if (bundle != null) {
             teamNumberOne = previous.getExtras().getString("teamNumberOne");
@@ -102,12 +107,13 @@ public class LeftField extends AppCompatActivity {
 
         }
     }
+    //Gets the XML IDs for front of cargo ship, the rest of the cargo ship, and the cargo bays
     public void getXML() {
-        //front of cargo ship???? hahahahahahahhahahahaa
+        //Front of cargo ship
         right_frontOfCargoShip = (Button) findViewById(R.id.right_frontOfCargoShip);
         left_frontOfCargoShip = (Button) findViewById(R.id.left_frontOfCargoShip);
 
-        //rest of cargo ship??? orange tree hahahhahahahahahahahahahahahahahahahahahahahahahahahahahahahahahaha
+        //Rest of cargo ship
         leftNear = (Button) findViewById(R.id.leftNear);
         leftMid = (Button) findViewById(R.id.leftMid);
         leftFar = (Button) findViewById(R.id.leftFar);
@@ -116,11 +122,12 @@ public class LeftField extends AppCompatActivity {
         rightMid = (Button) findViewById(R.id.rightMid);
         rightFar = (Button) findViewById(R.id.rightFar);
 
-        // SEPARATORS for baysLMAOOOOOOOOO haahahahhahaahahaaahahahhhaaahhahahah
+        //Cargo bay buttons separators
         centerNear = (Button) findViewById(R.id.centerNear);
         centerMid = (Button) findViewById(R.id.centerMid);
         centerFar = (Button ) findViewById(R.id.centerFar);
     }
+    //"Prepares" the field by setting the Cargo Bay colors red (if on the red alliance) and blue (if on the blue alliance)
     public void prepareField() {
         if (alliance.equals("red")){
             centerNear.setBackgroundColor(ContextCompat.getColor(this, R.color.TeamNumberRed));
@@ -132,6 +139,7 @@ public class LeftField extends AppCompatActivity {
             centerFar.setBackgroundColor(ContextCompat.getColor(this, R.color.Bloo));
         }
     }
+    //Sets the OnClickListener for each of the Cargo Bays. If clicked, then it will change the color to the one for a panel or cargo
     public void startFieldListener() {
         leftNear.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -182,7 +190,7 @@ public class LeftField extends AppCompatActivity {
                     rightFar.setBackgroundColor(ContextCompat.getColor(LeftField.this, R.color.Oroonge));rightFarBoolean = true;
                 }}});
     }
-    //Warns the user that going back will change data
+    //Creates a dialog to warns the user that going back will change data
     @Override
     public void onBackPressed () {
         final Activity activity = this;
@@ -198,6 +206,7 @@ public class LeftField extends AppCompatActivity {
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .show();
     }
+    //Inflates the Sandstorm screen
     @Override
     public boolean onCreateOptionsMenu (Menu menu){
         getMenuInflater().inflate(R.menu.sandstorm, menu);
@@ -207,6 +216,9 @@ public class LeftField extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected (MenuItem item){
         int id = item.getItemId();
+        //If the item (the xml) selected is sandstorm, then get the values of the cargo ship bays. If the cargo ship bay is empty,
+        //then create the error message (created above). If the cargo bay value isn't empty, put the cargo ship bay values, no show teams, alliance, team numbers,
+        //and scrollable conflict bar variables onto the "next" intent.
         if (id == R.id.sandstorm) {
             Intent next = new Intent(LeftField.this, SandstormConflict.class);
             getCargoShipInputValues();
@@ -234,6 +246,7 @@ public class LeftField extends AppCompatActivity {
                 next.putExtra("scrollableConflictBar",scrollableConflictBar);
                 startActivity(next);
             }
+            //If the item selected is the noShow xml, inflate the noshowteams layout
         } else if (id == R.id.noShow) {
             AlertDialog.Builder builder = new AlertDialog.Builder(LeftField.this);
             final View noShowLayout = LayoutInflater.from(LeftField.this).inflate(R.layout.noshowteams, null);
@@ -241,10 +254,12 @@ public class LeftField extends AppCompatActivity {
             final Button noShowTeamTwo = (Button) noShowLayout.findViewById(R.id.noShowTeamTwo);
             final Button noShowTeamThree = (Button) noShowLayout.findViewById(R.id.noShowTeamThree);
 
+            //Sets the noShowTeam buttons' text to the No Show Teams
             noShowTeamOne.setText(teamNumberOne);
             noShowTeamTwo.setText(teamNumberTwo);
             noShowTeamThree.setText(teamNumberThree);
-            
+
+            //Sets the no show team buttons red if that team is no show, or light grey if they aren't. Also, sets the onClickListeners for them.
             if (noShowOne.equals("true")) {
                 noShowTeamOne.setBackgroundColor(ContextCompat.getColor(LeftField.this, R.color.TeamNumberRed));
             } else {
@@ -260,7 +275,6 @@ public class LeftField extends AppCompatActivity {
             } else {
                 noShowTeamThree.setBackgroundColor(ContextCompat.getColor(LeftField.this, R.color.LightGrey));
             }
-
             noShowTeamOne.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -327,7 +341,7 @@ public class LeftField extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
+    //Sends the cargo ship bay colors to the updateCargoShipValue function, which puts the bay location and value (depending on its color) into the cargoShipInputValues map (defined above)
     public void getCargoShipInputValues() {
         Integer leftNearColor = ((ColorDrawable)leftNear.getBackground()).getColor();
         Integer leftMidColor = ((ColorDrawable)leftMid.getBackground()).getColor();
