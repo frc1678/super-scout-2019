@@ -259,7 +259,7 @@ public class LeftField extends AppCompatActivity {
             noShowTeamTwo.setText(teamNumberTwo);
             noShowTeamThree.setText(teamNumberThree);
 
-            //Sets the no show team buttons red if that team is no show, or light grey if they aren't. Also, sets the onClickListeners for them.
+            //Sets the noShowTeam buttons red if that team is no show, or light grey if they aren't. Also, sets the onClickListeners for them.
             if (noShowOne.equals("true")) {
                 noShowTeamOne.setBackgroundColor(ContextCompat.getColor(LeftField.this, R.color.TeamNumberRed));
             } else {
