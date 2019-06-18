@@ -18,9 +18,13 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class TeamAssignment {
+    /* TeamAssignment is a class apart of the assignment of scouts according to an assignment file
+       pre-downloaded on each of the Super Scout's tablets before each competition
+    */
 
     public static File bluetoothDir = new File(Environment.getExternalStorageDirectory().getAbsoluteFile()+"/bluetooth");
 
+    //Returns a JSONObject type from a given file's data
     public static JSONObject toJSONObject(String data){
         if(data.isEmpty()){
             return new JSONObject();
@@ -51,6 +55,7 @@ public class TeamAssignment {
     }
 
 
+    //Returns the data within the file path given as an argument.
     public static String retrieveSDCardFile(String pFileName) {
         Log.e("Retrieve Called", pFileName);
 
@@ -74,6 +79,7 @@ public class TeamAssignment {
         return null;
     }
 
+    //Returns the data of the assignment file given the name of the file
     public static String readAssignmentFile(String pPathName) {
         BufferedReader bReader;
         try{
