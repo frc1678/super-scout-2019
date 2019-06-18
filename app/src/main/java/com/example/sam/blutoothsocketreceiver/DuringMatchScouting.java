@@ -35,7 +35,7 @@ public class DuringMatchScouting extends AppCompatActivity { //Comments will be 
 	public FrameLayout timerButton; //timer button is a frame layout because it has two text views inside of it (which a button can't have) to display
 							        //the status (START, STOP) and the time itself. Will have an onClick to determine when timer is activated.
 
-	public TextView timerStatusDisplay, timerTimeDisplay; //As stated above, the status is the 'START, STOP', and the time itself is the '135 --> 134'
+	public TextView timerStatusDisplay, timerTimeDisplay; //As stated above, the status is the 'START, STOP', and the time display is, for example '135 --> 134'
 
 	public TextView currentSelectedTeam, firstOpposingTeam, secondOpposingTeam, thirdOpposingTeam; //Current selected team refers to the team from
 														// the SCOUT's alliance. The opposing teams are the three robots that defense is
@@ -56,7 +56,7 @@ public class DuringMatchScouting extends AppCompatActivity { //Comments will be 
 
 	public String teamOne, teamTwo, teamThree, opposingTeamOne, opposingTeamTwo, opposingTeamThree;
 				//The first three are the three teams from the SCOUT's alliance. The opposing teams are from the OPPOSITE alliance.
-	public String matchNumber, alliance; // <-
+	public String matchNumber, alliance; //Match number and Alliance
 
 	public String selectedDefensiveRobot = "0"; //the value contains which team is on defense for the SCOUT's alliance.
 
@@ -76,6 +76,7 @@ public class DuringMatchScouting extends AppCompatActivity { //Comments will be 
 		add("Shut down");
 	}};
 
+	//Defines the Arraylists for each robots' timelines
 	public ArrayList<Map<String, String>> timelineRobotOne = new ArrayList<>();
 	public ArrayList<Map<String, String>> timelineRobotTwo = new ArrayList<>();
 	public ArrayList<Map<String, String>> timelineRobotThree = new ArrayList<>();
