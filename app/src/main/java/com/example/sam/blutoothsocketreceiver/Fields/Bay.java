@@ -1,7 +1,7 @@
 package com.example.sam.blutoothsocketreceiver.Fields;
 
 public class Bay  {
-    //Defines the three color preload options within the Cargo Ship: orange, yellow, and gray, and assigns them a number
+    //Defines the three color preload options within the Cargo Ship: orange, yellow, and gray, and the numbers are for the decimal code for the color they represent
     public static Integer yellow = -6108;
     public static Integer orange = -21492;
     public static Integer gray = -5658199;
