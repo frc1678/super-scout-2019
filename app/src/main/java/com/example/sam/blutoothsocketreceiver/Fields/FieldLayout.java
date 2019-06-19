@@ -2,7 +2,7 @@ package com.example.sam.blutoothsocketreceiver.Fields;
 
 public class FieldLayout {
 
-    //Defines the two alliance color options: red or blue, and assigns them a number
+    //Defines the two alliance color options: red or blue, and the numbers are decimal codes for the colors they represent
     public static Integer Blue = -11630645;
     public static Integer Red = -2594978;
 
