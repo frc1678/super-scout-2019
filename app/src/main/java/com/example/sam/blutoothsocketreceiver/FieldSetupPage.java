@@ -25,7 +25,7 @@ import com.google.firebase.database.FirebaseDatabase;
  */
 
 public class FieldSetupPage extends AppCompatActivity{
-
+    //Declares/"Imports" datapoints to use in this class
     Activity context;
     Intent previous;
     Intent next;
@@ -44,6 +44,7 @@ public class FieldSetupPage extends AppCompatActivity{
     String noShowTeamThree;
     String scrollableConflictBar;
 
+    //"Inflates" the content layout: fieldsetuppage and sets it up for that alliance color
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,13 +67,13 @@ public class FieldSetupPage extends AppCompatActivity{
         }
     }
 
-
         @Override
         public boolean onCreateOptionsMenu (Menu menu){
             getMenuInflater().inflate(R.menu.field, menu);
             return true;
         }
 
+        //Sets up the field layout depending on the team's alliance color
         @Override
         public boolean onOptionsItemSelected (MenuItem item){
             int id = item.getItemId();
@@ -96,6 +97,7 @@ public class FieldSetupPage extends AppCompatActivity{
             return super.onOptionsItemSelected(item);
         }
 
+        //Gets all of the extras (stored datapoints on an intent ) needed to set up the field
         public void getExtrasForSetup () {
             numberOfMatch = previous.getExtras().getString("matchNumber");
             isRed = previous.getExtras().getBoolean("allianceColor");
@@ -111,16 +113,19 @@ public class FieldSetupPage extends AppCompatActivity{
             scrollableConflictBar = previous.getExtras().getString("scrollableConflictBar");
 
         }
+
+        //Gets the alliance color for a team by using the isRed extra (bool)
         public void getAllianceColor() {
             if (isRed) {
                 alliance = "red";
             } else if (!isRed) {
                 alliance = "blue";
             } else {
-                //Do null.
+                //null
             }
         }
 
+        //Sets up the Left Field UI by making an intent, adding the needed extras, and then passing the intent into the FieldSetupPage
         public void setUpLeftField() {
             Intent intent = new Intent(FieldSetupPage.this, LeftField.class);
             intent.putExtra("matchNumber", numberOfMatch);
@@ -136,7 +141,8 @@ public class FieldSetupPage extends AppCompatActivity{
             FieldSetupPage.this.startActivity(intent);
         }
 
-        public void setUpRightField() {
+    //Sets up the Right Field UI by making an intent, adding the needed extras, and then passing the intent into the FieldSetupPage
+    public void setUpRightField() {
             Intent intent = new Intent(FieldSetupPage.this, RightField.class);
             intent.putExtra("matchNumber", numberOfMatch);
             intent.putExtra("leftViewColor", leftViewColor);
