@@ -38,6 +38,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SandstormConflict extends AppCompatActivity {
+    //SandstormConflict is an activity used for the purpose of declaring which robots NEGATIVELY INTERACTED with their
+    //own teammates. For example, the page is a 3 button screen with each button being a robot on the team; if robot
+    //one were to crash into robot two during autonomous/sandstorm, the super scout would mark robot one down on the screen
 
     Intent previous;
     Intent next;
@@ -209,16 +212,19 @@ public class SandstormConflict extends AppCompatActivity {
         }
 
     }
+
+    //Turns the button given as an argument into the color of one that is affected (the conflict-er)
     public void makeAffected(Button button) {
         button.setBackgroundColor(ContextCompat.getColor(SandstormConflict.this, R.color.EmilyPurple));
-        Log.e("bacc",String.valueOf(button.getBackground()));
-        Integer buttonColor = ((ColorDrawable)button.getBackground()).getColor();
-        Log.e("bacc",String.valueOf(buttonColor));
-
     }
+
+    //Turns the button given as an argument into the color of one that is neutral (default color)
     public void makeNeutral(Button button) {
         button.setBackgroundColor(ContextCompat.getColor(SandstormConflict.this, R.color.LightGrey));
     }
+
+    //Returns a true or false depending on whether the button given as an argument is of the affected's color or not
+    // AKA: if affected color: return true. else, return false;
     public Boolean isAffected(Button button) {
         Integer buttonColor = ((ColorDrawable)button.getBackground()).getColor();
         if (String.valueOf(buttonColor).equals(FieldLayout.affectedColor)) {
@@ -226,6 +232,9 @@ public class SandstormConflict extends AppCompatActivity {
         }
         return false;
     }
+
+    //Returns a true or false depending on whether the button given as an argument is one of the neutral's color or not
+    // AKA: if neutral: return true. else, return false;
     public Boolean isNeutral(Button button) {
         Integer buttonColor = ((ColorDrawable)button.getBackground()).getColor();
         if (String.valueOf(buttonColor).equals(FieldLayout.neutralColor)) {
@@ -235,6 +244,7 @@ public class SandstormConflict extends AppCompatActivity {
     }
 
 
+    //Begins the listeners for the button onClicks
     public void initActivity() {
 
 
@@ -264,7 +274,7 @@ public class SandstormConflict extends AppCompatActivity {
         });
     }
 
-
+    //Method called on the button press. If the button is neutral, it will become affected. VICE VERSA
     public void initColors(Button button) {
         if (isNeutral(button)) {
             makeAffected(button);
@@ -274,6 +284,8 @@ public class SandstormConflict extends AppCompatActivity {
             dataCounter --;
         }
     }
+
+    //Updates placeholder booleans for each button
     public void updateConflict() {
         if (isAffected(teamOneButton)) {
             teamOneConflict = "true";
