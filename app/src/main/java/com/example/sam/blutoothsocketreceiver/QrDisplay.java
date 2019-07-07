@@ -44,6 +44,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class QrDisplay extends ActionBarActivity {
+
+    //Activity used to generate the final QR code with all of the data acquired at the end of each match
+
     String matchNumber;
     String alliance;
     String allianceCompressed;
@@ -191,6 +194,7 @@ public class QrDisplay extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    //Main method used to generate the QR code using all of the data acquired in a single string
     public void createCompressedFormat() {
         if (alliance.equals("Blue Alliance")) {
             allianceCompressed = "B";
@@ -274,8 +278,6 @@ public class QrDisplay extends ActionBarActivity {
                 + "?y" + defensiveEffectivenessValues[2][2]
                 + "?z" + defensiveEffectivenessValues[2][5] + "]";
 
-        Log.e("rree", String.valueOf(compressedData));
-
         new Thread() {
 
             @Override
@@ -301,6 +303,8 @@ public class QrDisplay extends ActionBarActivity {
         }.start();
     }
 
+    //Used to create a WindowManager to display a created QR code using the string. The QR code
+    //is created using a matrix method ( xy coordinate system )
     public void displayQR(String qrCode) {
         try {
             //setting size of qr code
@@ -321,6 +325,7 @@ public class QrDisplay extends ActionBarActivity {
         }
     }
 
+    //Used to create the QR code using an xy coordinate system (horizontal for every x and then y increases by one
     public void createQRCode(String qrCodeData, String charset, Map hintMap, int qrCodeheight, int qrCodewidth) {
 
         try {
@@ -348,7 +353,7 @@ public class QrDisplay extends ActionBarActivity {
         }
     }
 
-
+    //Returns translated alliance
     public String getStringAlliance(String alliance) {
         if (alliance.equals("Red Alliance")) {
             return "k";
@@ -358,6 +363,7 @@ public class QrDisplay extends ActionBarActivity {
         return "null";
     }
 
+    //returns translated fouls per alliance
     public String getFoulAlliance(String alliance) {
         if (alliance.equals("Red Alliance")) {
             return "n";
@@ -367,6 +373,7 @@ public class QrDisplay extends ActionBarActivity {
         return "null";
     }
 
+    //Returns translated ROCKET RP per alliance
     public String getRocketRPAlliance(String alliance) {
         if (alliance.equals("Red Alliance")) {
             return "r";
@@ -376,6 +383,7 @@ public class QrDisplay extends ActionBarActivity {
         return "null";
     }
 
+    //Returns translated Hab RP per alliance
     public String getHabClimbAlliance(String alliance) {
         if (alliance.equals("Red Alliance")) {
             return "t";
