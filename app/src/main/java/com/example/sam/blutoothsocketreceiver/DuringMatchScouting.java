@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -717,7 +718,7 @@ public class DuringMatchScouting extends AppCompatActivity { //Comments will be 
 		pushAbilityDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
 			@Override
 			public void onDismiss(DialogInterface dialogInterface) {
-				createPushAbilityInput(pushAbilityDialog);
+				if (pushAbilityDialog.getDismissed()) createPushAbilityInput(pushAbilityDialog);
 			}
 		});
 		pushAbilityDialog.show();
